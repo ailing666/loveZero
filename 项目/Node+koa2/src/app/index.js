@@ -1,7 +1,7 @@
 // koa相关
 const Koa = require('koa');
 // 导入路由
-const useRouter = require('../router/user');
+const useRouter = require('../router/user.router');
 
 const app = new Koa();
 
