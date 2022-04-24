@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 车辆卡片 -->
-    <section class="cars-item">
+    <section class="cars-item" @click="openCarsInfo">
       <!-- 头部 -->
       <header>
         <h4 class="car-logo fl fs-16">
@@ -47,10 +47,13 @@
       </footer>
     </section>
     <!-- 车辆详情 -->
-    <section class="cars-item cars-detailed" :style="'height:' + height">
+    <section
+      class="cars-item cars-detailed"
+      :style="'height:' + carsInfoHeight"
+    >
       <div>
         <h4 class="cars-detailed-parking">{{ carInfo.parkingName }}</h4>
-        <i class="close"></i>
+        <i class="close" @click="closeCarsInfo"></i>
       </div>
       <header>
         <h4 class="car-logo fl fs-16">
@@ -111,45 +114,61 @@
 </template>
 
 <script>
-import { getCarsAttrKey } from '@/utils/format';
+import { getCarsAttrKey } from '@/utils/format'
 export default {
   name: 'CarList',
   props: {
-    height: {
-      type: String,
-      default: '257px',
-    },
     carInfo: {
       type: Object,
       default: () => ({}),
     },
   },
-  data() {
-    return {};
+  data () {
+    return {
+      carsInfoHeight: 0,
+      timer: null,
+    }
   },
   filters: {
-    electricNumber(val) {
-      return `active-${Math.round(val / 10)}`;
+    electricNumber (val) {
+      return `active-${Math.round(val / 10)}`
     },
-    energyType(val) {
+    energyType (val) {
       return getCarsAttrKey({
         data: val,
         parerntKey: 'basis',
         childKey: 'energy_type',
-      });
+      })
     },
-    seatNumber(val) {
+    seatNumber (val) {
       return getCarsAttrKey({
         data: val,
         parerntKey: 'car_body',
         childKey: 'seat_number',
-      });
+      })
     },
-    setCountKm(val) {
-      return parseInt(val);
+    setCountKm (val) {
+      return parseInt(val)
     },
   },
-  methods: {},
+
+  methods: {
+    // 展开车辆信息
+    openCarsInfo () {
+      // 可视区的高度
+      const viewHeight =
+        document.documentElement.clientHeight || document.body.clientHeight
+      const height = viewHeight - 145
+      if (this.timer) { clearTimeout(this.timer) }
+      this.timer = setTimeout(() => {
+        this.carsInfoHeight = `${height}px`
+      }, 10)
+    },
+    // 关闭车辆信息
+    closeCarsInfo () {
+      this.carsInfoHeight = 0
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
