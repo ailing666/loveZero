@@ -1,17 +1,6 @@
 <template>
   <div>
-    <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig">
-      <template v-slot:status="slotData">
-        <!-- 当前id等于switchDisabled时禁用 -->
-        <el-switch
-          :disabled="slotData.data.id === switchDisabled"
-          @change="switchStastus(slotData.data)"
-          v-model="slotData.data.carsLeaseStatus"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        ></el-switch>
-      </template>
-    </TableData>
+    <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig"> </TableData>
     <AddSaleList :isVisible.sync="showDialog" :data="saleListData" />
   </div>
 </template>
@@ -29,14 +18,22 @@ export default {
       tableConfig: {
         thead: [
           { label: "租车类型", prop: "carsLeaseTypeName" },
-          { label: '禁启用', prop: 'carsLeaseStatus', type: 'slot', slotName: 'status' },
+          { label: '禁启用', prop: 'carsLeaseStatus', type: 'switch', disabledKey: 'carsLeaseTypeId' },
           { label: "车辆列表", prop: "carsList", width: 500 },
+          {
+            label: "操作",
+            type: "operation",
+            width: 500,
+            buttonGroup: [
+              { label: "编辑", type: "danger", event: "button", handler: (data) => this.edit(data) }
+            ],
+          },
         ],
         checkbox: false,
         url: 'leaseList',
         // 不显示分页器
         isPagination: false,
-        requestData: {}
+        requestData: {},
       },
       searchConfig: {
         formConfig: [
@@ -56,7 +53,6 @@ export default {
           }
         ]
       },
-      switchDisabled: '',
       saleListData: {}
     }
   },
@@ -65,9 +61,12 @@ export default {
     carsTypeAddDialog () {
       this.showDialog = true
     },
+    // 编辑
+    edit () { },
     // 修改状态
-    switchStastus (data) {
-      this.switchDisabled = data.carsLeaseTypeId
+
+    disabled () {
+      console.log(11)
     }
   }
 }

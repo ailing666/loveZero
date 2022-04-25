@@ -2,16 +2,6 @@
   <div>
     <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig">
       <!-- status插槽名称要一样，slotData为整行数据，比scope.row多一层data -->
-      <template v-slot:status="slotData">
-        <!-- 当前id等于switchDisabled时禁用 -->
-        <el-switch
-          :disabled="slotData.data.id === switchDisabled"
-          @change="switchStastus(slotData.data)"
-          v-model="slotData.data.status"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        ></el-switch>
-      </template>
       <template v-slot:lnglat="slotData">
         <el-button size="success" @click="changeDialogVisible(slotData.data)">点击查看地图</el-button>
       </template>
@@ -27,7 +17,7 @@ import TableData from '@/components/TableData.vue'
 export default {
   name: 'Parking',
   components: { ShowMap, TableData },
-  data() {
+  data () {
     return {
       isShowMap: false,
       parkingData: {},
@@ -48,7 +38,7 @@ export default {
             callback: (row, prop) => parkingAddress(row[prop])
           },
           { prop: 'carsNumber', label: '可停放车辆' },
-          { prop: 'status', label: '禁启用', type: 'slot', slotName: 'status' },
+          { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
           {
             prop: 'lnglat',
             label: '查看位置',
@@ -101,34 +91,13 @@ export default {
           }
         ]
       },
-      switchDisabled: ''
     }
   },
   methods: {
-    changeDialogVisible(v) {
+    changeDialogVisible (v) {
       this.parkingData = v
       this.isShowMap = true
     },
-
-    // 修改状态
-    switchStastus(data) {
-      let requestData = {
-        id: data.id,
-        status: data.status
-      }
-      this.switchDisabled = data.id
-      ParkingStatus(requestData)
-        .then(res => {
-          this.$message({
-            type: 'success',
-            message: res.message
-          })
-          this.switchDisabled = ''
-        })
-        .catch(() => {
-          this.switchDisabled = ''
-        })
-    }
   }
 }
 </script>

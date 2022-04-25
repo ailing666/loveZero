@@ -1,16 +1,6 @@
 <template>
   <!-- 表格数据 -->
   <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig">
-    <!--禁启用-->
-    <template v-slot:status="slotData">
-      <el-switch
-        :disabled="slotData.data.id === switchDisabled"
-        @change="switchStastus(slotData.data)"
-        v-model="slotData.data.status"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-      ></el-switch>
-    </template>
     <!-- 操作 -->
     <template v-slot:operation="slotData">
       <el-button type="danger" size="small" @click="editCars(slotData.data)">编辑</el-button>
@@ -18,7 +8,6 @@
   </TableData>
 </template>
 <script>
-import { CarsStatus } from '@/api/cars'
 import { yearCheckType, energyType, parkingAddress } from '@/utils/common'
 import TableData from '@/components/TableData.vue'
 export default {
@@ -64,13 +53,7 @@ export default {
             callback: (row, prop) => energyType(row[prop]),
             width: '100px'
           },
-          {
-            label: '禁启用',
-            prop: 'status',
-            type: 'slot',
-            slotName: 'status',
-            width: '100px'
-          },
+          { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
           { label: '停车场', prop: 'parkingName' },
           {
             label: '区域',
@@ -128,25 +111,6 @@ export default {
     }
   },
   methods: {
-    // 修改状态
-    switchStastus (data) {
-      let requestData = {
-        id: data.id,
-        status: data.status
-      }
-      this.switchDisabled = data.id
-      CarsStatus(requestData)
-        .then(res => {
-          this.$message({
-            type: 'success',
-            message: res.message
-          })
-          this.switchDisabled = ''
-        })
-        .catch(() => {
-          this.switchDisabled = ''
-        })
-    }
   }
 }
 </script>

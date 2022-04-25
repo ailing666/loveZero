@@ -24,6 +24,29 @@
             <span v-html="item.callback && item.callback(scope.row, item.prop)"></span>
           </template>
         </el-table-column>
+        <!-- 渲染switch -->
+        <el-table-column
+          v-else-if="item.type === 'switch'"
+          :key="item.prop"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width"
+        >
+          <!-- on：启用的数据，off：禁用的数据 -->
+          <template v-slot="scope">
+            <el-switch
+              :disabled="scope.row[item.disabledKey || 'id'] === switchDisabled"
+              @change="switchStatus(scope.row)"
+              v-model="scope.row[item.prop]"
+              :active-value="item.on || true"
+              :inactive-value="item.off || false"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+            >
+            </el-switch>
+            <slot :name="item.slotName" :data="scope.row" :type="item.prop"></slot>
+          </template>
+        </el-table-column>
         <!-- 渲染插槽 -->
         <el-table-column
           v-else-if="item.type === 'slot'"
@@ -58,21 +81,36 @@
           :width="item.width"
         >
           <template v-slot="scope">
+            <template v-if="item.buttonGroup && item.buttonGroup.length > 0">
+              <template v-for="button in item.buttonGroup">
+                <!-- 事件 -->
+                <el-button
+                  v-if="button.event === 'button'"
+                  :type="button.type"
+                  :key="button.id"
+                  @click="button.handler && button.handler(scope.row)"
+                  size="small"
+                >
+                  {{ button.label }}
+                </el-button>
+                <!-- 路由跳转 -->
+                <router-link
+                  v-if="button.event === 'link'"
+                  :key="button.id"
+                  :to="{ name: button.name, query: { [button.key]: scope.row[button.value || 'id'] } }"
+                  style="margin-right: 10px"
+                >
+                  <el-button :type="button.type" size="small">{{ button.label }}</el-button>
+                </router-link>
+              </template>
+            </template>
             <!-- 删除 -->
             <el-button
               size="small"
-              v-if="item.default && item.default.delButton"
-              :loading="scope.row.id == rowId"
-              @click="del(scope.row.id)"
+              v-if="item.default && item.default.deleteButton"
+              :loading="scope.row[item.default.deleteKey || 'id'] == rowId"
+              @click="del(scope.row[item.default.deleteKey || 'id'])"
               >删除</el-button
-            >
-            <!-- 路由跳转的修改 -->
-            <el-button
-              type="danger"
-              size="small"
-              v-if="item.default && item.default.editButton"
-              @click="edit(scope.row[item.default.id || 'id'], item.default.editLink)"
-              >编辑</el-button
             >
             <!-- 额外的 -->
             <slot v-if="item.slotName" :name="item.slotName" :data="scope.row"></slot>
@@ -105,7 +143,7 @@
 
 <script>
 import SearchForm from '@/components/SearchForm'
-import { ParkingList, Delete } from '@/api/common'
+import { GetList, Delete, Status } from '@/api/common'
 export default {
   name: 'TableData',
   props: {
@@ -145,13 +183,14 @@ export default {
         }
       },
       total: 0,
-      rowId: ''
+      rowId: '',
+      switchDisabled: ''
     }
   },
   watch: {
     // 监听外部传入的配置对象，默认触发一次，有值就初始化表格
     tableConfig: {
-      handler () {
+      handler (val) {
         this.initConfig()
       },
       immediate: true
@@ -193,9 +232,8 @@ export default {
         url: this.configData.url,
         data: this.configData.requestData
       }
-      console.log('requestData: ', requestData)
       this.tableLoading = true
-      ParkingList(requestData)
+      GetList(requestData)
         .then(res => {
           const { total, data } = res.data
           this.tableData = data
@@ -207,7 +245,27 @@ export default {
         })
     },
 
-    //
+    // 禁启用
+    switchStatus (data) {
+      this.switchDisabled = data.carsLeaseTypeId || data.id
+      const status = data.status === undefined ? data.carsLeaseStatus : data.status
+      let requestData = {
+        url: this.configData.url + 'Status',
+        data: { id: this.switchDisabled, status }
+      }
+
+      Status(requestData)
+        .then(res => {
+          this.$message({
+            type: 'success',
+            message: res.message
+          })
+          this.switchDisabled = ''
+        })
+        .catch(() => {
+          this.switchDisabled = ''
+        })
+    },
 
     // 页容量改变
     handleSizeChange (val) {
@@ -254,6 +312,9 @@ export default {
         name: link,
         query: { id }
       })
+    },
+    disabled () {
+      console.log(1)
     }
   }
 }
