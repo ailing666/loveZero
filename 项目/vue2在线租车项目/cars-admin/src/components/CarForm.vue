@@ -29,6 +29,16 @@
       <el-radio-group v-if="item.type === 'disabled'" v-model="formData[item.prop]">
         <el-radio v-for="radio in radio_disabled" :label="radio.value" :key="radio.value">{{ radio.label }}</el-radio>
       </el-radio-group>
+      <!-- 文本域 -->
+      <el-input
+        type="textarea"
+        :rows="item.rows || 5"
+        v-if="item.type === 'textarea'"
+        v-model.trim="formData[item.prop]"
+        :placeholder="item.placeholder"
+        :style="{ width: item.width }"
+        :disabled="item.disabled"
+      ></el-input>
       <!-- 图片上传 -->
       <UpLoad v-else-if="item.type === 'upLoad'" :imgUrl="formData[item.prop]" :value.sync="formData[item.prop]" />
       <!-- 具名插槽，slotName要对应 ，data就是整行的数据-->
@@ -70,7 +80,7 @@ export default {
     },
     formData: {
       type: Object,
-      default: () => {}
+      default: () => { }
     },
     formLoading: {
       type: Boolean,

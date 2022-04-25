@@ -24,7 +24,7 @@ import TableData from '@/components/TableData.vue'
 export default {
   name: 'CarIndex',
   components: { TableData },
-  data() {
+  data () {
     return {
       form: {
         area: '',
@@ -90,10 +90,6 @@ export default {
           }
         ],
         url: 'carsList',
-        data: {
-          pageSize: 10,
-          pageNumber: 1
-        }
       },
       searchConfig: {
         formConfig: [
@@ -133,7 +129,7 @@ export default {
   },
   methods: {
     // 修改状态
-    switchStastus(data) {
+    switchStastus (data) {
       let requestData = {
         id: data.id,
         status: data.status

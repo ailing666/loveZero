@@ -37,7 +37,7 @@ export default {
     },
     data: {
       type: Object,
-      defult: () => {}
+      defult: () => { }
     }
   },
   data () {
@@ -131,8 +131,15 @@ export default {
 
     // 表单提交
     submit () {
-      // 根据是否有id判断是修改还是新增
-      this.data.id ? this.edit() : this.add()
+      this.$refs.carForm.$refs.form.validate(valid => {
+        if (valid) {
+          // 根据是否有id判断是修改还是新增
+          this.data.id ? this.edit() : this.add()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
 
     // 添加

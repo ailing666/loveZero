@@ -120,6 +120,27 @@ const routes = [
         component: () => import('../views/Cars/CarsAttrList.vue')
       }
     ]
+  },
+  // 车辆管理
+  {
+    path: '/sale',
+    name: 'Sale',
+    meta: {
+      title: '销售管理',
+      icon: 'console',
+      iconClass: 'icon_console'
+    },
+    component: Layout,
+    children: [
+      {
+        path: '/saleType',
+        name: 'SaleType',
+        meta: {
+          title: '租车类型'
+        },
+        component: () => import('../views/Sale/SaleType.vue')
+      }
+    ]
   }
 ]
 
