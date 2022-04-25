@@ -1,4 +1,5 @@
 const { getUerInfo } = require('../service/user.service');
+const { userFormateError, userAlreadyExited } = require('../constant/err.type');
 // 校验值是否为空
 const userValidator = async (ctx, next) => {
   // 获取参数
@@ -6,13 +7,8 @@ const userValidator = async (ctx, next) => {
 
   if (!user_name || !password) {
     console.error('用户名或密码为空', ctx.request.body);
-    ctx.status = 400;
-
-    ctx.body = {
-      code: '10001',
-      message: '用户名或密码为空',
-      result: '',
-    };
+    // 触发error事件，进行错误处理逻辑
+    ctx.app.emit('error', userFormateError, ctx);
     return;
   }
 
@@ -25,12 +21,8 @@ const verifyUser = async (ctx, next) => {
   const { user_name } = ctx.request.body;
 
   if (getUerInfo({ user_name })) {
-    ctx.status = 409;
-    ctx.body = {
-      code: '10002',
-      message: '用户已经存在',
-      result: '',
-    };
+    // 触发error事件，进行错误处理逻辑
+    ctx.app.emit('error', userAlreadyExited, ctx);
     return;
   }
   await next();
