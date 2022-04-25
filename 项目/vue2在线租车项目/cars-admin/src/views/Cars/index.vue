@@ -1,11 +1,6 @@
 <template>
   <!-- 表格数据 -->
-  <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig">
-    <!-- 操作 -->
-    <template v-slot:operation="slotData">
-      <el-button type="danger" size="small" @click="editCars(slotData.data)">编辑</el-button>
-    </template>
-  </TableData>
+  <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig"> </TableData>
 </template>
 <script>
 import { yearCheckType, energyType, parkingAddress } from '@/utils/common'
@@ -64,12 +59,23 @@ export default {
           {
             label: '操作',
             type: 'operation',
+            // 需要删除按钮
             default: {
               delButton: true,
-              editButton: true,
-              editLink: 'CarsAdd',
-              editQuery: 'id'
-            }
+            },
+            // 配置编辑按钮
+            buttonGroup: [
+              {
+                // 指定是路由跳转事件
+                event: 'link',
+                // 跳转的路由的name
+                name: 'CarsAdd',
+                // 跳转携带参数键,值不传默认是id
+                queryKey: 'id',
+                label: '编辑',
+                type: 'danger'
+              }
+            ]
           }
         ],
         url: 'carsList',
@@ -107,10 +113,7 @@ export default {
           }
         ]
       },
-      switchDisabled: ''
     }
-  },
-  methods: {
   }
 }
 </script>

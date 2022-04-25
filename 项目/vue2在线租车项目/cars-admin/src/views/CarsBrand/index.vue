@@ -1,18 +1,13 @@
 <template>
   <div>
     <!-- 表格数据 -->
-    <TableData :tableConfig="tableConfig" :searchConfig="searchConfig">
-      <template v-slot:operation="slotData">
-        <el-button type="danger" size="small" @click="editParking(slotData.data)">编辑</el-button>
-      </template>
-    </TableData>
+    <TableData :tableConfig="tableConfig" :searchConfig="searchConfig"></TableData>
     <AddCarsBrand :isVisible.sync="showDialog" :data="brandData" />
   </div>
 </template>
 <script>
 import AddCarsBrand from '@c/dialog/addCarsBrand'
 import TableData from '@/components/TableData.vue'
-import { BrandStatus } from '@/api/brand'
 export default {
   name: 'CarBrand',
   components: { AddCarsBrand, TableData },
@@ -42,7 +37,15 @@ export default {
             default: {
               delButton: true
             },
-            slotName: 'operation'
+            buttonGroup: [
+              {
+                // 指定是按钮事件
+                event: 'button',
+                label: '编辑',
+                type: 'danger',
+                handler: (data) => { this.editParking(data) }
+              }
+            ]
           }
         ],
         url: 'brandList'

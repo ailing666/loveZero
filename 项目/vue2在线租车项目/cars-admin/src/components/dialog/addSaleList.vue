@@ -14,7 +14,7 @@
 
 <script>
 import CarForm from '@/components/CarForm'
-import { LeaseAdd, LeaseEdit } from "@/api/sale"
+import { LeaseAdd } from "@/api/sale"
 export default {
   name: 'addSaleList',
   components: { CarForm },

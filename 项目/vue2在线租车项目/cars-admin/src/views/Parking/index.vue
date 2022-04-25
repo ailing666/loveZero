@@ -10,7 +10,6 @@
   </div>
 </template>
 <script>
-import { ParkingStatus } from '@/api/parking'
 import { parkingType, parkingAddress } from '@/utils/common'
 import ShowMap from '@/components/dialog/showMap.vue'
 import TableData from '@/components/TableData.vue'

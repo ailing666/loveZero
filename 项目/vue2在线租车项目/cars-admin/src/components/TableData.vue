@@ -81,6 +81,7 @@
           :width="item.width"
         >
           <template v-slot="scope">
+            {{ item }}
             <template v-if="item.buttonGroup && item.buttonGroup.length > 0">
               <template v-for="button in item.buttonGroup">
                 <!-- 事件 -->
@@ -97,7 +98,7 @@
                 <router-link
                   v-if="button.event === 'link'"
                   :key="button.id"
-                  :to="{ name: button.name, query: { [button.key]: scope.row[button.value || 'id'] } }"
+                  :to="{ name: button.name, query: { [button.queryKey]: scope.row[button.queryValue || 'id'] } }"
                   style="margin-right: 10px"
                 >
                   <el-button :type="button.type" size="small">{{ button.label }}</el-button>
@@ -107,9 +108,9 @@
             <!-- 删除 -->
             <el-button
               size="small"
-              v-if="item.default && item.default.deleteButton"
-              :loading="scope.row[item.default.deleteKey || 'id'] == rowId"
-              @click="del(scope.row[item.default.deleteKey || 'id'])"
+              v-if="item.default && item.default.delButton"
+              :loading="scope.row[item.default.delKey || 'id'] === rowId"
+              @click="del(scope.row[item.default.delKey || 'id'])"
               >删除</el-button
             >
             <!-- 额外的 -->
