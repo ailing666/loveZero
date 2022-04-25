@@ -10,4 +10,9 @@ module.exports = {
     message: '用户已存在',
     result: '',
   },
+  userRegisterError: {
+    code: '10003',
+    message: '用户注册失败',
+    result: '',
+  },
 };
