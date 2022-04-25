@@ -14,7 +14,7 @@
 
 <script>
 import CarForm from '@/components/CarForm'
-import { LeaseAdd } from "@/api/sale"
+import { LeaseAdd, LeaseEdit } from "@/api/sale"
 export default {
   name: 'addSaleList',
   components: { CarForm },
@@ -64,6 +64,7 @@ export default {
   watch: {
     isVisible (newV) {
       this.dialogVisible = newV
+      this.formData = this.data
     }
   },
   methods: {
@@ -75,34 +76,35 @@ export default {
         if (valid) {
           this.data.carsLeaseTypeId ? this.edit() : this.add()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
-
-    // 添加
-    add () {
-      LeaseAdd({ ...this.formData }).then(res => {
-        console.log('res: ', res)
-        this.$message({
-          type: 'success',
-          message: res.message
-        })
-        // 重置表单
-        this.reset()
+    // 编辑
+    async edit () {
+      const res = await LeaseEdit({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
       })
+      // 重置表单
+      this.close()
     },
-
-    // 重置表单
-    reset () {
-      this.$refs.carForm.reset()
+    // 添加
+    async add () {
+      const res = await LeaseAdd({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
+      })
+      // 重置表单
+      this.close()
     },
 
     // 弹窗关闭
     close () {
       this.$emit('update:isVisible', false)
-      this.reset()
+      this.$refs.carForm.reset()
     }
   }
 }

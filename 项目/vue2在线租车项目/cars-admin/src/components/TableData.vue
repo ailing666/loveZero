@@ -81,7 +81,6 @@
           :width="item.width"
         >
           <template v-slot="scope">
-            {{ item }}
             <template v-if="item.buttonGroup && item.buttonGroup.length > 0">
               <template v-for="button in item.buttonGroup">
                 <!-- 事件 -->

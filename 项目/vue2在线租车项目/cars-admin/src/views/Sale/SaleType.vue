@@ -49,25 +49,25 @@ export default {
             prop: 'add',
             type: 'success',
             element: 'button',
-            handler: () => this.carsTypeAddDialog()
+            handler: () => this.showDialog = true
           }
         ]
       },
       saleListData: {}
     }
   },
-  methods: {
-    // 新增按钮打开弹窗
-    carsTypeAddDialog () {
-      this.showDialog = true
+  watch: {
+    'showDialog' (newV) {
+      // 弹窗关闭刷新数据
+      !newV && this.$refs.table.requestData()
     },
+  },
+  methods: {
     // 编辑
-    edit () { },
-    // 修改状态
-
-    disabled () {
-      console.log(11)
-    }
+    edit (data) {
+      this.showDialog = true
+      this.saleListData = JSON.parse(JSON.stringify(data))
+    },
   }
 }
 </script>
