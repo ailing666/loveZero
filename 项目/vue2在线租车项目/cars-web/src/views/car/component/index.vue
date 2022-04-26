@@ -50,6 +50,7 @@
     <section
       class="cars-item cars-detailed"
       :style="'height:' + carsInfoHeight"
+      v-if="carsInfoShow"
     >
       <div>
         <h4 class="cars-detailed-parking">{{ carInfo.parkingName }}</h4>
@@ -86,21 +87,14 @@
       </div>
       <p class="info">取车约支付12.0元停车费，实际补贴12.0元</p>
       <ul class="car-rental-time">
-        <li>
-          <span>日租车</span>
-          <span>￥300/1天</span>
-        </li>
-        <li>
-          <span>3日租车</span>
-          <span>￥499.00/3天</span>
-        </li>
-        <li>
-          <span>5日租车</span>
-          <span>￥799.00/5天</span>
-        </li>
-        <li>
-          <span>小时租车</span>
-          <span>￥99.00/1小时</span>
+        <li
+          v-for="item in leaseListData"
+          :class="{ current: leaseId === item.carsLeaseTypeId }"
+          :key="item.carsLeaseTypeId"
+          @click="selectLeaseType(item)"
+        >
+          <h4 class="name">{{ item.carsLeaseTypeName }}</h4>
+          <span class="price">￥{{ item.price }}</span>
         </li>
       </ul>
       <div class="car-insurance clearfix">
@@ -115,6 +109,7 @@
 
 <script>
 import { getCarsAttrKey } from '@/utils/format'
+import { GetLeaseList } from '@/api/cars.js'
 export default {
   name: 'CarList',
   props: {
@@ -125,8 +120,15 @@ export default {
   },
   data () {
     return {
+      // 车辆信息高度
       carsInfoHeight: 0,
+      // 车辆信息是否显示
+      carsInfoShow: false,
+      // 定时器
       timer: null,
+      // 租赁列表
+      leaseListData: [],
+      leaseId: ''
     }
   },
   filters: {
@@ -155,17 +157,39 @@ export default {
   methods: {
     // 展开车辆信息
     openCarsInfo () {
+      this.carsInfoShow = true
       // 可视区的高度
       const viewHeight =
         document.documentElement.clientHeight || document.body.clientHeight
+
       const height = viewHeight - 145
+
+      // 清除定时器
       if (this.timer) { clearTimeout(this.timer) }
+
+      // 添加定时器，过渡效果
       this.timer = setTimeout(() => {
         this.carsInfoHeight = `${height}px`
       }, 10)
+
+      this.getLaseList()
+    },
+
+    // 获取租赁列表
+    async getLaseList () {
+      if (this.leaseListData && this.leaseListData.length > 0) {
+        return false
+      }
+      const res = await GetLeaseList({ carsId: this.carInfo.id })
+
+      res.data && (this.leaseListData = res.data.data)
+    },
+    selectLeaseType (data) {
+      this.leaseId = data.carsLeaseTypeId
     },
     // 关闭车辆信息
     closeCarsInfo () {
+      this.carsInfoShow = false
       this.carsInfoHeight = 0
     }
   },

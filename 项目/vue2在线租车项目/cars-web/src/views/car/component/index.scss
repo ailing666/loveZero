@@ -198,6 +198,10 @@
       padding: 16px;
       @include webkitB(box-sizing, border-box);
       background-color: #f3f3f3;
+
+      &.current {
+        border: 1px solid #0f9cee;
+      }
     }
   }
 

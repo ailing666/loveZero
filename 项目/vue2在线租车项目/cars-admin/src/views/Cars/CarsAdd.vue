@@ -274,6 +274,7 @@ export default {
       Object.keys(this.formData).map(item => {
         this.formData[item] = res.data[item]
       })
+      console.log('this.formData: ', this.formData)
     },
 
     // 提交表单
