@@ -1,30 +1,14 @@
 <template>
   <!-- 表格数据 -->
-  <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig">
-    <!--禁启用-->
-    <template v-slot:status="slotData">
-      <el-switch
-        :disabled="slotData.data.id === switchDisabled"
-        @change="switchStastus(slotData.data)"
-        v-model="slotData.data.status"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-      ></el-switch>
-    </template>
-    <!-- 操作 -->
-    <template v-slot:operation="slotData">
-      <el-button type="danger" size="small" @click="editCars(slotData.data)">编辑</el-button>
-    </template>
-  </TableData>
+  <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig"> </TableData>
 </template>
 <script>
-import { CarsStatus } from '@/api/cars'
 import { yearCheckType, energyType, parkingAddress } from '@/utils/common'
 import TableData from '@/components/TableData.vue'
 export default {
   name: 'CarIndex',
   components: { TableData },
-  data() {
+  data () {
     return {
       form: {
         area: '',
@@ -64,13 +48,7 @@ export default {
             callback: (row, prop) => energyType(row[prop]),
             width: '100px'
           },
-          {
-            label: '禁启用',
-            prop: 'status',
-            type: 'slot',
-            slotName: 'status',
-            width: '100px'
-          },
+          { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
           { label: '停车场', prop: 'parkingName' },
           {
             label: '区域',
@@ -81,19 +59,26 @@ export default {
           {
             label: '操作',
             type: 'operation',
+            // 需要删除按钮
             default: {
               delButton: true,
-              editButton: true,
-              editLink: 'CarsAdd',
-              editQuery: 'id'
-            }
+            },
+            // 配置编辑按钮
+            buttonGroup: [
+              {
+                // 指定是路由跳转事件
+                event: 'link',
+                // 跳转的路由的name
+                name: 'CarsAdd',
+                // 跳转携带参数键,值不传默认是id
+                queryKey: 'id',
+                label: '编辑',
+                type: 'danger'
+              }
+            ]
           }
         ],
         url: 'carsList',
-        data: {
-          pageSize: 10,
-          pageNumber: 1
-        }
       },
       searchConfig: {
         formConfig: [
@@ -128,28 +113,6 @@ export default {
           }
         ]
       },
-      switchDisabled: ''
-    }
-  },
-  methods: {
-    // 修改状态
-    switchStastus(data) {
-      let requestData = {
-        id: data.id,
-        status: data.status
-      }
-      this.switchDisabled = data.id
-      CarsStatus(requestData)
-        .then(res => {
-          this.$message({
-            type: 'success',
-            message: res.message
-          })
-          this.switchDisabled = ''
-        })
-        .catch(() => {
-          this.switchDisabled = ''
-        })
     }
   }
 }

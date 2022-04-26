@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="`新增租车类型`"
+    title="新增租车类型"
     :visible.sync="dialogVisible"
     class="cars-dialog-center"
     @close="close"
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { CarsTypeAdd } from '@/api/carAttr.js'
 import CarForm from '@/components/CarForm'
+import { LeaseAdd, LeaseEdit } from "@/api/sale"
 export default {
-  name: 'addCarsAttrs',
+  name: 'addSaleList',
   components: { CarForm },
   props: {
     isVisible: {
@@ -34,19 +34,21 @@ export default {
       dialogVisible: false,
       // 表单数据
       formData: {
-        value: '',
-        key: ''
+        carsLeaseTypeName: "",
+        carsLeaseStatus: "",
+        carsLeaseDesc: ""
       },
       // 表单配置
       formConfig: [
         {
           type: 'input',
-          label: '文本',
-          prop: 'value',
+          label: '租车类型',
+          prop: 'carsLeaseTypeName',
           required: true,
           rules: [{ min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }]
         },
-        { type: 'input', label: '字段', prop: 'key', required: true }
+        { type: "disabled", label: "禁/启状态", prop: "carsLeaseStatus", required: true },
+        { type: "textarea", label: "描述", prop: "carsLeaseDesc" },
       ],
       // 表单按钮
       formButton: [
@@ -62,6 +64,7 @@ export default {
   watch: {
     isVisible (newV) {
       this.dialogVisible = newV
+      this.formData = this.data
     }
   },
   methods: {
@@ -71,40 +74,37 @@ export default {
     submit () {
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
-          this.add()
+          this.data.carsLeaseTypeId ? this.edit() : this.add()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
-
-    // 添加
-    add () {
-      const requestData = {
-        typeId: this.data.id,
-        key: this.formData.key,
-        value: this.formData.value
-      }
-      CarsTypeAdd(requestData).then(res => {
-        this.$message({
-          type: 'success',
-          message: res.message
-        })
-        // 重置表单
-        this.reset()
+    // 编辑
+    async edit () {
+      const res = await LeaseEdit({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
       })
+      // 重置表单
+      this.close()
     },
-
-    // 重置表单
-    reset () {
-      this.$refs.carForm.reset()
+    // 添加
+    async add () {
+      const res = await LeaseAdd({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
+      })
+      // 重置表单
+      this.close()
     },
 
     // 弹窗关闭
     close () {
       this.$emit('update:isVisible', false)
-      this.reset()
+      this.$refs.carForm.reset()
     }
   }
 }

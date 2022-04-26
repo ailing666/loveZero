@@ -37,7 +37,7 @@ export default {
     },
     data: {
       type: Object,
-      defult: () => {}
+      defult: () => { }
     }
   },
   data () {
@@ -106,24 +106,22 @@ export default {
     // 弹窗打开时
     opened () {
       this.getBrandLogo()
-      this.getDetailed()
+      // 如果id存在，就将数据覆盖
+      this.data.id && this.dataCover()
     },
 
     // 获取品牌LOGO
-    getBrandLogo () {
+    async getBrandLogo () {
       // 存在数据时，不再请求接口
       if (this.logoList.length !== 0) return false
       // 没有数据时
-      BrandLogo().then(response => {
-        const data = response.data
-        if (data) {
-          this.logoList = data
-        }
-      })
+      const res = await BrandLogo()
+      const data = res.data
+      data && (this.logoList = data)
     },
 
     // 获取详情
-    getDetailed () {
+    dataCover () {
       this.formData = this.data
       this.logoCurrent = this.data.imgUrl
       this.formData.imgUrl = this.data.imgUrl
@@ -131,46 +129,51 @@ export default {
 
     // 表单提交
     submit () {
-      // 根据是否有id判断是修改还是新增
-      this.data.id ? this.edit() : this.add()
+      this.formData.imgUrl = this.logoCurrent
+      this.$refs.carForm.$refs.form.validate(valid => {
+        if (valid) {
+          // 根据是否有id判断是修改还是新增
+          this.data.id ? this.edit() : this.add()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
 
     // 添加
-    add () {
-      this.formData.imgUrl = this.logoCurrent
-      BrandAdd(this.formData).then(response => {
-        this.$message({
-          type: 'success',
-          message: response.message
-        })
-        // 重置表单
-        this.reset()
+    async add () {
+      const res = await BrandAdd({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
       })
+      this.close()
     },
 
     // 修改
-    edit () {
-      this.formData.imgUrl = this.logoCurrent
-      const requestData = JSON.parse(JSON.stringify(this.formData))
-      BrandEdit(requestData).then(response => {
-        this.$message({
-          type: 'success',
-          message: response.message
-        })
-        this.reset()
+    async edit () {
+      const res = await BrandEdit({ ...this.formData })
+      this.$message({
+        type: 'success',
+        message: res.message
       })
+      this.close()
     },
 
     // 重置表单
     reset () {
+      for (let key in this.formData) {
+        this.formData[key] = ""
+      }
       this.$refs.carForm.reset()
       // 清除选中的LOGO
       this.logoCurrent = ''
-      this.close()
     },
 
     // 弹窗关闭
     close () {
+      this.reset()
       this.$emit('update:isVisible', false)
     }
   }

@@ -112,13 +112,13 @@
 }
 
 .cars-detailed {
-  display: none;
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   padding-top: 0;
   padding: 27px 34px 0 32px;
+  @include webkitB(transition, all 0.3s ease 0s);
 
   .cars-detailed-parking {
     position: relative;

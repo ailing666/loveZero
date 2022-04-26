@@ -34,7 +34,9 @@ const state = {
     { label: '停车场名称', value: 'parkingName' },
     { label: '详细区域', value: 'address' },
     { label: '字段', value: 'key' },
-    { label: '文本', value: 'value' }
+    { label: '文本', value: 'value' },
+    { label: '租车类型', value: 'carsLeaseTypeName' },
+    { label: '车牌号', value: 'carsNumber' },
   ]
 }
 export default {

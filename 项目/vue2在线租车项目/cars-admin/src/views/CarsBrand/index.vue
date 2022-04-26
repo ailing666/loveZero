@@ -1,32 +1,17 @@
 <template>
   <div>
     <!-- 表格数据 -->
-    <TableData :tableConfig="tableConfig" :searchConfig="searchConfig">
-      <template v-slot:status="slotData">
-        <!-- 当前id等于switchDisabled时禁用 -->
-        <el-switch
-          :disabled="slotData.data.id === switchDisabled"
-          @change="switchStastus(slotData.data)"
-          v-model="slotData.data.status"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-        ></el-switch>
-      </template>
-      <template v-slot:operation="slotData">
-        <el-button type="danger" size="small" @click="editParking(slotData.data)">编辑</el-button>
-      </template>
-    </TableData>
+    <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig"></TableData>
     <AddCarsBrand :isVisible.sync="showDialog" :data="brandData" />
   </div>
 </template>
 <script>
 import AddCarsBrand from '@c/dialog/addCarsBrand'
 import TableData from '@/components/TableData.vue'
-import { BrandStatus } from '@/api/brand'
 export default {
   name: 'CarBrand',
   components: { AddCarsBrand, TableData },
-  data() {
+  data () {
     return {
       // 弹窗标记
       showDialog: false,
@@ -45,14 +30,22 @@ export default {
             type: 'function',
             callback: row => `${row.nameCh}/${row.nameEn}`
           },
-          { prop: 'status', label: '禁启用', type: 'slot', slotName: 'status' },
+          { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
           {
             label: '操作',
             type: 'operation',
             default: {
               delButton: true
             },
-            slotName: 'operation'
+            buttonGroup: [
+              {
+                // 指定是按钮事件
+                event: 'button',
+                label: '编辑',
+                type: 'danger',
+                handler: (data) => { this.editParking(data) }
+              }
+            ]
           }
         ],
         url: 'brandList'
@@ -71,6 +64,7 @@ export default {
           {
             label: '新增',
             key: 'add',
+            element: 'button',
             type: 'success',
             handler: () => (this.showDialog = true)
           }
@@ -79,35 +73,19 @@ export default {
           resetButton: false
         }
       },
-      switchDisabled: ''
     }
+  },
+  watch: {
+    'showDialog' (newV) {
+      !newV && this.$refs.table.requestData()
+    },
   },
   methods: {
     // 编辑
-    editParking(query) {
+    editParking (query) {
       this.brandData = JSON.parse(JSON.stringify(query))
       this.showDialog = true
     },
-
-    // 修改状态
-    switchStastus(data) {
-      let requestData = {
-        id: data.id,
-        status: data.status
-      }
-      this.switchDisabled = data.id
-      BrandStatus(requestData)
-        .then(res => {
-          this.$message({
-            type: 'success',
-            message: res.message
-          })
-          this.switchDisabled = ''
-        })
-        .catch(() => {
-          this.switchDisabled = ''
-        })
-    }
   }
 }
 </script>
