@@ -6,6 +6,7 @@
     :formConfig="formConfig"
     :formButton="formButton"
   >
+    <!-- 保养日期 -->
     <template v-slot:maintain>
       <el-row :gutter="30">
         <el-col :span="6">
@@ -19,6 +20,7 @@
         <el-col :span="6">下次保养日期：2020-12-12</el-col>
       </el-row>
     </template>
+    <!-- 能源类型 -->
     <template v-slot:energy>
       <el-radio-group v-model="formData.energyType" @change="changeEnergyType">
         <el-radio :label="1">电</el-radio>
@@ -43,6 +45,7 @@
         </el-row>
       </div>
     </template>
+    <!-- 车辆属性 -->
     <template v-slot:carsAttr>
       <AddCarsAttrList
         ref="AddCarsAttrList"
@@ -52,10 +55,27 @@
         :value.sync="formData.carsAttr"
       />
     </template>
+    <!-- 租赁价格 -->
+    <template v-slot:leaseList>
+      <el-row :gutter="20">
+        <el-col :span="4" v-for="item in formData.leasePrice" :key="item.carsLeaseTypeId">
+          <div>{{ item.carsLeaseTypeName }}</div>
+          <el-input-number
+            v-model="item.price"
+            controls-position="right"
+            :min="0"
+            :max="10000"
+            placeholder="请输入价格"
+            style="width: 100%"
+          ></el-input-number>
+        </el-col>
+      </el-row>
+    </template>
   </CarForm>
 </template>
 <script>
 import CarForm from '@c/CarForm'
+import { LeaseList } from "@/api/sale"
 import AddCarsAttrList from '@c/addCarsAttrList'
 import { GetCarsBrand, GetParking } from '@/api/common'
 import { CarsAdd, CarsEdit, CarsDetailed } from '@/api/cars'
@@ -63,7 +83,7 @@ import { CarsAdd, CarsEdit, CarsDetailed } from '@/api/cars'
 export default {
   name: 'CarsAdd',
   components: { CarForm, AddCarsAttrList },
-  data() {
+  data () {
     return {
       id: this.$route.query.id,
       carsAttrList: [],
@@ -170,6 +190,12 @@ export default {
           label: '车辆属性'
         },
         {
+          type: "slot",
+          slotName: "leaseList",
+          prop: "lease",
+          label: "租赁价格"
+        },
+        {
           type: 'editor',
           prop: 'content',
           label: '车辆描述'
@@ -196,99 +222,25 @@ export default {
         carsAttr: '',
         content: '',
         maintainDate: '',
-        status: true
+        status: true,
+        leasePrice: []
       },
       // 车辆品牌列表
       carsBrandList: [],
-      formLoading: false
+      formLoading: false,
     }
   },
-  beforeMount() {
+  beforeMount () {
     this.getCarsBrandList()
     this.getParkingList()
+    this.getLeaseList()
+    // 如果是修改就请求车辆详情
+    this.id && this.getCarsDetailed()
   },
-  mounted() {
-    this.getCarsDetailed()
-  },
+
   methods: {
-    // 获取详情
-    getCarsDetailed() {
-      // id不存在返回
-      if (!this.id) return
-      CarsDetailed({ id: this.id }).then(res => {
-        Object.keys(this.formData).map(item => {
-          this.formData[item] = res.data[item]
-        })
-      })
-    },
-    // 提交表单
-    formSubmit() {
-      // 获取属性
-      this.$refs.AddCarsAttrList.setAttrList()
-      this.$refs.carForm.$refs.form.validate(valid => {
-        if (valid) {
-          this.id ? this.editCar() : this.addCar()
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-
-    // 编辑车辆
-    editCar() {
-      let requestData = JSON.parse(JSON.stringify(this.formData))
-      requestData.id = this.id
-      this.formLoading = true
-      CarsEdit(requestData)
-        .then(res => {
-          // 重置表单
-          this.resetForm()
-          this.formLoading = false
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.$router.push({
-            name: 'CarsIndex'
-          })
-        })
-        .catch(() => {
-          this.formLoading = false
-        })
-    },
-
-    // 添加车辆
-    addCar() {
-      this.formLoading = true
-      CarsAdd(this.formData)
-        .then(res => {
-          // 重置表单
-          this.resetForm()
-          this.formLoading = false
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.$router.push({
-            name: 'CarsIndex'
-          })
-        })
-        .catch(() => {
-          this.formLoading = false
-        })
-    },
-
-    // 重置表单
-    resetForm() {
-      // form表单重置
-      this.$refs.carForm.reset()
-      // 车辆属性
-      this.carsAttrList = []
-    },
-
     // 获取车辆品牌
-    async getCarsBrandList() {
+    async getCarsBrandList () {
       const res = await GetCarsBrand()
       const data = res.data.data
       if (data && data.length > 0) {
@@ -299,7 +251,7 @@ export default {
     },
 
     // 获取停车场
-    async getParkingList() {
+    async getParkingList () {
       const res = await GetParking()
       const data = res.data.data
       if (data && data.length > 0) {
@@ -309,18 +261,64 @@ export default {
       }
     },
 
-    // 添加车辆属性
-    addCarsAttr() {
-      this.carsAttrList.push({ attrKey: '', attrValue: '' })
+    /** 获取租赁列表 */
+    async getLeaseList () {
+      const res = await LeaseList()
+      const data = res.data.data
+      if (data) { this.formData.leasePrice = data }
     },
 
-    // 删除属性
-    delCarsAttr(key) {
-      this.carsAttrList = this.carsAttrList.filter(item => item.attrKey !== key)
+    // 获取车辆详情
+    async getCarsDetailed () {
+      const res = await CarsDetailed({ id: this.id })
+      Object.keys(this.formData).map(item => {
+        this.formData[item] = res.data[item]
+      })
+    },
+
+    // 提交表单
+    formSubmit () {
+      // 获取属性
+      this.$refs.AddCarsAttrList.setAttrList()
+      this.$refs.carForm.$refs.form.validate(valid => {
+        valid && this.requestCars()
+      })
+    },
+
+    // 请求接口
+    async requestCars () {
+      // 根据id判断是编辑还是新增
+      let api = this.id ? CarsEdit : CarsAdd
+      let requestData = { ...this.formData, leasePrice: this.formData.leasePrice }
+      // 编辑需要携带id
+      this.id && (requestData.id = this.id)
+
+      this.formLoading = true
+      try {
+        const res = await api(requestData)
+        // 重置表单
+        this.resetForm()
+        this.formLoading = false
+        this.$message({
+          message: res.message,
+          type: 'success'
+        })
+        this.$router.push({ name: 'CarsIndex' })
+      } catch {
+        this.formLoading = false
+      }
+    },
+
+    // 重置表单
+    resetForm () {
+      // form表单重置
+      this.$refs.carForm.reset()
+      // 车辆属性
+      this.carsAttrList = []
     },
 
     // 改变能源类型清空值
-    changeEnergyType() {
+    changeEnergyType () {
       this.formData.electric = 0
       this.formData.oil = 0
     }
