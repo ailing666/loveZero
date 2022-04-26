@@ -1,7 +1,12 @@
 // 引入包
 const bcrypt = require('bcryptjs');
 const { getUerInfo } = require('../service/user.service');
-const { userFormateError, userAlreadyExited, userRegisterError } = require('../constant/err.type');
+const {
+  userFormateError,
+  userAlreadyExited,
+  userRegisterError,
+  invalidPassword,
+} = require('../constant/err.type');
 
 // 校验值是否为空
 const userValidator = async (ctx, next) => {
@@ -47,4 +52,28 @@ const cryptyPassword = async (ctx, next) => {
   await next();
 };
 
-module.exports = { userValidator, verifyUser, cryptyPassword };
+// 登录校验
+const verifyLogin = async (ctx, next) => {
+  const { user_name, password } = ctx.request.body;
+  try {
+    // 根据 user_name 查询用户是否存在
+    const res = await getUerInfo({ user_name });
+    if (!res) {
+      // 用户不存在
+      ctx.app.emit('error', userDoesNotExited, ctx);
+      return;
+    }
+
+    // 校验输入的密码与数据库的密码是否匹配
+    if (!bcrypt.compareSync(password, res.password)) {
+      ctx.app.emit('error', invalidPassword, ctx);
+      return;
+    }
+  } catch {
+    ctx.app.emit('error', userLoginError, ctx);
+    return;
+  }
+
+  await next();
+};
+module.exports = { userValidator, verifyUser, cryptyPassword, verifyLogin };
