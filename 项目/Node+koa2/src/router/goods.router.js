@@ -1,8 +1,9 @@
 const Router = require('koa-router');
 const { upload } = require('../controller/goods.controller');
+const { auth, hadAdminPermission } = require('../middleware/auth.middleware');
 const router = new Router({ prefix: '/goods' });
 
-// 注册接口：先匹配路由 -> 执行中间件校验参数是否填写 -> 校验用户是否存在 -> 密码加密 -> 注册接口控制器
-router.post('/upload', upload);
+// 上传商品图片接口：先匹配路由 -> 执行中间件认证token是否正确 -> 鉴权是否是管理员 -> 注册接口控制器
+router.post('/upload', auth, hadAdminPermission, upload);
 
 module.exports = router;

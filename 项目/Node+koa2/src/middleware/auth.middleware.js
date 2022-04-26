@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/config.default');
-const { tokenExpiredError, invalidToken } = require('../constant/err.type');
+const { tokenExpiredError, invalidToken, hasNotAdminPermission } = require('../constant/err.type');
+// 认证token
 const auth = async (ctx, next) => {
   // 拿到接口传进来的token
   const { authorization } = ctx.request.header;
@@ -24,4 +25,15 @@ const auth = async (ctx, next) => {
 
   await next();
 };
-module.exports = { auth };
+
+// 鉴权是否是管理员
+const hadAdminPermission = async (ctx, next) => {
+  const { is_admin } = ctx.state.user;
+  if (!is_admin) {
+    ctx.app.emit('error', hasNotAdminPermission, ctx);
+    return;
+  }
+
+  await next();
+};
+module.exports = { auth, hadAdminPermission };

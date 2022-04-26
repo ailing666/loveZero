@@ -15,7 +15,7 @@ router.post('/register', userValidator, verifyUser, cryptyPassword, register);
 // 登录接口: 匹配路由 -> 校验参数是否填写 -> 校验用户是否存在 -> 校验密码是否匹配 -> 登录接口控制器
 router.post('/login', userValidator, verifyLogin, login);
 
-// 修改密码接口：匹配路由 -> 鉴权token是否正确 -> 密码加密 -> 两次密码是否相同 -> 修改密码接口控制器
+// 修改密码接口：匹配路由 -> 认证token是否正确 -> 密码加密 -> 两次密码是否相同 -> 修改密码接口控制器
 router.patch('/changePassword', auth, cryptyPassword, changePassword);
 
 module.exports = router;
