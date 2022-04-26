@@ -1,7 +1,7 @@
 // 错误处理函数
 module.exports = (err, ctx) => {
   // 打印错误日志
-  console.error(err.message, ctx.request.body);
+  console.error(err.message || err, ctx.request.body);
   let status = null;
 
   switch (err.code) {

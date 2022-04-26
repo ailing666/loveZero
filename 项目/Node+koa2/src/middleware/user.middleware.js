@@ -6,6 +6,8 @@ const {
   userAlreadyExited,
   userRegisterError,
   invalidPassword,
+  userLoginError,
+  userDoesNotExited,
 } = require('../constant/err.type');
 
 // 校验值是否为空
@@ -33,7 +35,7 @@ const verifyUser = async (ctx, next) => {
       ctx.app.emit('error', userAlreadyExited, ctx);
       return;
     }
-  } catch (err) {
+  } catch {
     ctx.app.emit('error', userRegisterError, ctx);
     return;
   }

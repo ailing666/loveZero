@@ -6,7 +6,7 @@ class UserService {
     try {
       const res = await User.create({ user_name, password });
       return res.dataValues;
-    } catch (err) {
+    } catch {
       ctx.app.emit('error', userRegisterError, ctx);
       return;
     }
@@ -24,7 +24,7 @@ class UserService {
       });
       // 如果存在就返回该值，否则就返回null
       return res ? res.dataValues : null;
-    } catch (err) {
+    } catch {
       ctx.app.emit('error', userRegisterError, ctx);
       return;
     }
