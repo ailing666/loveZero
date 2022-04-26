@@ -1,5 +1,8 @@
+// 引入包
+const bcrypt = require('bcryptjs');
 const { getUerInfo } = require('../service/user.service');
 const { userFormateError, userAlreadyExited, userRegisterError } = require('../constant/err.type');
+
 // 校验值是否为空
 const userValidator = async (ctx, next) => {
   // 获取参数
@@ -32,4 +35,16 @@ const verifyUser = async (ctx, next) => {
   await next();
 };
 
-module.exports = { userValidator, verifyUser };
+// 密码加密
+const cryptyPassword = async (ctx, next) => {
+  // 获取密码
+  const { password } = ctx.request.body;
+  // 加密
+  const salt = bcrypt.genSaltSync(10);
+  // hash就是加密后的密码
+  const hash = bcrypt.hashSync(password, salt);
+  ctx.request.body.password = hash;
+  await next();
+};
+
+module.exports = { userValidator, verifyUser, cryptyPassword };
