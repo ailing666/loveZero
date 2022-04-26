@@ -49,7 +49,7 @@ export default {
             prop: 'add',
             type: 'success',
             element: 'button',
-            handler: () => this.showDialog = true
+            handler: () => this.add()
           }
         ]
       },
@@ -63,6 +63,10 @@ export default {
     },
   },
   methods: {
+    // 新增
+    add () {
+      this.showDialog = true
+    },
     // 编辑
     edit (data) {
       this.showDialog = true

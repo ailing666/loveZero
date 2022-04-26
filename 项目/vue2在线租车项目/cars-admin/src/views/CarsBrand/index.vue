@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 表格数据 -->
-    <TableData :tableConfig="tableConfig" :searchConfig="searchConfig"></TableData>
+    <TableData ref="table" :tableConfig="tableConfig" :searchConfig="searchConfig"></TableData>
     <AddCarsBrand :isVisible.sync="showDialog" :data="brandData" />
   </div>
 </template>
@@ -64,6 +64,7 @@ export default {
           {
             label: '新增',
             key: 'add',
+            element: 'button',
             type: 'success',
             handler: () => (this.showDialog = true)
           }
@@ -73,6 +74,11 @@ export default {
         }
       },
     }
+  },
+  watch: {
+    'showDialog' (newV) {
+      !newV && this.$refs.table.requestData()
+    },
   },
   methods: {
     // 编辑
