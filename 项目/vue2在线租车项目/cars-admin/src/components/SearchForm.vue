@@ -45,7 +45,7 @@
         <!-- 路由跳转按钮 -->
         <el-button v-if="item.element === 'link'" :key="item.key" :type="item.type">
           <router-link :to="item.router">
-            <span style="color:#fff;">{{ item.label }}</span>
+            <span style="color: #fff">{{ item.label }}</span>
           </router-link>
         </el-button>
         <!-- 按钮 -->
@@ -78,7 +78,7 @@ export default {
     },
     config: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   components: { AreaCascader, KeyWord },
@@ -136,7 +136,7 @@ export default {
       // 城市处理
       this.$refs.city && this.$refs.city[0].clear()
 
-      this.formData = {}
+      this.initFormData()
     }
   }
 }

@@ -24,7 +24,7 @@ import { ParkingAdd, ParkingDetailed, ParkingEdit } from '@/api/parking'
 export default {
   name: 'ParkingAdd',
   components: { CarMap, AreaCascader, CarForm },
-  data() {
+  data () {
     // 自定义校验
     const validateNumber = (rule, value, callback) => {
       if (!value) {
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     // 提交表单
-    formValidate() {
+    formValidate () {
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
           this.id ? this.editParking() : this.addParking()
@@ -108,97 +108,96 @@ export default {
     },
 
     // 地图加载完成再获取接口
-    mapLoad() {
+    mapLoad () {
       this.getParkingDetailed()
     },
 
     // 获取详情
-    getParkingDetailed() {
+    async getParkingDetailed () {
       // id不存在返回
       if (!this.id) return
+      const res = await ParkingDetailed({ id: this.id })
 
-      ParkingDetailed({ id: this.id }).then(res => {
-        Object.keys(this.formData).map(item => {
-          this.formData[item] = res.data[item]
-        })
-
-        // 设置覆盖物
-        const splitLnglat = res.data.lnglat.split(',')
-        const lnglat = {
-          lng: splitLnglat[0],
-          lat: splitLnglat[1]
-        }
-
-        this.$refs.carMap.setMarker(lnglat)
-
-        // 初始化省市区
-        this.$refs.areaCascader.initDefault(res.data.region)
+      // 有值才存进来
+      Object.keys(this.formData).map(item => {
+        this.formData[item] = res.data[item]
       })
+
+      // 设置覆盖物
+      const splitLnglat = res.data.lnglat.split(',')
+      const lnglat = {
+        lng: splitLnglat[0],
+        lat: splitLnglat[1]
+      }
+
+      this.$refs.carMap.setMarker(lnglat)
+
+      // 初始化省市区
+      this.$refs.areaCascader.initDefault(res.data.region)
     },
 
     // 请求修改停车场接口
-    editParking() {
+    async editParking () {
       let requestData = JSON.parse(JSON.stringify(this.formData))
       requestData.id = this.id
       this.formLoading = true
-      ParkingEdit(requestData)
-        .then(res => {
-          // 重置表单
-          this.resetForm()
-          this.formLoading = false
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.$router.push({
-            name: 'ParkingIndex'
-          })
+      try {
+        const res = await ParkingEdit(requestData)
+        // 重置表单
+        this.resetForm()
+        this.formLoading = false
+        this.$message({
+          message: res.message,
+          type: 'success'
         })
-        .catch(() => {
-          this.formLoading = false
+        this.$router.push({
+          name: 'ParkingIndex'
         })
+      } catch {
+        this.formLoading = false
+      }
     },
 
     // 请求添加停车场接口
-    addParking() {
+    async addParking () {
       this.formLoading = true
-      ParkingAdd(this.formData)
-        .then(res => {
-          // 重置表单
-          this.resetForm()
-          this.formLoading = false
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.$router.push({
-            name: 'ParkingIndex'
-          })
+      try {
+        const res = await ParkingAdd(this.formData)
+        // 重置表单
+        this.resetForm()
+        this.formLoading = false
+        this.$message({
+          message: res.message,
+          type: 'success'
         })
-        .catch(() => {
-          this.formLoading = false
+        this.$router.push({
+          name: 'ParkingIndex'
         })
+      } catch {
+        this.formLoading = false
+
+      }
     },
 
     // 修改areaValue
-    cityAreaValue(v) {
+    cityAreaValue (v) {
       this.formData.areaValue = v
     },
 
     // 获取经纬度
-    getLngLat(v) {
+    getLngLat (v) {
       this.formData.lnglat = v.value
     },
 
     // 获取中文地址
-    getAddress(address) {
+    getAddress (address) {
       this.formData.address = address
       // 触发carMap组件事件
       this.$refs.carMap.setMapCenter(address)
     },
 
     // 重置表单
-    resetForm() {
+    resetForm () {
       this.$refs.carForm.$refs.form.resetFields()
       // 清除 cityAray 的值
       this.$refs.areaCascader.clear()

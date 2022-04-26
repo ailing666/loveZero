@@ -88,7 +88,10 @@ export default {
             element: 'link',
             router: '/ParkingAdd'
           }
-        ]
+        ],
+        config: {
+          resetButton: true
+        }
       },
     }
   },
