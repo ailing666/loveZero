@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { createUser, getUerInfo } = require('../service/user.service');
-const { userRegisterError, userLoginError } = require('../constant/err.type');
+const { userRegisterError, userLoginError, changePasswordError } = require('../constant/err.type');
 const { JWT_SECRET } = require('../config/config.default');
 class UserController {
   // 注册接口
@@ -42,6 +42,20 @@ class UserController {
       };
     } catch {
       ctx.app.emit('error', userLoginError, ctx);
+      return;
+    }
+  }
+
+  // 修改密码
+  async changePassword(ctx, next) {
+    try {
+      ctx.body = {
+        code: 0,
+        message: '修改密码成功',
+        result: '',
+      };
+    } catch {
+      ctx.app.emit('error', changePasswordError, ctx);
       return;
     }
   }
