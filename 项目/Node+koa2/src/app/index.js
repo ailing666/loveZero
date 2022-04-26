@@ -5,7 +5,7 @@ const Koa = require('koa');
 const KoaBody = require('koa-body');
 
 // 导入路由
-const useRouter = require('../router/user.router');
+const router = require('../router');
 
 // 错误处理函数
 const errHandler = require('./errHandler');
@@ -15,8 +15,8 @@ const app = new Koa();
 // koa-body在其余中间件之前
 app.use(KoaBody());
 
-// 中间件：注册路由
-app.use(useRouter.routes());
+// router.allowedMethods() 用于 当 request method 不匹配时返回 501
+app.use(router.routes()).use(router.allowedMethods());
 
 // 接受error事件，在 errHandler 中统一错误处理
 app.on('error', errHandler);
