@@ -1,5 +1,6 @@
 // 错误处理返回模板
 module.exports = {
+  // user
   userFormateError: {
     code: '10001',
     message: '用户名或密码为空',
@@ -35,6 +36,12 @@ module.exports = {
     message: '修改密码失败',
     result: '',
   },
+  samePasswordError: {
+    code: '10008',
+    message: '两次密码相同',
+    result: '',
+  },
+  // auth
   tokenExpiredError: {
     code: '10101',
     message: 'token已过期',

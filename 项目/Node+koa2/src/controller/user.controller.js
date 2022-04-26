@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { createUser, getUerInfo } = require('../service/user.service');
+const { createUser, getUserInfo, updateUser } = require('../service/user.service');
 const { userRegisterError, userLoginError, changePasswordError } = require('../constant/err.type');
 const { JWT_SECRET } = require('../config/config.default');
 class UserController {
@@ -31,7 +31,7 @@ class UserController {
     const { user_name } = ctx.request.body;
     try {
       // 通过 user_name 查询,生成token不包含password，所以返回的数据要剔除password
-      const { password, ...res } = await getUerInfo({ user_name });
+      const { password, ...res } = await getUserInfo({ user_name });
       ctx.body = {
         code: 0,
         message: '登录成功',
@@ -48,16 +48,24 @@ class UserController {
 
   // 修改密码
   async changePassword(ctx, next) {
+    const { id } = ctx.state.user;
+    const { password } = ctx.request.body;
     try {
-      ctx.body = {
-        code: 0,
-        message: '修改密码成功',
-        result: '',
-      };
+      if (await updateUser({ id, password })) {
+        ctx.body = {
+          code: 0,
+          message: '修改密码成功',
+          result: '',
+        };
+      } else {
+        ctx.app.emit('error', changePasswordError, ctx);
+        return;
+      }
     } catch {
       ctx.app.emit('error', changePasswordError, ctx);
       return;
     }
+    await next();
   }
 }
 

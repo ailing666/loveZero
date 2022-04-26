@@ -1,5 +1,6 @@
 const User = require('../model/user.model');
-const { userRegisterError } = require('../constant/err.type');
+const { userRegisterError, changePasswordError } = require('../constant/err.type');
+let that = this;
 class UserService {
   // 创建用户
   async createUser(user_name, password) {
@@ -13,7 +14,7 @@ class UserService {
   }
 
   // 获取用户信息
-  async getUerInfo({ ...args }) {
+  async getUserInfo({ ...args }) {
     const whereOpt = { ...args };
     try {
       const res = await User.findOne({
@@ -26,6 +27,22 @@ class UserService {
       return res ? res.dataValues : null;
     } catch {
       ctx.app.emit('error', userRegisterError, ctx);
+      return;
+    }
+  }
+
+  // 修改用户信息
+  async updateUser({ ...args }) {
+    // 传进来要改的参数
+    const whereOpt = { ...args };
+    try {
+      // 通过id找到对应的数据进行修改
+      const res = await User.update(whereOpt, { where: { id: whereOpt.id } });
+
+      // res[0] > 0说明修改成功
+      return res[0] > 0;
+    } catch {
+      ctx.app.emit('error', changePasswordError, ctx);
       return;
     }
   }
