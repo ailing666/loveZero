@@ -9,16 +9,8 @@
     </HeaderBack>
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
-        <el-form-item>
-          <el-input
-            v-model="form.password"
-            placeholder="设置6位数字的密码"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <div class="v-code">获取验证码</div>
-          <el-input v-model="form.vCode" placeholder="手机验证码"></el-input>
-        </el-form-item>
+        <UserPhone :value.sync="form.username"></UserPhone>
+        <Code :username="form.username" :value="form.code"></Code>
         <el-form-item>
           <el-button type="primary" class="submit">确定</el-button>
         </el-form-item>
@@ -28,16 +20,21 @@
 </template>
 
 <script>
+import UserPhone from '../../components/userPhone.vue'
+import Code from '../../components/code.vue'
 export default {
   name: 'Register',
+  components: { UserPhone, Code },
   data () {
     return {
       form: {
+        username: '',
         password: '',
-        vCode: '',
+        code: '',
       }
     }
   },
+
   methods: {}
 }
 
