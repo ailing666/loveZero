@@ -1,7 +1,7 @@
 // 错误处理函数
-module.exports = (err, ctx) => {
-  // 打印错误日志
-  console.error(err.message || err, ctx.request.body);
+module.exports = (err, ctx, catchErr) => {
+  // 打印错误日志：err.type定义的err，carch捕获的err，前端传入的参数
+  console.error(err.message || err, catchErr, ctx.request.body);
   let status = null;
 
   switch (err.code) {

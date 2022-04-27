@@ -19,8 +19,7 @@ const userValidator = async (ctx, next) => {
 
   if (!user_name || !password) {
     // 触发error事件，进行错误处理逻辑
-    ctx.app.emit('error', userFormateError, ctx);
-    return;
+    return ctx.app.emit('error', userFormateError, ctx);
   }
 
   // 校验成功，放行
@@ -34,12 +33,10 @@ const verifyUser = async (ctx, next) => {
     const res = await getUserInfo({ user_name });
     if (res) {
       // 触发error事件，进行错误处理逻辑
-      ctx.app.emit('error', userAlreadyExited, ctx);
-      return;
+      return ctx.app.emit('error', userAlreadyExited, ctx);
     }
-  } catch {
-    ctx.app.emit('error', userRegisterError, ctx);
-    return;
+  } catch (err) {
+    return ctx.app.emit('error', userRegisterError, ctx, err);
   }
   await next();
 };
@@ -55,13 +52,11 @@ const cryptyPassword = async (ctx, next) => {
       const res = await getUserInfo({ id: ctx.state.user.id });
       if (bcrypt.compareSync(password, res.password)) {
         // 两次密码相同
-        ctx.app.emit('error', samePasswordError, ctx);
-        return;
+        return ctx.app.emit('error', samePasswordError, ctx);
       }
     }
-  } catch {
-    ctx.app.emit('error', changePasswordError, ctx);
-    return;
+  } catch (err) {
+    return ctx.app.emit('error', changePasswordError, ctx, err);
   }
   // 加密
   const salt = bcrypt.genSaltSync(10);
@@ -80,18 +75,15 @@ const verifyLogin = async (ctx, next) => {
     const res = await getUserInfo({ user_name });
     if (!res) {
       // 用户不存在
-      ctx.app.emit('error', userDoesNotExited, ctx);
-      return;
+      return ctx.app.emit('error', userDoesNotExited, ctx);
     }
 
     // 校验输入的密码与数据库的密码是否匹配
     if (!bcrypt.compareSync(password, res.password)) {
-      ctx.app.emit('error', invalidPassword, ctx);
-      return;
+      return ctx.app.emit('error', invalidPassword, ctx);
     }
-  } catch {
-    ctx.app.emit('error', userLoginError, ctx);
-    return;
+  } catch (err) {
+    return ctx.app.emit('error', userLoginError, ctx, err);
   }
 
   await next();

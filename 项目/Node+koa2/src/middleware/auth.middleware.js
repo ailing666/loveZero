@@ -14,10 +14,10 @@ const auth = async (ctx, next) => {
   } catch (err) {
     switch (err.name) {
       case 'TokenExpiredError':
-        ctx.app.emit('error', tokenExpiredError, ctx);
+        ctx.app.emit('error', tokenExpiredError, ctx, err);
         break;
       case 'JsonWebTokenError':
-        ctx.app.emit('error', invalidToken, ctx);
+        ctx.app.emit('error', invalidToken, ctx, err);
         break;
     }
     return;
@@ -30,8 +30,7 @@ const auth = async (ctx, next) => {
 const hadAdminPermission = async (ctx, next) => {
   const { is_admin } = ctx.state.user;
   if (!is_admin) {
-    ctx.app.emit('error', hasNotAdminPermission, ctx);
-    return;
+    return ctx.app.emit('error', hasNotAdminPermission, ctx);
   }
 
   await next();

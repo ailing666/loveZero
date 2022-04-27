@@ -3,6 +3,7 @@ const { goodsFormatError } = require('../constant/err.type');
 // 参数校验
 const goodsValidator = async (ctx, next) => {
   try {
+    // koa-parameter校验，校验不通过会返回具体的err
     ctx.verifyParams({
       goods_name: { type: 'string', required: true },
       goods_price: { type: 'number', required: true },
@@ -11,7 +12,7 @@ const goodsValidator = async (ctx, next) => {
     });
   } catch (err) {
     goodsFormatError.result = err.errors;
-    return ctx.app.emit('error', goodsFormatError, ctx);
+    return ctx.app.emit('error', goodsFormatError, ctx, err);
   }
 
   await next();
