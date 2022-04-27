@@ -4,8 +4,9 @@ const {
   fileTypeError,
   goodsCreateError,
   goodsUpdateError,
+  goodsRemoveError,
 } = require('../constant/err.type');
-const { createGoods, updateGoods } = require('../service/goods.service');
+const { createGoods, updateGoods, removeGoods } = require('../service/goods.service');
 class GoodsController {
   // 上传图片接口
   async upload(ctx, next) {
@@ -57,6 +58,25 @@ class GoodsController {
       }
     } catch (err) {
       return ctx.app.emit('error', goodsUpdateError, ctx, err);
+    }
+  }
+
+  // 下架商品接口
+  async remove(ctx) {
+    try {
+      const res = await removeGoods(ctx.params.id);
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: '商品下架成功',
+          result: '',
+        };
+      } else {
+        ctx.app.emit('error', goodsRemoveError, ctx);
+      }
+    } catch (err) {
+      console.log(11);
+      return ctx.app.emit('error', goodsRemoveError, ctx, err);
     }
   }
 }
