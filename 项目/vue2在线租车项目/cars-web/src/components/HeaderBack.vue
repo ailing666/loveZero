@@ -4,7 +4,7 @@
     <header class="nav-header">
       <div class="back" @click="goBack">
         <i class="icon"></i>
-        <h4 class="title">{{ title }}</h4>
+        <h4 class="title">{{ $store.state.app.routerName }}</h4>
       </div>
     </header>
   </div>
@@ -13,12 +13,11 @@
 <script>
 export default {
   name: 'HeaderBack',
-  props: {
-    title: {
-      type: String,
-      default: ''
+  methods: {
+    goBack () {
+      this.$router.go(-1)
     }
-  }
+  },
 }
 
 </script>
@@ -54,7 +53,7 @@ export default {
   top: 0;
   border-radius: 0;
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 15px;
