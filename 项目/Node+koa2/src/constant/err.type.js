@@ -73,4 +73,9 @@ module.exports = {
     message: '商品参数格式错误',
     result: '',
   },
+  goodsCreateError: {
+    code: '10204',
+    message: '商品创建失败',
+    result: '',
+  },
 };

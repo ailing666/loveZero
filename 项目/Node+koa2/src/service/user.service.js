@@ -1,6 +1,5 @@
 const User = require('../model/user.model');
 const { userRegisterError, changePasswordError } = require('../constant/err.type');
-let that = this;
 class UserService {
   // 创建用户
   async createUser(user_name, password) {

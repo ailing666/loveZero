@@ -1,5 +1,6 @@
 const path = require('path');
-const { fileUploadError, fileTypeError } = require('../constant/err.type');
+const { fileUploadError, fileTypeError, goodsCreateError } = require('../constant/err.type');
+const { createGoods } = require('../service/goods.service');
 class GoodsController {
   // 上传图片接口
   async upload(ctx, next) {
@@ -23,11 +24,17 @@ class GoodsController {
 
   // 上传商品接口
   async create(ctx, next) {
-    ctx.body = {
-      code: 0,
-      message: '商品图片上传成功',
-      result: '',
-    };
+    try {
+      // 返回给前端的数据剔除 createdAt 和  updatedAt
+      const { createdAt, updatedAt, ...res } = await createGoods(ctx.request.body);
+      ctx.body = {
+        code: 0,
+        message: '商品图片上传成功',
+        result: res,
+      };
+    } catch (err) {
+      return ctx.app.emit('error', goodsCreateError, ctx, err);
+    }
   }
 }
 
