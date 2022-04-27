@@ -78,4 +78,9 @@ module.exports = {
     message: '商品创建失败',
     result: '',
   },
+  goodsUpdateError: {
+    code: '10205',
+    message: '商品修改失败',
+    result: '',
+  },
 };
