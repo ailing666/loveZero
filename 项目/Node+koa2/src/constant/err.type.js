@@ -63,4 +63,29 @@ module.exports = {
     message: '商品图片上传失败',
     result: '',
   },
+  fileTypeError: {
+    code: '10202',
+    message: '只支持图片上传',
+    result: '',
+  },
+  goodsFormatError: {
+    code: '10203',
+    message: '商品参数格式错误',
+    result: '',
+  },
+  goodsCreateError: {
+    code: '10204',
+    message: '商品创建失败',
+    result: '',
+  },
+  goodsUpdateError: {
+    code: '10205',
+    message: '商品修改失败',
+    result: '',
+  },
+  goodsRemoveError: {
+    code: '10206',
+    message: '商品下架失败',
+    result: '',
+  },
 };

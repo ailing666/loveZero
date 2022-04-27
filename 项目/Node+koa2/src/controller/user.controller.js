@@ -20,9 +20,8 @@ class UserController {
           user_name: res.user_name,
         },
       };
-    } catch {
-      ctx.app.emit('error', userRegisterError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', userRegisterError, ctx, err);
     }
   }
 
@@ -40,9 +39,8 @@ class UserController {
           token: jwt.sign(res, JWT_SECRET, { expiresIn: '1d' }),
         },
       };
-    } catch {
-      ctx.app.emit('error', userLoginError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', userLoginError, ctx, err);
     }
   }
 
@@ -58,12 +56,10 @@ class UserController {
           result: '',
         };
       } else {
-        ctx.app.emit('error', changePasswordError, ctx);
-        return;
+        return ctx.app.emit('error', changePasswordError, ctx);
       }
-    } catch {
-      ctx.app.emit('error', changePasswordError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', changePasswordError, ctx, err);
     }
     await next();
   }

@@ -1,15 +1,13 @@
 const User = require('../model/user.model');
 const { userRegisterError, changePasswordError } = require('../constant/err.type');
-let that = this;
 class UserService {
   // 创建用户
   async createUser(user_name, password) {
     try {
       const res = await User.create({ user_name, password });
       return res.dataValues;
-    } catch {
-      ctx.app.emit('error', userRegisterError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', userRegisterError, ctx, err);
     }
   }
 
@@ -25,9 +23,8 @@ class UserService {
       });
       // 如果存在就返回该值，否则就返回null
       return res ? res.dataValues : null;
-    } catch {
-      ctx.app.emit('error', userRegisterError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', userRegisterError, ctx, err);
     }
   }
 
@@ -41,9 +38,8 @@ class UserService {
 
       // res[0] > 0说明修改成功
       return res[0] > 0;
-    } catch {
-      ctx.app.emit('error', changePasswordError, ctx);
-      return;
+    } catch (err) {
+      return ctx.app.emit('error', changePasswordError, ctx, err);
     }
   }
 }
