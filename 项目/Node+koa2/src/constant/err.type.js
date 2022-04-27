@@ -63,4 +63,9 @@ module.exports = {
     message: '商品图片上传失败',
     result: '',
   },
+  fileTypeError: {
+    code: '10202',
+    message: '只支持图片上传',
+    result: '',
+  },
 };

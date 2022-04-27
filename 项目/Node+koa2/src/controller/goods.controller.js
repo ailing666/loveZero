@@ -1,8 +1,12 @@
 const path = require('path');
-const { fileUploadError } = require('../constant/err.type');
+const { fileUploadError, fileTypeError } = require('../constant/err.type');
 class GoodsController {
   // 注册接口
   async upload(ctx, next) {
+    // 文件格式不正确
+    if (ctx.app.fileTypeError) {
+      return ctx.app.emit('error', fileTypeError, ctx);
+    }
     const { file } = ctx.request.files;
     if (file) {
       ctx.body = {

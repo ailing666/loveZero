@@ -1,12 +1,11 @@
 const path = require('path');
 // koa相关
 const Koa = require('koa');
-
+let fs = require('fs');
 // koa-body
 const KoaBody = require('koa-body');
 
 const KoaStatic = require('koa-static');
-
 // 导入路由
 const router = require('../router');
 
@@ -25,6 +24,11 @@ app.use(
       uploadDir: path.join(__dirname, '../upload'),
       // 保持后缀名
       keepExtensions: true,
+      filter: function ({ mimetype }) {
+        const res = mimetype && mimetype.includes('image');
+        app.fileTypeError = !res;
+        return res;
+      },
     },
   })
 );
