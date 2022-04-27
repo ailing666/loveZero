@@ -20,12 +20,15 @@
   </div>
 </template>
 <script>
+import { getToken } from "@/utils/accountCookies"
 export default {
   name: 'Navbar',
   methods: {
     // 跳转到user
     toUser () {
-      this.$router.push(this.$route.name === 'Index' ? '/user' : '/')
+      this.$router.push({
+        name: getToken() ? "User" : "Login"
+      })
     },
     // 获取自身定位
     selfLocation () {
