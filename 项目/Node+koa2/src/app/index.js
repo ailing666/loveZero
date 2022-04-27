@@ -1,7 +1,8 @@
 const path = require('path');
 // koa相关
 const Koa = require('koa');
-let fs = require('fs');
+// koa-parameter参数校验
+const parameter = require('koa-parameter');
 // koa-body
 const KoaBody = require('koa-body');
 
@@ -32,6 +33,8 @@ app.use(
     },
   })
 );
+
+app.use(parameter(app));
 
 // 开启静态服务
 app.use(KoaStatic(path.join(__dirname, '../upload')));

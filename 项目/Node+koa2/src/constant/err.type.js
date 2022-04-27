@@ -68,4 +68,9 @@ module.exports = {
     message: '只支持图片上传',
     result: '',
   },
+  goodsFormatError: {
+    code: '10203',
+    message: '商品参数格式错误',
+    result: '',
+  },
 };
