@@ -1,31 +1,53 @@
-@import "./sassConfig.scss";
+@import './sassConfig.scss';
 @import './normalize.scss';
-@import "./icon.scss";
-@import "./ui.scss";
-@import "./map.scss";
+@import './icon.scss';
+@import './ui.scss';
+@import './map.scss';
 
 /* clearfix */
-.clearfix { @extend %clearfix; }
+.clearfix {
+  @extend %clearfix;
+}
 
 /* float */
-.fl { float: left; }
-.fr { float: right; }
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
 
 /* font-size */
-.fs-24 { font-size: 24px; }
-.fs-20 { font-size: 20px; }
-.fs-12 { font-size: 12px; }
-.fs-18 { font-size: 18px; }
-.fs-16 { font-size: 16px; }
-
+.fs-24 {
+  font-size: 24px;
+}
+.fs-20 {
+  font-size: 20px;
+}
+.fs-12 {
+  font-size: 12px;
+}
+.fs-18 {
+  font-size: 18px;
+}
+.fs-16 {
+  font-size: 16px;
+}
 
 /* opacity */
-.opacity-2 { opacity: 0.2; }
-.opacity-4 { opacity: 0.4; }
-
+.opacity-2 {
+  opacity: 0.2;
+}
+.opacity-4 {
+  opacity: 0.4;
+}
+.color-white {
+  color: #fff;
+}
 /* flex */
-.df { display: flex; }
-
+.df {
+  display: flex;
+}
 
 .select-car-btn {
   display: block;
@@ -61,30 +83,30 @@
     padding: 0 30px;
     height: 64px;
     line-height: 64px;
-    color: rgba(255, 255, 255, .4);
-    border-bottom: 1px solid rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     font-size: 15px;
   }
 
   .icon {
-      width: 30px;
-      height: 30px;
-      margin: 0 16px -10px 0;
+    width: 30px;
+    height: 30px;
+    margin: 0 16px -10px 0;
   }
 
   .arrow:after {
-      display: block;
-      content: "";
-      position: absolute;
-      right: 60px;
-      top: 50%;
-      width: 10px;
-      height: 10px;
-      margin-top: -7px;
-      border-top: 1px solid #fff;
-      border-right: 1px solid #fff;
-      @include webkitB(box-sizing, border-box);
-      @include webkitB(transform, rotate(45deg));
-      opacity: .1;
+    display: block;
+    content: '';
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: -7px;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    @include webkitB(box-sizing, border-box);
+    @include webkitB(transform, rotate(45deg));
+    opacity: 0.1;
   }
 }

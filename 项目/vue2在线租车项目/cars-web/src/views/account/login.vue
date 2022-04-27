@@ -1,6 +1,12 @@
 <template>
   <div class="user">
-    <HeaderBack title="登录" />
+    <HeaderBack title="登录">
+      <template #navHeaderRight>
+        <router-link to="/register" class="color-white opacity-4"
+          >注册</router-link
+        >
+      </template>
+    </HeaderBack>
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>

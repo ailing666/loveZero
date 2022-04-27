@@ -6,6 +6,9 @@
         <i class="icon"></i>
         <h4 class="title">{{ $store.state.app.routerName }}</h4>
       </div>
+      <div class="right-wrap">
+        <slot name="navHeaderRight"></slot>
+      </div>
     </header>
   </div>
 </template>
