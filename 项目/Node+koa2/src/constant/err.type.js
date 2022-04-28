@@ -137,4 +137,31 @@ module.exports = {
     message: '切换选中状态失败',
     result: '',
   },
+
+  // 地址
+  AddressCreateError: {
+    code: '10401',
+    message: '添加地址失败',
+    result: '',
+  },
+  AddressUpdateError: {
+    code: '10402',
+    message: '修改地址失败',
+    result: '',
+  },
+  AddressRemoveError: {
+    code: '10403',
+    message: '删除地址失败',
+    result: '',
+  },
+  AddressFindError: {
+    code: '10404',
+    message: '获取地址列表失败',
+    result: '',
+  },
+  AddressDefaultError: {
+    code: '10405',
+    message: '设置默认地址失败',
+    result: '',
+  },
 };
