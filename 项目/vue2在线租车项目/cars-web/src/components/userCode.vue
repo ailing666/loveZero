@@ -1,6 +1,11 @@
 <template>
   <el-form-item prop="code" :rules="rules">
-    <el-button class="v-code" :disabled="disabled" @click="getCode">
+    <el-button
+      class="v-code"
+      :loading="loading"
+      :disabled="disabled"
+      @click="getCode"
+    >
       {{ codeText }}
     </el-button>
     <el-input
@@ -12,6 +17,7 @@
 </template>
 
 <script>
+import { GetCode } from "@/api/account"
 export default {
   name: 'UserCode',
   props: {
@@ -30,6 +36,8 @@ export default {
       timer: '',
       // 是否禁用按钮
       disabled: false,
+      // 按钮loading
+      loading: false,
       // 校验规则
       rules: [
         { required: true, message: "验证不能为空", trigger: "blur" },
@@ -47,9 +55,24 @@ export default {
         })
         return
       }
-
-      this.countdown()
-
+      this.requestCode()
+    },
+    // 请求验证码
+    async requestCode () {
+      this.loading = true
+      try {
+        const res = await GetCode({ username: this.username, module: "register" })
+        this.$message({
+          type: "success",
+          message: res.message
+        })
+        console.log('验证码', res.message)
+        this.loading = false
+        this.countDown()
+      } catch (error) {
+        console.error('error: ', error)
+        this.loading = false
+      }
     },
     // 倒计时
     countdown () {
