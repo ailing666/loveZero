@@ -1,5 +1,10 @@
 const Goods = require('../model/goods.model');
-const { goodsCreateError, goodsUpdateError, goodsRemoveError } = require('../constant/err.type');
+const {
+  goodsCreateError,
+  goodsUpdateError,
+  goodsRemoveError,
+  goodsRestoreError,
+} = require('../constant/err.type');
 class GoodsService {
   // 创建商品
   async createGoods(data) {
@@ -11,6 +16,7 @@ class GoodsService {
       return ctx.app.emit('error', goodsCreateError, ctx, err);
     }
   }
+
   // 修改商品
   async updateGoods(id, data) {
     try {
@@ -21,6 +27,7 @@ class GoodsService {
       return ctx.app.emit('error', goodsUpdateError, ctx, err);
     }
   }
+
   // 下架商品
   async removeGoods(id) {
     try {
@@ -28,6 +35,16 @@ class GoodsService {
       return await Goods.destroy({ where: { id } });
     } catch (err) {
       return ctx.app.emit('error', goodsRemoveError, ctx, err);
+    }
+  }
+
+  // 上架商品
+  async restoreGoods(id) {
+    try {
+      // 将这个id的数据恢复，恢复成功返回1，恢复失败返回0
+      return await Goods.restore({ where: { id } });
+    } catch (err) {
+      return ctx.app.emit('error', goodsRestoreError, ctx, err);
     }
   }
 }

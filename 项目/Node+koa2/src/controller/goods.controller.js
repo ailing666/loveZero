@@ -5,8 +5,10 @@ const {
   goodsCreateError,
   goodsUpdateError,
   goodsRemoveError,
+  goodsRestoreError,
+  invalidGoodsID,
 } = require('../constant/err.type');
-const { createGoods, updateGoods, removeGoods } = require('../service/goods.service');
+const { createGoods, updateGoods, removeGoods, restoreGoods } = require('../service/goods.service');
 class GoodsController {
   // 上传图片接口
   async upload(ctx, next) {
@@ -72,11 +74,29 @@ class GoodsController {
           result: '',
         };
       } else {
-        ctx.app.emit('error', goodsRemoveError, ctx);
+        ctx.app.emit('error', invalidGoodsID, ctx);
       }
     } catch (err) {
       console.log(11);
       return ctx.app.emit('error', goodsRemoveError, ctx, err);
+    }
+  }
+
+  // 上架商品接口
+  async restore(ctx) {
+    try {
+      const res = await restoreGoods(ctx.params.id);
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: '商品上架成功',
+          result: '',
+        };
+      } else {
+        ctx.app.emit('error', invalidGoodsID, ctx);
+      }
+    } catch (err) {
+      return ctx.app.emit('error', goodsRestoreError, ctx, err);
     }
   }
 }

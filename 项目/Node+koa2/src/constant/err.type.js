@@ -88,4 +88,14 @@ module.exports = {
     message: '商品下架失败',
     result: '',
   },
+  invalidGoodsID: {
+    code: '10207',
+    message: '无效的商品ID',
+    result: '',
+  },
+  goodsRestoreError: {
+    code: '10208',
+    message: '商品上架失败',
+    result: '',
+  },
 };
