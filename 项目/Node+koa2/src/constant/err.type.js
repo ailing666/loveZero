@@ -122,4 +122,9 @@ module.exports = {
     message: '库存不足添加失败',
     result: '',
   },
+  cartsFindError: {
+    code: '10304',
+    message: '购物车列表获取失败',
+    result: '',
+  },
 };

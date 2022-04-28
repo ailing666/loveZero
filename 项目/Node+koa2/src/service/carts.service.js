@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const Carts = require('../model/carts.model');
+const Goods = require('../model/goods.model');
 class CartsService {
   // 创建商品
   async createOrUpdate(goods_id, user_id, goods_num) {
@@ -21,6 +22,27 @@ class CartsService {
       // 没有数据，就创建一条
       return await Carts.create({ user_id, goods_id });
     }
+  }
+
+  // 获取购物车列表
+  async findAllCarts(pageNum, pageSize) {
+    const offset = (pageNum - 1) * pageSize;
+    const res = await Carts.findAndCountAll({
+      // 指定查询的字段
+      attributes: ['id', 'number', 'selected'],
+      offset,
+      limit: Number(pageSize),
+      // 查询关联表
+      include: {
+        // 关联的表
+        model: Goods,
+        // 表别名，要与Carts里面配置的别名对上
+        as: 'goods_info',
+        // 指定查询的字段
+        attributes: ['id', 'goods_name', 'goods_price', 'goods_img'],
+      },
+    });
+    return res;
   }
 }
 

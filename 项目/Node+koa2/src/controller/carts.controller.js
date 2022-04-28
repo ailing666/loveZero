@@ -1,6 +1,10 @@
-const { cartsUpdateError, goodsInsufficientError } = require('../constant/err.type');
-const { createOrUpdate } = require('../service/carts.service');
-class GoodsController {
+const {
+  cartsUpdateError,
+  goodsInsufficientError,
+  cartsFindError,
+} = require('../constant/err.type');
+const { createOrUpdate, findAllCarts } = require('../service/carts.service');
+class CartsController {
   // 添加购物车接口
   async addCarts(ctx) {
     const { goods_id } = ctx.request.body;
@@ -21,6 +25,26 @@ class GoodsController {
       return ctx.app.emit('error', cartsUpdateError, err);
     }
   }
+
+  // 获取购物车列表
+  async findAll(ctx) {
+    const { pageNum = 1, pageSize = 10 } = ctx.request.query;
+    try {
+      const res = await findAllCarts(pageNum, pageSize);
+      ctx.body = {
+        code: 0,
+        message: '获取购物车列表成功',
+        result: {
+          pageNum,
+          pageSize,
+          total: res.count,
+          list: res.rows,
+        },
+      };
+    } catch (err) {
+      return ctx.app.emit('error', cartsFindError, err);
+    }
+  }
 }
 
-module.exports = new GoodsController();
+module.exports = new CartsController();

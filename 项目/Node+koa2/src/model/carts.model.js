@@ -32,5 +32,12 @@ const Cart = seq.define('zd_carts', {
 // 3. 同步数据(建表)
 // Cart.sync({ force: true });
 
+// Catr表属于Goods，用 belongsTo
+Cart.belongsTo(Goods, {
+  // 关联外键，Goods中的goods_id字段
+  foreignKey: 'goods_id',
+  // 配置别名
+  as: 'goods_info',
+});
 // 4. 导出Cart模型
 module.exports = Cart;
