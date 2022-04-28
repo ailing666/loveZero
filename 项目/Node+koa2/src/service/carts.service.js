@@ -55,6 +55,18 @@ class CartsService {
     // 保存
     return await res.save();
   }
+
+  // 批量删除购物车商品
+  async removeCartsGoods(ids) {
+    return await Carts.destroy({
+      where: {
+        id: {
+          // IN [1, 2],删除多个
+          [Op.in]: ids,
+        },
+      },
+    });
+  }
 }
 
 module.exports = new CartsService();

@@ -127,4 +127,9 @@ module.exports = {
     message: '更新购物车失败',
     result: '',
   },
+  cartsDelError: {
+    code: '10307',
+    message: '删除购物车商品失败',
+    result: '',
+  },
 };

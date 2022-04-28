@@ -4,8 +4,14 @@ const {
   cartsFindError,
   cartsInvalidError,
   cartsUpdateError,
+  cartsDelError,
 } = require('../constant/err.type');
-const { createOrUpdate, findAllCarts, updateCarts } = require('../service/carts.service');
+const {
+  createOrUpdate,
+  findAllCarts,
+  updateCarts,
+  removeCartsGoods,
+} = require('../service/carts.service');
 class CartsController {
   // 添加购物车接口
   async addCarts(ctx) {
@@ -64,6 +70,20 @@ class CartsController {
       };
     } catch (err) {
       return ctx.app.emit('error', cartsUpdateError, ctx, err);
+    }
+  }
+
+  // 删除购物车
+  async remove(ctx) {
+    try {
+      await removeCartsGoods(ctx.request.body.ids);
+      ctx.body = {
+        code: 0,
+        message: '删除购物车商品成功',
+        result: '',
+      };
+    } catch (err) {
+      return ctx.app.emit('error', cartsDelError, ctx, err);
     }
   }
 }
