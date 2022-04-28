@@ -101,7 +101,7 @@ module.exports = {
   },
 
   // 购物车模块
-  cartsUpdateError: {
+  cartsAddError: {
     code: '10302',
     message: '添加购物车失败',
     result: '',
@@ -115,6 +115,16 @@ module.exports = {
   cartsFindError: {
     code: '10304',
     message: '购物车列表获取失败',
+    result: '',
+  },
+  cartsInvalidError: {
+    code: '10305',
+    message: 'number和select不能同时为空',
+    result: '',
+  },
+  cartsUpdateError: {
+    code: '10306',
+    message: '更新购物车失败',
     result: '',
   },
 };

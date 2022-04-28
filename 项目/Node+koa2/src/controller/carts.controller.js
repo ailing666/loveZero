@@ -1,9 +1,11 @@
 const {
-  cartsUpdateError,
+  cartsAddError,
   goodsInsufficientError,
   cartsFindError,
+  cartsInvalidError,
+  cartsUpdateError,
 } = require('../constant/err.type');
-const { createOrUpdate, findAllCarts } = require('../service/carts.service');
+const { createOrUpdate, findAllCarts, updateCarts } = require('../service/carts.service');
 class CartsController {
   // 添加购物车接口
   async addCarts(ctx) {
@@ -22,7 +24,7 @@ class CartsController {
         return ctx.app.emit('error', goodsInsufficientError, ctx);
       }
     } catch (err) {
-      return ctx.app.emit('error', cartsUpdateError, err);
+      return ctx.app.emit('error', cartsAddError, ctx, err);
     }
   }
 
@@ -42,7 +44,26 @@ class CartsController {
         },
       };
     } catch (err) {
-      return ctx.app.emit('error', cartsFindError, err);
+      return ctx.app.emit('error', cartsFindError, ctx, err);
+    }
+  }
+
+  // 更新购物车
+  async update(ctx) {
+    const { number, selected } = ctx.request.body;
+
+    if (number === undefined && selected === undefined) {
+      return ctx.app.emit('error', cartsInvalidError, ctx);
+    }
+    try {
+      const res = await updateCarts(ctx.params.id, number, selected);
+      ctx.body = {
+        code: 0,
+        message: '更新购物车成功',
+        result: res,
+      };
+    } catch (err) {
+      return ctx.app.emit('error', cartsUpdateError, ctx, err);
     }
   }
 }

@@ -44,6 +44,17 @@ class CartsService {
     });
     return res;
   }
+
+  // 更新购物车
+  async updateCarts(id, number, selected) {
+    // 根据id查找到对应的数据
+    const res = await Carts.findByPk(id);
+    // 覆盖要修改的字段
+    res.number = number !== undefined && res.number;
+    res.selected = selected !== undefined && res.selected;
+    // 保存
+    return await res.save();
+  }
 }
 
 module.exports = new CartsService();
