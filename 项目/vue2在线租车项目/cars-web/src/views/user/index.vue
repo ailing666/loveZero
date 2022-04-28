@@ -34,7 +34,7 @@
         </router-link>
       </ul>
     </div>
-    <button class="login-out">登出</button>
+    <button class="login-out" @click="loginOut">登出</button>
   </div>
 </template>
 
@@ -46,10 +46,17 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    async loginOut () {
+      await this.$store.dispatch('account/logoutAction')
+      this.$router.replace({
+        name: "Login"
+      })
+    }
+  }
 }
 
 </script>
 <style lang='scss'>
-@import "./index.scss";
+@import './index.scss';
 </style>

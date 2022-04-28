@@ -66,16 +66,16 @@ export default {
           type: "success",
           message: res.message
         })
+        this.countDown()
         console.log('验证码', res.message)
         this.loading = false
-        this.countDown()
       } catch (error) {
         console.error('error: ', error)
         this.loading = false
       }
     },
     // 倒计时
-    countdown () {
+    countDown () {
       this.disabled = true
       let second = 5
       this.codeText = `倒计时${second}秒`

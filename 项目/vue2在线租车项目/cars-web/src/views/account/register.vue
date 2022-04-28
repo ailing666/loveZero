@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <HeaderBack title="注册">
+    <HeaderBack>
       <template #navHeaderRight>
         <router-link to="/login" class="color-white opacity-4"
           >登录</router-link
@@ -18,7 +18,7 @@
         <UserCode v-model="form.code" :username="form.username"></UserCode>
         <el-form-item>
           <el-button type="primary" class="submit" @click="submit"
-            >确定</el-button
+            >注册</el-button
           >
         </el-form-item>
       </el-form>
@@ -31,6 +31,8 @@ import UserPhone from '@/components/userPhone.vue'
 import UserPassword from '@/components/userPassword.vue'
 import UserPasswordConfirm from '@/components/userPasswordConfirm.vue'
 import UserCode from '@/components/userCode.vue'
+import sha1 from "js-sha1"
+
 export default {
   name: 'Register',
   components: { UserPassword, UserPasswordConfirm, UserPhone, UserCode },
@@ -49,12 +51,22 @@ export default {
     submit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          console.log('验证通过', this.form)
+          this.requestRegister()
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    // 注册
+    async requestRegister () {
+      const { username, password, code } = this.form
+      const res = await this.$store.dispatch('account/registerAction', ({ username, password: sha1(password), code }))
+      this.$message({
+        type: 'success',
+        message: res.message
+      })
+      this.$router.replace({ name: 'Login' })
     }
   }
 }
