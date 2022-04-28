@@ -1,15 +1,19 @@
 <template>
-  <el-form-item>
+  <el-form-item prop="code" :rules="rules">
     <el-button class="v-code" :disabled="disabled" @click="getCode">
       {{ codeText }}
     </el-button>
-    <el-input v-model="code" placeholder="手机验证码"></el-input>
+    <el-input
+      v-model="code"
+      placeholder="手机验证码"
+      @input="() => this.$emit('input', this.code)"
+    ></el-input>
   </el-form-item>
 </template>
 
 <script>
 export default {
-  name: 'Code',
+  name: 'UserCode',
   props: {
     username: {
       type: String,
@@ -24,7 +28,13 @@ export default {
       codeText: '获取验证码',
       // 定时器
       timer: '',
-      disabled: false
+      // 是否禁用按钮
+      disabled: false,
+      // 校验规则
+      rules: [
+        { required: true, message: "验证不能为空", trigger: "blur" },
+        { min: 6, max: 6, message: "请输入6位字符的验证码", trigger: "change" }
+      ]
     }
   },
   methods: {
@@ -37,6 +47,12 @@ export default {
         })
         return
       }
+
+      this.countdown()
+
+    },
+    // 倒计时
+    countdown () {
       this.disabled = true
       let second = 5
       this.codeText = `倒计时${second}秒`
@@ -53,7 +69,7 @@ export default {
           clearInterval(this.timer)
         }
       }, 1000)
-    }
+    },
   }
 }
 

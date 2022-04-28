@@ -9,10 +9,12 @@
     </HeaderBack>
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
-        <UserPhone :value.sync="form.username"></UserPhone>
-        <Code :username="form.username" :value="form.code"></Code>
+        <UserPhone v-model="form.username"></UserPhone>
+        <UserCode v-model="form.code" :username="form.username"></UserCode>
         <el-form-item>
-          <el-button type="primary" class="submit">确定</el-button>
+          <el-button type="primary" class="submit" @click="submit"
+            >确定</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -21,10 +23,10 @@
 
 <script>
 import UserPhone from '../../components/userPhone.vue'
-import Code from '../../components/code.vue'
+import UserCode from '../../components/userCode.vue'
 export default {
   name: 'Register',
-  components: { UserPhone, Code },
+  components: { UserPhone, UserCode },
   data () {
     return {
       form: {
@@ -35,7 +37,18 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    submit () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          console.log('验证通过', this.form)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
+  }
 }
 
 </script>
