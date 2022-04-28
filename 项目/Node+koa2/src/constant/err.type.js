@@ -116,4 +116,10 @@ module.exports = {
     message: '添加购物车失败',
     result: '',
   },
+
+  goodsInsufficientError: {
+    code: '10303',
+    message: '库存不足添加失败',
+    result: '',
+  },
 };

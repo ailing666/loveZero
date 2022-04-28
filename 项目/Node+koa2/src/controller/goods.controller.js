@@ -84,7 +84,6 @@ class GoodsController {
         ctx.app.emit('error', invalidGoodsID, ctx);
       }
     } catch (err) {
-      console.log(11);
       return ctx.app.emit('error', goodsRemoveError, ctx, err);
     }
   }

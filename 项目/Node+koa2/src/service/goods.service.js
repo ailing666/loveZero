@@ -33,6 +33,19 @@ class GoodsService {
     // 需要转为数字类型
     return await Goods.findAndCountAll({ offset, limit: Number(pageSize) });
   }
+
+  // 获取商品信息
+  async getGoodsInfo({ ...args }) {
+    const whereOpt = { ...args };
+    const res = await Goods.findOne({
+      // 查询的字段
+      attributes: ['id', 'goods_name', 'goods_price', 'goods_num', 'goods_img'],
+      // 传入的查询的条件
+      where: whereOpt,
+    });
+    // 如果存在就返回该值，否则就返回null
+    return res ? res.dataValues : null;
+  }
 }
 
 module.exports = new GoodsService();
