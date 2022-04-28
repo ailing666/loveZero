@@ -5,12 +5,14 @@ const {
   cartsInvalidError,
   cartsUpdateError,
   cartsDelError,
+  cartsSelectAllError,
 } = require('../constant/err.type');
 const {
   createOrUpdate,
   findAllCarts,
   updateCarts,
   removeCartsGoods,
+  toggleSelectAllGoods,
 } = require('../service/carts.service');
 class CartsController {
   // 添加购物车接口
@@ -84,6 +86,21 @@ class CartsController {
       };
     } catch (err) {
       return ctx.app.emit('error', cartsDelError, ctx, err);
+    }
+  }
+
+  // 全选或全不选
+  async toggleSelectAll(ctx) {
+    const { isAll } = ctx.request.body;
+    try {
+      await toggleSelectAllGoods(ctx.state.user.id, isAll);
+      ctx.body = {
+        code: 0,
+        message: isAll ? '已全部选中' : '已全部取消选中',
+        result: '',
+      };
+    } catch (err) {
+      return ctx.app.emit('error', cartsSelectAllError, ctx, err);
     }
   }
 }

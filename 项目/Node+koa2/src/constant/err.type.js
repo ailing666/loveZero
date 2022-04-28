@@ -132,4 +132,9 @@ module.exports = {
     message: '删除购物车商品失败',
     result: '',
   },
+  cartsSelectAllError: {
+    code: '10308',
+    message: '切换选中状态失败',
+    result: '',
+  },
 };

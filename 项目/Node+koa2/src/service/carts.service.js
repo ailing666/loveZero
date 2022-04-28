@@ -58,6 +58,7 @@ class CartsService {
 
   // 批量删除购物车商品
   async removeCartsGoods(ids) {
+    // 删除 id 与 ids 中所有数据匹配的项
     return await Carts.destroy({
       where: {
         id: {
@@ -66,6 +67,17 @@ class CartsService {
         },
       },
     });
+  }
+
+  // 切换全选与不全选
+  async toggleSelectAllGoods(id, isAll) {
+    // 将 user_id = id的项数据中的 selected 更新为 isAll
+    return await Carts.update(
+      { selected: isAll },
+      {
+        where: { user_id: id },
+      }
+    );
   }
 }
 
