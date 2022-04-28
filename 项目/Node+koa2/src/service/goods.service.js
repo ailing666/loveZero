@@ -4,6 +4,7 @@ const {
   goodsUpdateError,
   goodsRemoveError,
   goodsRestoreError,
+  goodsFindError,
 } = require('../constant/err.type');
 class GoodsService {
   // 创建商品
@@ -45,6 +46,18 @@ class GoodsService {
       return await Goods.restore({ where: { id } });
     } catch (err) {
       return ctx.app.emit('error', goodsRestoreError, ctx, err);
+    }
+  }
+
+  // 查找所有商品
+  async findAllGoods(pageNum, pageSize) {
+    try {
+      // 偏移量
+      const offset = (pageNum - 1) * pageSize;
+      // 需要转为数字类型
+      return await Goods.findAndCountAll({ offset, limit: Number(pageSize) });
+    } catch (err) {
+      return ctx.app.emit('error', goodsFindError, ctx, err);
     }
   }
 }

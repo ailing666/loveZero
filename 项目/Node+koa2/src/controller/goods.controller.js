@@ -7,8 +7,15 @@ const {
   goodsRemoveError,
   goodsRestoreError,
   invalidGoodsID,
+  goodsFindError,
 } = require('../constant/err.type');
-const { createGoods, updateGoods, removeGoods, restoreGoods } = require('../service/goods.service');
+const {
+  createGoods,
+  updateGoods,
+  removeGoods,
+  restoreGoods,
+  findAllGoods,
+} = require('../service/goods.service');
 class GoodsController {
   // 上传图片接口
   async upload(ctx, next) {
@@ -97,6 +104,28 @@ class GoodsController {
       }
     } catch (err) {
       return ctx.app.emit('error', goodsRestoreError, ctx, err);
+    }
+  }
+
+  // 获取商品列表
+  async findAll(ctx) {
+    // 获取get请求传入的参数，设置默认值
+    const { pageNum = 1, pageSize = 10 } = ctx.request.query;
+    try {
+      // 解构查询返回的对象，count是总数，rows是查询的数据
+      const { count, rows } = await findAllGoods(pageNum, pageSize);
+      ctx.body = {
+        code: 0,
+        message: '商品查询成功',
+        result: {
+          pageNum,
+          pageSize,
+          total: count,
+          list: rows,
+        },
+      };
+    } catch (err) {
+      return ctx.app.emit('error', goodsFindError, ctx, err);
     }
   }
 }

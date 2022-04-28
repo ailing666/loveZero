@@ -98,4 +98,9 @@ module.exports = {
     message: '商品上架失败',
     result: '',
   },
+  goodsFindError: {
+    code: '10209',
+    message: '商品查询失败',
+    result: '',
+  },
 };
