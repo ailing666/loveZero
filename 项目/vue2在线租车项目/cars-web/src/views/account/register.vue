@@ -10,6 +10,11 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <UserPhone v-model="form.username"></UserPhone>
+        <UserPassword v-model="form.password"></UserPassword>
+        <UserPasswordConfirm
+          :password="form.password"
+          v-model="form.passwordConfirm"
+        ></UserPasswordConfirm>
         <UserCode v-model="form.code" :username="form.username"></UserCode>
         <el-form-item>
           <el-button type="primary" class="submit" @click="submit"
@@ -22,16 +27,19 @@
 </template>
 
 <script>
-import UserPhone from '../../components/userPhone.vue'
-import UserCode from '../../components/userCode.vue'
+import UserPhone from '@/components/userPhone.vue'
+import UserPassword from '@/components/userPassword.vue'
+import UserPasswordConfirm from '@/components/userPasswordConfirm.vue'
+import UserCode from '@/components/userCode.vue'
 export default {
   name: 'Register',
-  components: { UserPhone, UserCode },
+  components: { UserPassword, UserPasswordConfirm, UserPhone, UserCode },
   data () {
     return {
       form: {
         username: '',
         password: '',
+        passwordConfirm: '',
         code: '',
       }
     }
