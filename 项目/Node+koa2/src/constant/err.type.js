@@ -68,11 +68,7 @@ module.exports = {
     message: '只支持图片上传',
     result: '',
   },
-  goodsFormatError: {
-    code: '10203',
-    message: '商品参数格式错误',
-    result: '',
-  },
+
   goodsCreateError: {
     code: '10204',
     message: '商品创建失败',
@@ -105,12 +101,6 @@ module.exports = {
   },
 
   // 购物车模块
-  cartsFormatError: {
-    code: '10301',
-    message: '商品参数格式错误',
-    result: '',
-  },
-
   cartsUpdateError: {
     code: '10302',
     message: '添加购物车失败',

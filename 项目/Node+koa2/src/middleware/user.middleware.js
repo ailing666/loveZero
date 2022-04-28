@@ -12,20 +12,6 @@ const {
   changePasswordError,
 } = require('../constant/err.type');
 
-// 校验值是否为空
-const userValidator = async (ctx, next) => {
-  // 获取参数
-  const { user_name, password } = ctx.request.body;
-
-  if (!user_name || !password) {
-    // 触发error事件，进行错误处理逻辑
-    return ctx.app.emit('error', userFormateError, ctx);
-  }
-
-  // 校验成功，放行
-  await next();
-};
-
 // 校验用户是否已存在
 const verifyUser = async (ctx, next) => {
   const { user_name } = ctx.request.body;
@@ -89,4 +75,4 @@ const verifyLogin = async (ctx, next) => {
   await next();
 };
 
-module.exports = { userValidator, verifyUser, cryptyPassword, verifyLogin };
+module.exports = { verifyUser, cryptyPassword, verifyLogin };
