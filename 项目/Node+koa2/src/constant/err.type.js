@@ -103,4 +103,17 @@ module.exports = {
     message: '商品查询失败',
     result: '',
   },
+
+  // 购物车模块
+  cartsFormatError: {
+    code: '10301',
+    message: '商品参数格式错误',
+    result: '',
+  },
+
+  cartsUpdateError: {
+    code: '10302',
+    message: '添加购物车失败',
+    result: '',
+  },
 };
