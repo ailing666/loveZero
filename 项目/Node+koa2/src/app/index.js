@@ -31,6 +31,7 @@ app.use(
         return res;
       },
     },
+    parsedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   })
 );
 
