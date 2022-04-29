@@ -7,15 +7,14 @@ class OrderService {
   updateOrder = async (id, status) => await Order.update({ status }, { where: { id } });
 
   // 查找所有订单
-  findAllOrder = async (pageNum, pageSize, status) => {
-    return await Order.findAndCountAll({
+  findAllOrder = async (pageNum, pageSize, status) =>
+    await Order.findAndCountAll({
       offset: (pageNum - 1) * pageSize,
       limit: Number(pageSize),
       where: { status },
       // 设置查询的字段
       attributes: ['goods_info', 'total', 'order_number', 'status'],
     });
-  };
 }
 
 module.exports = new OrderService();

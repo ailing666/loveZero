@@ -56,27 +56,12 @@ class CartsService {
     return await res.save();
   };
 
-  // 批量删除购物车商品
-  removeCartsGoods = async ids =>
-    // 删除 id 与 ids 中所有数据匹配的项
-    await Carts.destroy({
-      where: {
-        id: {
-          // IN [1, 2],删除多个
-          [Op.in]: ids,
-        },
-      },
-    });
+  // 批量删除购物车商品, 删除 id 与 ids 中所有数据匹配的项,IN [1, 2],删除多个
+  removeCartsGoods = async ids => await Carts.destroy({ where: { id: { [Op.in]: ids } } });
 
-  // 切换全选与不全选
-  toggleSelectAllGoods = async (id, isAll) =>
-    // 将 user_id = id的项数据中的 selected 更新为 isAll
-    await Carts.update(
-      { selected: isAll },
-      {
-        where: { user_id: id },
-      }
-    );
+  // 切换全选与不全选,将 user_id = id的项数据中的 selected 更新为 isAll
+  toggleSelectAllGoods = async (id, selected) =>
+    await Carts.update({ selected }, { where: { user_id: id } });
 }
 
 module.exports = new CartsService();

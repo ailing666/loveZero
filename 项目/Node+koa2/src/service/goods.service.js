@@ -14,12 +14,8 @@ class GoodsService {
 
   // 查找所有商品
   findAllGoods = async (pageNum, pageSize) =>
-    await Goods.findAndCountAll({
-      // 偏移量
-      offset: (pageNum - 1) * pageSize,
-      // 需要转为数字类型
-      limit: Number(pageSize),
-    });
+    // offset:偏移量，limit:页容量，需要转为数字类型
+    await Goods.findAndCountAll({ offset: (pageNum - 1) * pageSize, limit: pageSize * 1 });
 
   // 获取商品信息
   async getGoodsInfo({ ...args }) {
