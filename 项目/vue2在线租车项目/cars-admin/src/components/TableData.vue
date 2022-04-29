@@ -36,7 +36,7 @@
           <template v-slot="scope">
             <el-switch
               :disabled="scope.row[item.disabledKey || 'id'] === switchDisabled"
-              @change="switchStatus(scope.row)"
+              @change="scope.row[item.handler] || switchStatus(scope.row, item.config)"
               v-model="scope.row[item.prop]"
               :active-value="item.on || true"
               :inactive-value="item.off || false"
@@ -246,9 +246,11 @@ export default {
     },
 
     // 禁启用
-    switchStatus (data) {
-      this.switchDisabled = data.carsLeaseTypeId || data.id
-      const status = data.status === undefined ? data.carsLeaseStatus : data.status
+    switchStatus (data, config) {
+      console.log('config: ', config)
+      console.log('data: ', data)
+      this.switchDisabled = data[config.id]
+      const status = data[config.status]
       let requestData = {
         url: this.configData.url + 'Status',
         data: { id: this.switchDisabled, status }

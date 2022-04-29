@@ -40,7 +40,7 @@
     <el-form-item>
       <el-button @click="search">搜索</el-button>
       <!-- 是否要重置按钮 -->
-      <el-button v-if="config && config.resetButton" @click="reset">重置</el-button>
+      <el-button v-if="config && config.resetButton" :type="config.type || 'danger'" @click="reset">重置</el-button>
       <template v-for="item in formButton">
         <!-- 路由跳转按钮 -->
         <el-button v-if="item.element === 'link'" :key="item.key" :type="item.type">
@@ -125,6 +125,7 @@ export default {
         // 初始化下拉框值
         item.type === 'select' && (item.options = this.$store.state.config[item.options])
       })
+      this.keyWord = {}
       this.formData = felid
     },
     // 重置表单
@@ -137,6 +138,8 @@ export default {
       this.$refs.city && this.$refs.city[0].clear()
 
       this.initFormData()
+
+      this.search()
     }
   }
 }

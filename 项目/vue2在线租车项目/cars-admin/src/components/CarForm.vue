@@ -25,6 +25,14 @@
           :label="selectItem.label || selectItem[item.select_label]"
         ></el-option>
       </el-select>
+      <!-- InputNumber -->
+      <el-input-number
+        v-if="item.type === 'inputNumber'"
+        v-model="formData[item.prop]"
+        controls-position="right"
+        :min="item.min || 0"
+        :max="item.max || 10000"
+      ></el-input-number>
       <!-- 禁启用 -->
       <el-radio-group v-if="item.type === 'disabled'" v-model="formData[item.prop]">
         <el-radio v-for="radio in radio_disabled" :label="radio.value" :key="radio.value">{{ radio.label }}</el-radio>

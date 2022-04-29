@@ -39,4 +39,19 @@ const yearCheckType = value => store.state.config.year_check.find(item => item.v
  */
 const energyType = value => store.state.config.energyType.find(item => item.value === parseInt(value)).label
 
-export { parkingAddress, parkingType, yearCheckType, energyType }
+/**
+ * 格式化请求数据的参数
+ * keyData：form_data
+ * requestData：请求的数据
+ *
+ * */
+const formatRequestData = (keyData, requestData) => {
+  const data = {}
+  for (let key in keyData) {
+    if (Object.keys(requestData).includes(key)) {
+      data[key] = requestData[key]
+    }
+  }
+  return data
+}
+export { parkingAddress, parkingType, yearCheckType, energyType, formatRequestData }

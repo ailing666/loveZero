@@ -36,6 +36,7 @@ export function GetParking (data = {}) {
  * 获取列表
  */
 export function GetList (params = {}) {
+  console.log('params: ', params)
   return service.request({
     method: 'post',
     url: requestUrl[params.url],
@@ -58,12 +59,11 @@ export function Delete (params = {}) {
 export function Status (params = {}) {
   console.log('params: ', params)
   return service.request({
-    method: "post",
+    method: 'post',
     url: requestUrl[params.url],
     data: params.data
   })
 }
-
 
 /**
  * 获取七牛云 token

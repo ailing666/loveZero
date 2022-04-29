@@ -11,9 +11,11 @@ const requestUrl = {
   parkingListStatus: '/parking/status/',
 
   // 销售管理 - 租车类型
-  leaseList: "/lease/list/",
-  leaseListStatus: "/lease/status/",
-
-
+  leaseList: '/lease/list/',
+  leaseListStatus: '/lease/status/',
+  // 会员 - 列表
+  memberList: '/member/list/',
+  memberListStatus: '/member/blacklist/',
+  memberListDelete: '/member/delete/'
 }
 export default requestUrl

@@ -18,7 +18,7 @@ export default {
       tableConfig: {
         thead: [
           { label: "租车类型", prop: "carsLeaseTypeName" },
-          { label: '禁启用', prop: 'carsLeaseStatus', type: 'switch', disabledKey: 'carsLeaseTypeId' },
+          { label: '禁启用', prop: 'carsLeaseStatus', type: 'switch', config: { id: 'carsLeaseTypeId', status: 'carsLeaseStatus' }, disabledKey: 'carsLeaseTypeId' },
           { label: "车辆列表", prop: "carsList", width: 500 },
           {
             label: "操作",

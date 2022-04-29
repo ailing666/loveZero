@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <HeaderBack title="登录">
+    <HeaderBack>
       <template #navHeaderRight>
         <router-link to="/register" class="color-white opacity-4"
           >注册</router-link
