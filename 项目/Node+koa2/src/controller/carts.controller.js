@@ -16,7 +16,7 @@ const {
 } = require('../service/carts.service');
 class CartsController {
   // 添加购物车接口
-  async addCarts(ctx) {
+  addCarts = async ctx => {
     const { goods_id } = ctx.request.body;
     // 用户id和库存
     const { id, goods_num } = ctx.state.user;
@@ -34,10 +34,10 @@ class CartsController {
     } catch (err) {
       return ctx.app.emit('error', cartsAddError, ctx, err);
     }
-  }
+  };
 
   // 获取购物车列表
-  async findAll(ctx) {
+  findAll = async ctx => {
     const { pageNum = 1, pageSize = 10 } = ctx.request.query;
     try {
       const res = await findAllCarts(pageNum, pageSize);
@@ -54,10 +54,10 @@ class CartsController {
     } catch (err) {
       return ctx.app.emit('error', cartsFindError, ctx, err);
     }
-  }
+  };
 
   // 更新购物车
-  async update(ctx) {
+  update = async ctx => {
     const { number, selected } = ctx.request.body;
 
     if (number === undefined && selected === undefined) {
@@ -73,10 +73,10 @@ class CartsController {
     } catch (err) {
       return ctx.app.emit('error', cartsUpdateError, ctx, err);
     }
-  }
+  };
 
   // 删除购物车
-  async remove(ctx) {
+  remove = async ctx => {
     try {
       await removeCartsGoods(ctx.request.body.ids);
       ctx.body = {
@@ -87,10 +87,10 @@ class CartsController {
     } catch (err) {
       return ctx.app.emit('error', cartsDelError, ctx, err);
     }
-  }
+  };
 
   // 全选或全不选
-  async toggleSelectAll(ctx) {
+  toggleSelectAll = async ctx => {
     const { isAll } = ctx.request.body;
     try {
       await toggleSelectAllGoods(ctx.state.user.id, isAll);
@@ -102,7 +102,7 @@ class CartsController {
     } catch (err) {
       return ctx.app.emit('error', cartsSelectAllError, ctx, err);
     }
-  }
+  };
 }
 
 module.exports = new CartsController();

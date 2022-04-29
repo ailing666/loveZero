@@ -4,29 +4,29 @@ const { userRegisterError, userLoginError, changePasswordError } = require('../c
 const { JWT_SECRET } = require('../config/config.default');
 class UserController {
   // 注册接口
-  async register(ctx, next) {
+  register = async ctx => {
     // 获取数据
     const { user_name, password } = ctx.request.body;
 
     try {
       // 操作数据库
-      const res = await createUser(user_name, password);
+      const { dataValues } = await createUser(user_name, password);
       // 返回结果
       ctx.body = {
         code: 0,
         message: '用户注册成功',
         result: {
-          id: res.id,
-          user_name: res.user_name,
+          id: dataValues.id,
+          user_name: dataValues.user_name,
         },
       };
     } catch (err) {
       return ctx.app.emit('error', userRegisterError, ctx, err);
     }
-  }
+  };
 
   // 登录接口
-  async login(ctx, next) {
+  login = async ctx => {
     const { user_name } = ctx.request.body;
     try {
       // 通过 user_name 查询,生成token不包含password，所以返回的数据要剔除password
@@ -42,10 +42,10 @@ class UserController {
     } catch (err) {
       return ctx.app.emit('error', userLoginError, ctx, err);
     }
-  }
+  };
 
   // 修改密码
-  async changePassword(ctx, next) {
+  changePassword = async ctx => {
     const { id } = ctx.state.user;
     const { password } = ctx.request.body;
     try {
@@ -61,8 +61,7 @@ class UserController {
     } catch (err) {
       return ctx.app.emit('error', changePasswordError, ctx, err);
     }
-    await next();
-  }
+  };
 }
 
 module.exports = new UserController();

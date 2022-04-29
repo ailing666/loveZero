@@ -14,7 +14,7 @@ const {
 } = require('../service/address.service');
 class AddressController {
   // 添加地址接口
-  async create(ctx) {
+  create = async ctx => {
     try {
       const user_id = ctx.state.user.id;
       const { dataValues } = await createAddress({ user_id, ...ctx.request.body });
@@ -26,10 +26,10 @@ class AddressController {
     } catch (err) {
       return ctx.app.emit('error', AddressCreateError, ctx, err);
     }
-  }
+  };
 
   // 修改地址接口
-  async update(ctx) {
+  update = async ctx => {
     try {
       const res = await updateAddress(ctx.params.id, ctx.request.body);
       if (res[0]) {
@@ -44,10 +44,10 @@ class AddressController {
     } catch (err) {
       return ctx.app.emit('error', AddressUpdateError, ctx, err);
     }
-  }
+  };
 
   // 删除地址接口
-  async remove(ctx) {
+  remove = async ctx => {
     try {
       const res = await removeAddress(ctx.params.id);
       if (res) {
@@ -62,10 +62,10 @@ class AddressController {
     } catch (err) {
       return ctx.app.emit('error', AddressRemoveError, ctx, err);
     }
-  }
+  };
 
   // 获取地址列表接口
-  async findAll(ctx) {
+  findAll = async ctx => {
     const { pageNum = 1, pageSize = 10 } = ctx.request.body;
     try {
       const res = await findAllAddress(pageNum, pageSize);
@@ -77,10 +77,10 @@ class AddressController {
     } catch (err) {
       return ctx.app.emit('error', AddressFindError, ctx, err);
     }
-  }
+  };
 
   // 设为默认地址成功
-  async setDefault(ctx) {
+  setDefault = async ctx => {
     try {
       const res = await setDefaultAddr(ctx.state.user.id, ctx.params.id);
       if (res[0]) {
@@ -95,7 +95,7 @@ class AddressController {
     } catch (err) {
       return ctx.app.emit('error', AddressDefaultError, ctx, err);
     }
-  }
+  };
 }
 
 module.exports = new AddressController();

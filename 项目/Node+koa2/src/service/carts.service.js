@@ -3,7 +3,7 @@ const Carts = require('../model/carts.model');
 const Goods = require('../model/goods.model');
 class CartsService {
   // 创建商品
-  async createOrUpdate(goods_id, user_id, goods_num) {
+  createOrUpdate = async (goods_id, user_id, goods_num) => {
     // 同时查询 goods_id 和 user_id字段
     const res = await Carts.findOne({
       where: {
@@ -22,10 +22,10 @@ class CartsService {
       // 没有数据，就创建一条
       return await Carts.create({ user_id, goods_id });
     }
-  }
+  };
 
   // 获取购物车列表
-  async findAllCarts(pageNum, pageSize) {
+  findAllCarts = async (pageNum, pageSize) => {
     const offset = (pageNum - 1) * pageSize;
     const res = await Carts.findAndCountAll({
       // 指定查询的字段
@@ -43,10 +43,10 @@ class CartsService {
       },
     });
     return res;
-  }
+  };
 
   // 更新购物车
-  async updateCarts(id, number, selected) {
+  updateCarts = async (id, number, selected) => {
     // 根据id查找到对应的数据
     const res = await Carts.findByPk(id);
     // 覆盖要修改的字段
@@ -54,12 +54,12 @@ class CartsService {
     res.selected = selected !== undefined && res.selected;
     // 保存
     return await res.save();
-  }
+  };
 
   // 批量删除购物车商品
-  async removeCartsGoods(ids) {
+  removeCartsGoods = async ids =>
     // 删除 id 与 ids 中所有数据匹配的项
-    return await Carts.destroy({
+    await Carts.destroy({
       where: {
         id: {
           // IN [1, 2],删除多个
@@ -67,18 +67,16 @@ class CartsService {
         },
       },
     });
-  }
 
   // 切换全选与不全选
-  async toggleSelectAllGoods(id, isAll) {
+  toggleSelectAllGoods = async (id, isAll) =>
     // 将 user_id = id的项数据中的 selected 更新为 isAll
-    return await Carts.update(
+    await Carts.update(
       { selected: isAll },
       {
         where: { user_id: id },
       }
     );
-  }
 }
 
 module.exports = new CartsService();
