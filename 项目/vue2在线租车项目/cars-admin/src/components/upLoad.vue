@@ -23,24 +23,24 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       imageUrl: '',
       upLoadData: {}
     }
   },
-  beforeMount() {
+  beforeMount () {
     this.getQiniuToken()
   },
   watch: {
     imgUrl: {
-      handler(newValue) {
+      handler (newValue) {
         this.imageUrl = newValue
       }
     }
   },
   methods: {
-    getQiniuToken() {
+    getQiniuToken () {
       // 在工作中，
       const requestData = {
         ak: 'om140cvYaZmCBoZbLdA9MZ-qu2H12HAsPecOP4zU',
@@ -52,11 +52,11 @@ export default {
         this.upLoadData.token = data.token
       })
     },
-    handleAvatarSuccess(res) {
+    handleAvatarSuccess (res) {
       this.imageUrl = `http://raia7li0w.hn-bkt.clouddn.com/${res.key}`
       this.$emit('update:value', this.imageUrl)
     },
-    beforeAvatarUpload(file) {
+    beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
 
