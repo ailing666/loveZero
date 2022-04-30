@@ -138,7 +138,6 @@ export default {
     },
     // 重置表单
     reset () {
-      console.log(1)
       this.$refs.form.resetFields()
       this.$refs.editor && this.$refs.editor[0].clear()
     }

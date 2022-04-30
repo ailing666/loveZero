@@ -1,20 +1,27 @@
 <template>
   <div>
     <!-- 表格数据 -->
-    <TableData ref="table" :searchConfig="searchConfig" :tableConfig="tableConfig"> </TableData>
+    <TableData ref="table" :searchConfig="searchConfig" :tableConfig="tableConfig">
+      <template v-slot:realPhoto="slotData">
+        <img :src="realPhoto" alt="" class="real-photo" @click="showPhoto(slotData)" />
+      </template>
+    </TableData>
+    <RealPhoto :flagVisible.sync="dialogShow" :data="dataPhoto" :title="title" />
   </div>
 </template>
 <script>
 import TableData from '@/components/TableData.vue'
+import RealPhoto from '@/components/dialog/realPhoto'
 // API
-import { Blacklist, AmountClear } from "@/api/member"
+import { AmountClear, Photo } from "@/api/member"
 export default {
   name: "Member",
-  components: { TableData },
+  components: { TableData, RealPhoto },
   data () {
     return {
       // 弹窗的标题
       title: "",
+      realPhoto: require("@/assets/logo.png"),
       // 表格配置
       tableConfig: {
         thead: [
@@ -31,7 +38,6 @@ export default {
           {
             label: "租车订单",
             prop: "order",
-            width: 150
           },
           {
             label: "违章预存金",
@@ -49,12 +55,18 @@ export default {
           {
             label: "实名认证",
             prop: "check_real_name",
-            width: 150
+            type: "switch",
+            width: 150,
+            slotName: "realPhoto",
+            config: { id: 'memberId', type: 'identity', status: 'check_real_name' }
           },
           {
             label: "驾驶证",
             prop: "check_cars",
-            width: 150
+            type: "switch",
+            width: 150,
+            slotName: "realPhoto",
+            config: { id: 'memberId', type: 'drive', status: 'check_cars' }
           },
           {
             label: "黑名单",
@@ -100,43 +112,39 @@ export default {
           resetButton: true
         }
       },
-      // row_id
-      row_id: "",
-      data_photo: {},
+      dataPhoto: {},
       // switch_disabled
       switch_disabled: "",
       // 弹窗标记
-      dialog_show: false,
-      form: {
-        brand: "",
-      }
+      dialogShow: false,
     }
   },
   methods: {
-    callbackComponent (params) {
-      console.log(params)
-      if (params.function) { this[params.function]() }
-    },
-
-    /** 黑名单 */
-    updateBlacklist (status, data) {
-      console.log(123)
+    showPhoto (data) {
+      const type = data.type
+      // 更新弹窗标题
+      this.title = type === "check_cars" ? "驾驶证" : "实名认证"
+      // 接口
       const requestData = {
-        status,
-        id: data.memberId
+        id: data.data.memberId,
+        type: type === "check_cars" ? "drive" : "identity"
       }
-      Blacklist(requestData).then(response => {
-        const data = response
-        this.$message({
-          message: response.message,
-          type: "success"
-        })
+      Photo(requestData).then(res => {
+        const data = res.data
+        if (data) {
+          this.dataPhoto = data
+          this.dialogShow = true
+        }
       })
     },
 
     // 清空金额
     async amountClear (data) {
       await AmountClear({ member_id: data.memberId })
+      this.$message({
+        type: 'success',
+        message: '清空成功'
+      })
       this.$refs.table.requestData()
     }
   }
@@ -144,7 +152,7 @@ export default {
 </script>
 <style lass="scss" scoped>
 .real-photo {
-  display: inline;
+  display: inline-block;
   width: 30px;
   margin-left: 5px;
   vertical-align: middle;

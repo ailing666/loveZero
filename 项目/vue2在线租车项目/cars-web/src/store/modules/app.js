@@ -6,7 +6,6 @@ const mutations = {
   // selfLocation取反
   SET_IS_CARS_WARP (state, flag) {
     state.isCarsWarp = flag
-    console.log('state.isCarsWarp: ', state.isCarsWarp)
   },
 
   // 储存路由名称

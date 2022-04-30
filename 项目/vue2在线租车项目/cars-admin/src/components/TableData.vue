@@ -36,7 +36,7 @@
           <template v-slot="scope">
             <el-switch
               :disabled="scope.row[item.disabledKey || 'id'] === switchDisabled"
-              @change="scope.row[item.handler] || switchStatus(scope.row, item.config)"
+              @change="switchStatus(scope.row, item.config)"
               v-model="scope.row[item.prop]"
               :active-value="item.on || true"
               :inactive-value="item.off || false"
@@ -247,15 +247,19 @@ export default {
 
     // 禁启用
     switchStatus (data, config) {
-      console.log('config: ', config)
-      console.log('data: ', data)
-      this.switchDisabled = data[config.id]
-      const status = data[config.status]
+      this.switchDisabled = data[config ? config.id : 'id']
+      const status = data[config ? config.status : 'status']
       let requestData = {
         url: this.configData.url + 'Status',
         data: { id: this.switchDisabled, status }
       }
-
+      // type 是实人认证和驾驶证
+      if (config.type === 'identity' || config.type === 'drive') {
+        requestData = {
+          url: this.configData.url + 'UpdateRealName',
+          data: { id: this.switchDisabled, status, type: config.type }
+        }
+      }
       Status(requestData)
         .then(res => {
           this.$message({
@@ -316,7 +320,6 @@ export default {
       })
     },
     disabled () {
-      console.log(1)
     }
   }
 }

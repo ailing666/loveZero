@@ -36,7 +36,6 @@ export function GetParking (data = {}) {
  * 获取列表
  */
 export function GetList (params = {}) {
-  console.log('params: ', params)
   return service.request({
     method: 'post',
     url: requestUrl[params.url],
@@ -57,7 +56,6 @@ export function Delete (params = {}) {
 
 /** 添加 */
 export function Status (params = {}) {
-  console.log('params: ', params)
   return service.request({
     method: 'post',
     url: requestUrl[params.url],

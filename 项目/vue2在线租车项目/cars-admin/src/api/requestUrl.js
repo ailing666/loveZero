@@ -16,6 +16,7 @@ const requestUrl = {
   // 会员 - 列表
   memberList: '/member/list/',
   memberListStatus: '/member/blacklist/',
-  memberListDelete: '/member/delete/'
+  memberListDelete: '/member/delete/',
+  memberListUpdateRealName: '/member/updateRealName/'
 }
 export default requestUrl
