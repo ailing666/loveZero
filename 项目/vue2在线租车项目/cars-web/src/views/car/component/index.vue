@@ -91,7 +91,7 @@
           v-for="item in leaseListData"
           :class="{ current: leaseId === item.carsLeaseTypeId }"
           :key="item.carsLeaseTypeId"
-          @click="selectLeaseType(item)"
+          @click="leaseId = item.carsLeaseTypeId"
         >
           <h4 class="name">{{ item.carsLeaseTypeName }}</h4>
           <span class="price">￥{{ item.price }}</span>
@@ -102,14 +102,16 @@
         <!-- 激活：current -->
         <i class="current"></i>
       </div>
-      <a href="javascript: void(0);" class="select-car-btn">预约用车</a>
+      <a href="javascript: void(0);" class="select-car-btn" @click="confirmCars"
+        >预约用车</a
+      >
     </section>
   </div>
 </template>
 
 <script>
 import { getCarsAttrKey } from '@/utils/format'
-import { GetLeaseList } from '@/api/cars.js'
+import { GetLeaseList, ConfirmCars } from '@/api/cars.js'
 export default {
   name: 'CarList',
   props: {
@@ -128,7 +130,11 @@ export default {
       timer: null,
       // 租赁列表
       leaseListData: [],
-      leaseId: ''
+      leaseId: '',
+      // 检验提示
+      message_item: this.$store.state.config.message_item,
+      // 用户审核
+      arr: ['check_real_name', 'check_cars', 'gilding', 'illegalAmount']
     }
   },
   filters: {
@@ -184,8 +190,59 @@ export default {
 
       res.data && (this.leaseListData = res.data.data)
     },
-    selectLeaseType (data) {
-      this.leaseId = data.carsLeaseTypeId
+    // 预约用车
+    confirmCars () {
+      // 判断用户是登录
+      if (!this.$store.state.account.token) {
+        this.$router.push({ name: 'Login' })
+        return
+      }
+      // 判断是否选择了租车类型
+      if (!this.leaseId) {
+        this.$message({
+          message: '请选择租车类型',
+          type: 'error'
+        })
+        return
+      }
+
+      const requestData = {
+        cars_id: this.carInfo.id,
+        cars_lease_type_id: this.leaseId
+      }
+      ConfirmCars(requestData).then(res => {
+        const data = res.data
+        const key = Object.keys(data)
+        if (key && key.length > 0) {
+          // 匹配 message
+          this.backup_key = key[0] // 临时存储
+          if (this.arr.includes(key[0])) {
+            let message = ''
+            let msg = this.message_item[key[0]].msg
+            msg && (message = msg)
+            // 弹窗提示
+            this.$confirm(message, '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              let router = this.message_item[this.backup_key].router
+              if (router) {
+                console.log('this.message_item[this.backup_key].type: ', this.message_item[this.backup_key].type)
+                this.$router.push({
+                  name: router,
+                  query: this.message_item[this.backup_key].type
+                })
+              }
+            })
+          } else {
+            this.$message({
+              message: this.message_item[this.backup_key].msg,
+              type: 'error'
+            })
+          }
+        }
+      })
     },
     // 关闭车辆信息
     closeCarsInfo () {

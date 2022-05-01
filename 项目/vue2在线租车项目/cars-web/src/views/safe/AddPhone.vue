@@ -4,7 +4,10 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.phoneNumber" placeholder="预留手机号"></el-input>
+          <el-input
+            v-model="form.phoneNumber"
+            placeholder="预留手机号"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="v-code">获取验证码</div>

@@ -49,6 +49,7 @@
           :offset="item.offset"
           :position="item.position"
           :vid="index"
+          :events="item.events"
         ></el-amap-marker
       ></el-amap>
     </div>
@@ -146,6 +147,8 @@ export default {
     },
     // 路径规划成功执行的回调，设置停车场距离信息覆盖物
     handlerWalkingComlete (val, data) {
+      console.log('val: ', val)
+      console.log('data: ', data)
       this.parkingInfo = [
         {
           position: data.lnglat.split(','),
@@ -153,10 +156,14 @@ export default {
                     <span class="parking-info-number">${data.carsNumber}</span>辆车
                     <span class="parking-info-line"></span>距离您${val.routes[0].distance}米
                   </div>`,
-          offset: [-15, -54]
+          offset: [-15, -54],
+          events: {
+            // 点击触发 walking
+            click: () => this.$emit('getCarsList', data)
+          }
         }
       ]
-    }
+    },
   }
 }
 </script>

@@ -3,7 +3,13 @@
 @import './icon.scss';
 @import './ui.scss';
 @import './map.scss';
-
+.color-success,
+.color-OVER {
+  color: #10da06;
+}
+.color-fail {
+  color: #bd1b00;
+}
 /* clearfix */
 .clearfix {
   @extend %clearfix;
