@@ -1,5 +1,7 @@
 <template>
-  <div>welcome</div>
+  <div>
+    <el-button type="success">welcome</el-button>
+  </div>
 </template>
 
 <script>
