@@ -180,6 +180,27 @@ const routes = [
         component: () => import('../views/Member/detailed.vue')
       }
     ]
+  },
+  // 订单管理
+  {
+    path: '/order',
+    name: 'Order',
+    meta: {
+      title: '订单管理',
+      icon: 'console',
+      iconClass: 'icon_console'
+    },
+    component: Layout,
+    children: [
+      {
+        path: '/order',
+        name: 'Order',
+        meta: {
+          title: '订单管理'
+        },
+        component: () => import('../views/Order/index.vue')
+      }
+    ]
   }
 ]
 

@@ -49,6 +49,17 @@ export default {
             width: '100px'
           },
           { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
+          { label: '车辆状态', prop: 'status', type: 'switch', width: '100px' },
+          {
+            label: "车辆状态",
+            prop: "cars_status",
+            type: "function",
+            callback: (row) => {
+              const carsStatus = this.$store.state.config.cars_status
+              const status = carsStatus[row.carsStatus]
+              return status ? status.zh : ""
+            }
+          },
           { label: '停车场', prop: 'parkingName' },
           {
             label: '区域',
