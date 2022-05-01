@@ -196,7 +196,7 @@ const routes = [
         path: '/order',
         name: 'Order',
         meta: {
-          title: '订单管理'
+          title: '订单列表'
         },
         component: () => import('../views/Order/index.vue')
       }

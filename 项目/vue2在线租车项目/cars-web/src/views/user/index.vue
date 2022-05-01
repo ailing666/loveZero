@@ -12,15 +12,15 @@
     </header>
     <div class="group-link">
       <ul>
-        <router-link to="aa" tag="a">
+        <router-link to="/my" tag="a">
           <i class="icon icon-user-link-1"></i>
           我的帐户
         </router-link>
-        <router-link to="aa" tag="a">
+        <router-link to="order" tag="a">
           <i class="icon icon-user-link-2"></i>
           租车订单
         </router-link>
-        <router-link to="aa" tag="a">
+        <router-link to="authentication" tag="a">
           <i class="icon icon-user-link-3"></i>
           实名认证
         </router-link>
