@@ -21,9 +21,9 @@
 </template>
 <script>
 export default {
-  name: "PayResult",
+  name: 'PayResult',
   components: {},
-  data () {
+  data() {
     return {
       status: this.$route.query.status
     }

@@ -20,73 +20,69 @@
   </div>
 </template>
 <script>
-import { OrderStatus } from "@/api/order"
+import { OrderStatus } from '@/api/order'
 import { setInterval, clearInterval } from 'timers'
 export default {
-  name: "PayStatus",
+  name: 'PayStatus',
   components: {},
-  data () {
+  data() {
     return {
       timer: null
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.getOrderStatus()
     this.setInter()
   },
   methods: {
     // 查询订单状态
-    orderStatus () {
+    orderStatus() {
       // 拿到订单号
-      const order_no = localStorage.getItem("order_no")
-      return OrderStatus({ order_no }).then(res => {
+      const order_no = localStorage.getItem('order_no')
+      return OrderStatus({ order_no }).then((res) => {
         const status = res.data.status
         return status
       })
     },
 
-    async getOrderStatus () {
+    async getOrderStatus() {
       const status = await this.orderStatus()
       this.toResult(status)
     },
 
     // 没隔3秒查询一次订单状态
-    setInter () {
+    setInter() {
       this.timer = setInterval(() => {
         this.getOrderStatus()
       }, 3000)
     },
 
     // 去支付
-    async gotoPay () {
+    async gotoPay() {
       const status = await this.orderStatus()
       this.toResult(status)
     },
 
     // 支付完成
-    async overPay () {
+    async overPay() {
       const status = await this.orderStatus()
       this.toResult(status)
     },
 
-
-    toResult (status) {
+    toResult(status) {
       // 订单支付成功就清除定时器，跳转页面
       if (status === 'success') {
         clearInterval(this.timer)
         this.$router.replace({
-          name: "PayResult",
+          name: 'PayResult',
           query: { status }
         })
       }
 
       if (status === 'fail') {
-
       }
     }
-
   }
 }
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

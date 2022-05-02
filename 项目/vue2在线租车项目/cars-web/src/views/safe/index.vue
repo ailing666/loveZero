@@ -17,13 +17,10 @@
 <script>
 export default {
   name: 'Safe',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   methods: {}
 }
-
 </script>
-<style lang='scss'>
-</style>
+<style lang="scss"></style>

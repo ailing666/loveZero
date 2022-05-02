@@ -7,10 +7,16 @@
           <el-input v-model="form.cardName" placeholder="开户名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.bankName" placeholder="请选择开户银行"></el-input>
+          <el-input
+            v-model="form.bankName"
+            placeholder="请选择开户银行"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.phoneNumber" placeholder="预留手机号"></el-input>
+          <el-input
+            v-model="form.phoneNumber"
+            placeholder="预留手机号"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="v-code">获取验证码</div>
@@ -27,19 +33,17 @@
 <script>
 export default {
   name: 'BankCard',
-  data () {
+  data() {
     return {
       form: {
         cardName: '',
         bankName: '',
         phoneNumber: '',
-        vCode: '',
+        vCode: ''
       }
     }
   },
   methods: {}
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

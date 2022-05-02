@@ -9,17 +9,17 @@
 </template>
 
 <script>
-import { validate_phone } from "@/utils/validate"
+import { validate_phone } from '@/utils/validate'
 
 export default {
   name: 'UserPhone',
-  data () {
+  data() {
     // 手机号格式校验
     const validateUserPhone = (rule, value, callback) => {
       if (!this.userPhone || this.userPhone == '') {
-        return callback(new Error("手机号不能为空"))
+        return callback(new Error('手机号不能为空'))
       } else if (!validate_phone(this.userPhone)) {
-        return callback(new Error("手机号格式不正确"))
+        return callback(new Error('手机号格式不正确'))
       } else {
         callback()
       }
@@ -29,9 +29,7 @@ export default {
       userPhone: '',
       rules: [{ validator: validateUserPhone, trigger: 'change' }]
     }
-  },
+  }
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

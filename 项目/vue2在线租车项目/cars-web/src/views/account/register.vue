@@ -31,24 +31,24 @@ import UserPhone from '@/components/userPhone.vue'
 import UserPassword from '@/components/userPassword.vue'
 import UserPasswordConfirm from '@/components/userPasswordConfirm.vue'
 import UserCode from '@/components/userCode.vue'
-import sha1 from "js-sha1"
+import sha1 from 'js-sha1'
 
 export default {
   name: 'Register',
   components: { UserPassword, UserPasswordConfirm, UserPhone, UserCode },
-  data () {
+  data() {
     return {
       form: {
         username: '',
         password: '',
         passwordConfirm: '',
-        code: '',
+        code: ''
       }
     }
   },
 
   methods: {
-    submit () {
+    submit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.requestRegister()
@@ -59,9 +59,13 @@ export default {
       })
     },
     // 注册
-    async requestRegister () {
+    async requestRegister() {
       const { username, password, code } = this.form
-      const res = await this.$store.dispatch('account/registerAction', ({ username, password: sha1(password), code }))
+      const res = await this.$store.dispatch('account/registerAction', {
+        username,
+        password: sha1(password),
+        code
+      })
       this.$message({
         type: 'success',
         message: res.message
@@ -70,7 +74,5 @@ export default {
     }
   }
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

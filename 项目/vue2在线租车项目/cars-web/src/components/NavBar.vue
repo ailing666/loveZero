@@ -1,37 +1,27 @@
 <template>
   <div class="navbar">
     <ul>
-      <li>
-        <i class="icon icon-w-44 icon-help"></i>
-      </li>
-      <li>
-        <i class="icon icon-w-44 icon-search"></i>
-      </li>
-      <li>
-        <a href="javascript: void(0);" class="select-car-btn">选择车辆</a>
-      </li>
-      <li>
-        <i class="icon icon-w-44 icon-location" @click="selfLocation"></i>
-      </li>
-      <li>
-        <i class="icon icon-w-44 icon-user" @click="toUser"></i>
-      </li>
+      <li><i class="icon icon-w-44 icon-help"></i></li>
+      <li><i class="icon icon-w-44 icon-search"></i></li>
+      <li><a href="javascript: void(0);" class="select-car-btn">选择车辆</a></li>
+      <li><i class="icon icon-w-44 icon-location" @click="selfLocation"></i></li>
+      <li><i class="icon icon-w-44 icon-user" @click="toUser"></i></li>
     </ul>
   </div>
 </template>
 <script>
-import { getToken } from "@/utils/accountCookies"
+import { getToken } from '@/utils/accountCookies'
 export default {
   name: 'Navbar',
   methods: {
     // 跳转到user
-    toUser () {
+    toUser() {
       this.$router.push({
-        name: getToken() ? "User" : "Login"
+        name: getToken() ? 'User' : 'Login'
       })
     },
     // 获取自身定位
-    selfLocation () {
+    selfLocation() {
       this.$store.commit('location/SELE_LOCATION')
     }
   }

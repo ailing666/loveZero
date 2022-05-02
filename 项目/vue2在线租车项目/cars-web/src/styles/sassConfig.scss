@@ -3,36 +3,34 @@ $color-blur: #b5dcf3;
 $color-white: #fff;
 $color-black: #000;
 $color-wait: yellow;
-$color-shadow-2:rgba(0, 0, 0, .2);
-$color-border1:#f3f3f3;
-$color-border2:#e1e1e1;
-$color-blue:#00a3fd;
-$color-text:#7b7f81;
-$color-bg:#e1e1e1;
-$color-user:#34373e;
+$color-shadow-2: rgba(0, 0, 0, 0.2);
+$color-border1: #f3f3f3;
+$color-border2: #e1e1e1;
+$color-blue: #00a3fd;
+$color-text: #7b7f81;
+$color-bg: #e1e1e1;
+$color-user: #34373e;
 
 /* 清除浮动 */
 %clearfix {
-    &:after {
-        clear: both;
-        content: '.';
-        display: block;
-        height: 0;
-        line-height: 0;
-        overflow: hidden;
-    }
-    *height: 1%;
+  &:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+  }
+  *height: 1%;
 }
-
-
 
 /* 属性后端 */
 @mixin webkitA($type, $value) {
-    #{$type}: -webkit-#{$value};
-    #{$type}: -moz-#{$value};
-    #{$type}: -ms-#{$value};
-    #{$type}: -o-#{$value};
-    #{$type}: $value;
+  #{$type}: -webkit-#{$value};
+  #{$type}: -moz-#{$value};
+  #{$type}: -ms-#{$value};
+  #{$type}: -o-#{$value};
+  #{$type}: $value;
 }
 
 /* 属性前端 */

@@ -9,18 +9,18 @@
 </template>
 
 <script>
-import { validate_password } from "@/utils/validate"
+import { validate_password } from '@/utils/validate'
 
 export default {
   name: 'UserPassword',
-  data () {
+  data() {
     // 手机号格式校验
     const validateUserPassword = (rule, value, callback) => {
-      // 校验规则 
+      // 校验规则
       if (!this.userPassword || this.userPassword == '') {
-        return callback(new Error("密码不能为空"))
+        return callback(new Error('密码不能为空'))
       } else if (!validate_password(this.userPassword)) {
-        return callback(new Error("密码为6~20的英文和数字组合"))
+        return callback(new Error('密码为6~20的英文和数字组合'))
       } else {
         callback()
       }
@@ -30,9 +30,7 @@ export default {
       userPassword: '',
       rules: [{ validator: validateUserPassword, trigger: 'change' }]
     }
-  },
+  }
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

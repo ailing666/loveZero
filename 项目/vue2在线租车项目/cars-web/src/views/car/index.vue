@@ -20,35 +20,34 @@ import CarItem from './component'
 export default {
   name: 'Car',
   components: { CarItem, Swiper, SwiperSlide },
-  data () {
+  data() {
     return {
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 50,
         navigation: {
           nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
+          prevEl: '.swiper-button-prev'
+        }
       },
-      carsData: [],
+      carsData: []
     }
   },
   watch: {
-    '$store.state.app.isCarsWarp' (newV, oldV) {
+    '$store.state.app.isCarsWarp'(newV, oldV) {
       // 如果是false，就将数组置为空，使列表隐藏
       if (!newV) this.carsData = []
       // 还原值
       this.$store.commit('app/SET_IS_CARS_WARP', true)
-    },
+    }
   },
   methods: {
-    async getCarsList (params) {
+    async getCarsList(params) {
       const res = await carsList({ parkingId: params.id })
       this.carsData = res.data.data
-    },
-  },
-
-};
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import './index.scss';

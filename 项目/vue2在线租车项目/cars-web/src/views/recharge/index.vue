@@ -58,37 +58,37 @@
   </div>
 </template>
 <script>
-import { AmountList, Pay } from "@/api/pay"
+import { AmountList, Pay } from '@/api/pay'
 export default {
-  name: "User",
+  name: 'User',
   components: {},
-  data () {
+  data() {
     return {
       data: [],
-      amount_id: "",
-      amount: "",
-      amount_number: "",
+      amount_id: '',
+      amount: '',
+      amount_number: '',
       disabled_button: true
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.getAmountList()
   },
   methods: {
     /** 获取充值列表 */
-    getAmountList () {
-      AmountList().then(res => this.data = res.data)
+    getAmountList() {
+      AmountList().then((res) => (this.data = res.data))
     },
     /** 选择金额 */
-    checkAmount (data) {
+    checkAmount(data) {
       this.amount_id = data.id
       this.amount = data.amount
       this.disabled_button = false
     },
     /** 确认充值 */
-    confirmSubmit () {
+    confirmSubmit() {
       let amount = this.amount_number || this.amount
-      Pay({ amount: amount, type: this.$route.query }).then(res => {
+      Pay({ amount: amount, type: this.$route.query }).then((res) => {
         const order_no = res.data.order_no
         // 完成支付后返回的真实url地址
         // const payUrl = res.data.pay_url
@@ -99,12 +99,12 @@ export default {
         //
 
         // 储存订单号
-        localStorage.setItem("order_no", order_no)
+        localStorage.setItem('order_no', order_no)
         // 跳转
-        this.$router.push({ path: "/payStatus" })
+        this.$router.push({ path: '/payStatus' })
       })
     },
-    inputEnter () {
+    inputEnter() {
       const reg = /^[0-9]*$/
       const status = reg.test(this.amount_number)
       this.disabled_button = !status

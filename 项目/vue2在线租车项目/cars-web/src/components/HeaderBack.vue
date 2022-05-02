@@ -1,4 +1,3 @@
-
 <template>
   <div class="header-back">
     <header class="nav-header">
@@ -17,12 +16,11 @@
 export default {
   name: 'HeaderBack',
   methods: {
-    goBack () {
+    goBack() {
       this.$router.go(-1)
     }
-  },
+  }
 }
-
 </script>
 <style lang="scss" scoped>
 .header-back {

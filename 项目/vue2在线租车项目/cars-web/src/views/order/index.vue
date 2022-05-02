@@ -42,15 +42,13 @@
   </div>
 </template>
 <script>
-import { OrderList } from "@/api/order"
-import { fotmarDate } from "@/utils/common"
 export default {
-  name: "User",
+  name: 'User',
   components: {},
-  data () {
+  data() {
     return {
       // 引入图片
-      img: require("@/assets/images/level-img.png"),
+      img: require('@/assets/images/level-img.png'),
       // 订单列表
       order_list_data: [],
       // 页码

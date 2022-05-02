@@ -117,10 +117,10 @@ export default {
   props: {
     carInfo: {
       type: Object,
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
-  data () {
+  data() {
     return {
       // 车辆信息高度
       carsInfoHeight: 0,
@@ -138,31 +138,31 @@ export default {
     }
   },
   filters: {
-    electricNumber (val) {
+    electricNumber(val) {
       return `active-${Math.round(val / 10)}`
     },
-    energyType (val) {
+    energyType(val) {
       return getCarsAttrKey({
         data: val,
         parerntKey: 'basis',
-        childKey: 'energy_type',
+        childKey: 'energy_type'
       })
     },
-    seatNumber (val) {
+    seatNumber(val) {
       return getCarsAttrKey({
         data: val,
         parerntKey: 'car_body',
-        childKey: 'seat_number',
+        childKey: 'seat_number'
       })
     },
-    setCountKm (val) {
+    setCountKm(val) {
       return parseInt(val)
-    },
+    }
   },
 
   methods: {
     // 展开车辆信息
-    openCarsInfo () {
+    openCarsInfo() {
       this.carsInfoShow = true
       // 可视区的高度
       const viewHeight =
@@ -171,7 +171,9 @@ export default {
       const height = viewHeight - 145
 
       // 清除定时器
-      if (this.timer) { clearTimeout(this.timer) }
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
 
       // 添加定时器，过渡效果
       this.timer = setTimeout(() => {
@@ -182,7 +184,7 @@ export default {
     },
 
     // 获取租赁列表
-    async getLaseList () {
+    async getLaseList() {
       if (this.leaseListData && this.leaseListData.length > 0) {
         return false
       }
@@ -191,7 +193,7 @@ export default {
       res.data && (this.leaseListData = res.data.data)
     },
     // 预约用车
-    confirmCars () {
+    confirmCars() {
       // 判断用户是登录
       if (!this.$store.state.account.token) {
         this.$router.push({ name: 'Login' })
@@ -210,7 +212,7 @@ export default {
         cars_id: this.carInfo.id,
         cars_lease_type_id: this.leaseId
       }
-      ConfirmCars(requestData).then(res => {
+      ConfirmCars(requestData).then((res) => {
         const data = res.data
         const key = Object.keys(data)
         if (key && key.length > 0) {
@@ -228,7 +230,10 @@ export default {
             }).then(() => {
               let router = this.message_item[this.backup_key].router
               if (router) {
-                console.log('this.message_item[this.backup_key].type: ', this.message_item[this.backup_key].type)
+                console.log(
+                  'this.message_item[this.backup_key].type: ',
+                  this.message_item[this.backup_key].type
+                )
                 this.$router.push({
                   name: router,
                   query: this.message_item[this.backup_key].type
@@ -245,12 +250,12 @@ export default {
       })
     },
     // 关闭车辆信息
-    closeCarsInfo () {
+    closeCarsInfo() {
       this.carsInfoShow = false
       this.carsInfoHeight = 0
     }
-  },
-};
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import './index.scss';

@@ -4,7 +4,10 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.password" placeholder="设置6位数字的密码"></el-input>
+          <el-input
+            v-model="form.password"
+            placeholder="设置6位数字的密码"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="v-code">获取验证码</div>
@@ -21,17 +24,15 @@
 <script>
 export default {
   name: 'SetPassword',
-  data () {
+  data() {
     return {
       form: {
         password: '',
-        vCode: '',
+        vCode: ''
       }
     }
   },
   methods: {}
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

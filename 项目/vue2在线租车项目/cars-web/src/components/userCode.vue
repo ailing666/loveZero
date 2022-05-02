@@ -1,23 +1,14 @@
 <template>
   <el-form-item prop="code" :rules="rules">
-    <el-button
-      class="v-code"
-      :loading="loading"
-      :disabled="disabled"
-      @click="getCode"
-    >
+    <el-button class="v-code" :loading="loading" :disabled="disabled" @click="getCode">
       {{ codeText }}
     </el-button>
-    <el-input
-      v-model="code"
-      placeholder="手机验证码"
-      @input="() => this.$emit('input', this.code)"
-    ></el-input>
+    <el-input v-model="code" placeholder="手机验证码" @input="() => this.$emit('input', this.code)"></el-input>
   </el-form-item>
 </template>
 
 <script>
-import { GetCode } from "@/api/account"
+import { GetCode } from '@/api/account'
 export default {
   name: 'UserCode',
   props: {
@@ -26,7 +17,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       // 验证码
       code: '',
@@ -40,13 +31,13 @@ export default {
       loading: false,
       // 校验规则
       rules: [
-        { required: true, message: "验证不能为空", trigger: "blur" },
-        { min: 6, max: 6, message: "请输入6位字符的验证码", trigger: "change" }
+        { required: true, message: '验证不能为空', trigger: 'blur' },
+        { min: 6, max: 6, message: '请输入6位字符的验证码', trigger: 'change' }
       ]
     }
   },
   methods: {
-    getCode () {
+    getCode() {
       // 手机号填写后才能获取验证码
       if (!this.username) {
         this.$message({
@@ -58,12 +49,12 @@ export default {
       this.requestCode()
     },
     // 请求验证码
-    async requestCode () {
+    async requestCode() {
       this.loading = true
       try {
-        const res = await GetCode({ username: this.username, module: "register" })
+        const res = await GetCode({ username: this.username, module: 'register' })
         this.$message({
-          type: "success",
+          type: 'success',
           message: res.message
         })
         this.countDown()
@@ -75,7 +66,7 @@ export default {
       }
     },
     // 倒计时
-    countDown () {
+    countDown() {
       this.disabled = true
       let second = 5
       this.codeText = `倒计时${second}秒`
@@ -92,10 +83,8 @@ export default {
           clearInterval(this.timer)
         }
       }, 1000)
-    },
+    }
   }
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

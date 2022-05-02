@@ -2,7 +2,7 @@ import service from '../utils/request'
 /**
  * 支付查询订单状态
  */
-export function OrderStatus (data = {}) {
+export function OrderStatus(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/orderStatus/`,
@@ -11,7 +11,7 @@ export function OrderStatus (data = {}) {
 }
 
 /** 租车订单 */
-export function OrderList (data = {}) {
+export function OrderList(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/orderList/`,
@@ -20,7 +20,7 @@ export function OrderList (data = {}) {
 }
 
 /** 查找正在使用的车辆 */
-export function GetCarsActivation (data = {}) {
+export function GetCarsActivation(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/carsActivation/`,
@@ -29,7 +29,7 @@ export function GetCarsActivation (data = {}) {
 }
 
 /** 取车 */
-export function CarsGet (data = {}) {
+export function CarsGet(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/carsGet/`,
@@ -38,7 +38,7 @@ export function CarsGet (data = {}) {
 }
 
 /** 还车 */
-export function CarsReturn (data = {}) {
+export function CarsReturn(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/carsReturn/`,
@@ -47,7 +47,7 @@ export function CarsReturn (data = {}) {
 }
 
 /** 还车 */
-export function CarsReturns (data = {}) {
+export function CarsReturns(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/carsReturnS/`,
@@ -56,7 +56,7 @@ export function CarsReturns (data = {}) {
 }
 
 /** 取消 */
-export function CarsCancel (data = {}) {
+export function CarsCancel(data = {}) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/carsCancel/`,

@@ -6,12 +6,10 @@
 
 <script>
 export default {
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
-  mounted () {
-
+  mounted() {
     document.addEventListener('mouseup', (e) => {
       e.preventDefault()
 
@@ -24,19 +22,19 @@ export default {
       const UserDom = document.getElementById('children-view')
       if (UserDom && !UserDom.contains(e.target)) {
         const routerName = this.$route.name
-        if (routerName === "Index") { return false }
+        if (routerName === 'Index') {
+          return false
+        }
         this.$router.push({
-          name: "Index"
+          name: 'Index'
         })
       }
     })
-
   },
   methods: {}
 }
-
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 #app {
 }
 </style>

@@ -26,16 +26,15 @@
   </div>
 </template>
 <script>
-import UploadVue from "@/components/upload.vue"
+import UploadVue from '@/components/upload.vue'
 export default {
-  name: "Authentication",
+  name: 'Authentication',
   components: { UploadVue },
-  data () {
+  data() {
     return {
-      type: "identity"
+      type: 'identity'
     }
-  },
-
+  }
 }
 </script>
 <style lang="scss">

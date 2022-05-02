@@ -26,26 +26,26 @@ import Login from './Login.vue'
 export default {
   name: 'Index',
   components: { AMap, Car, Navbar, Login },
-  data () {
+  data() {
     return {
       parking: []
     }
   },
   computed: {
-    isShow () {
+    isShow() {
       return this.$route.name === 'User'
     }
   },
   methods: {
     // 地图加载完成后
-    mapLoad () {
+    mapLoad() {
       this.getParking()
     },
     // 获取停车场列表
-    async getParking () {
+    async getParking() {
       const res = await Parking()
       const data = res.data.data
-      data.forEach(item => {
+      data.forEach((item) => {
         // 定位
         item.position = item.lnglat.split(',')
         // 覆盖物内容
@@ -59,7 +59,7 @@ export default {
         // 事件
         item.events = {
           // 点击触发 walking
-          click: e => {
+          click: (e) => {
             console.log('e.target.getExtData(): ', e.target.getExtData())
             this.walking(e.target.getExtData())
             // 调用子组件方法获取车辆列表
@@ -69,12 +69,12 @@ export default {
       })
       this.parking = data
     },
-    getCarsList (data) {
+    getCarsList(data) {
       console.log('data: ', data)
       this.$refs.car.getCarsList(data)
     },
     // 获取步行路径
-    walking (data) {
+    walking(data) {
       // 调用map组件的 handlerWalking 方法
       this.$refs.map.handlerWalking(data)
     }

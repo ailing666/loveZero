@@ -2,7 +2,7 @@ import service from '../utils/request'
 /**
  * 获取验证码
  */
-export function GetCode (data) {
+export function GetCode(data) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/account/code/`,
@@ -13,7 +13,7 @@ export function GetCode (data) {
 /**
  * 注册
  */
-export function Register (data) {
+export function Register(data) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/account/register/`,
@@ -24,7 +24,7 @@ export function Register (data) {
 /**
  * 登录
  */
-export function Login (data) {
+export function Login(data) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/account/login/`,
@@ -35,7 +35,7 @@ export function Login (data) {
 /**
  * 忘记密码
  */
-export function Forget (data) {
+export function Forget(data) {
   return service.request({
     method: 'post',
     url: `${process.env.VUE_APP_API_WEB}/account/forget/`,

@@ -4,13 +4,19 @@
     <div class="cars-form-ui">
       <el-form ref="form" :model="form">
         <el-form-item>
-          <el-input v-model="form.oldPassword" placeholder="原始密码"></el-input>
+          <el-input
+            v-model="form.oldPassword"
+            placeholder="原始密码"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-input v-model="form.newPassword" placeholder="新密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.confirmPassword" placeholder="确认密码"></el-input>
+          <el-input
+            v-model="form.confirmPassword"
+            placeholder="确认密码"
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <div class="v-code">获取验证码</div>
@@ -27,19 +33,17 @@
 <script>
 export default {
   name: 'ChangePassword',
-  data () {
+  data() {
     return {
       form: {
         oldPassword: '',
         newPassword: '',
         confirmPassword: '',
-        vCode: '',
+        vCode: ''
       }
     }
   },
   methods: {}
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

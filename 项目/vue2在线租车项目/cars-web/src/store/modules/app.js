@@ -4,13 +4,13 @@ const state = {
 }
 const mutations = {
   // selfLocation取反
-  SET_IS_CARS_WARP (state, flag) {
+  SET_IS_CARS_WARP(state, flag) {
     state.isCarsWarp = flag
     console.log('state.isCarsWarp: ', state.isCarsWarp)
   },
 
   // 储存路由名称
-  SET_ROUTER_NAME (state, title) {
+  SET_ROUTER_NAME(state, title) {
     state.routerName = title
   }
 }

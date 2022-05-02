@@ -1,57 +1,50 @@
 import { Register, Login, Forget } from '@/api/account'
-import {
-  setToken,
-  setUsername,
-  getToken,
-  getUsername,
-  removeToken,
-  removeUsername
-} from '@/utils/accountCookies'
+import { setToken, setUsername, getToken, getUsername, removeToken, removeUsername } from '@/utils/accountCookies'
 
 const state = {
   token: '' || getToken(),
   username: '' || getUsername()
 }
 const mutations = {
-  SET_TOKEN (state, val) {
+  SET_TOKEN(state, val) {
     state.token = val
   },
 
-  SET_USERNAME (state, val) {
+  SET_USERNAME(state, val) {
     state.username = val
   }
 }
 const actions = {
   // 用户注册
-  registerAction (context, requestData) {
+  registerAction(context, requestData) {
     return new Promise((resolve, reject) => {
       Register(requestData)
-        .then(res => {
+        .then((res) => {
           resolve(res)
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err)
         })
     })
   },
   // 用户登录
-  loginAction (context, requestData) {
+  loginAction(context, requestData) {
     return new Promise((resolve, reject) => {
       Login(requestData)
-        .then(res => {
+        .then((res) => {
           resolve(res)
           context.commit('SET_TOKEN', res.data.token)
           context.commit('SET_USERNAME', res.data.username)
           setToken(res.data.token)
           setUsername(res.data.username)
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err)
         })
     })
   },
   // 用户登出
-  logoutAction (context, requestData) {
+  logoutAction(context, requestData) {
     return new Promise((resolve, reject) => {
       context.commit('SET_TOKEN', '')
       context.commit('SET_USERNAME', '')
@@ -61,13 +54,13 @@ const actions = {
     })
   },
   // 忘记密码
-  forgetAction (context, requestData) {
+  forgetAction(context, requestData) {
     return new Promise((resolve, reject) => {
       Forget(requestData)
-        .then(res => {
+        .then((res) => {
           resolve(res)
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err)
         })
     })

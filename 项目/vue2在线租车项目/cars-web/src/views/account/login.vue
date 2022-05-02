@@ -28,20 +28,20 @@
 <script>
 import UserPhone from '@/components/userPhone.vue'
 import UserPassword from '@/components/userPassword.vue'
-import sha1 from "js-sha1"
+import sha1 from 'js-sha1'
 export default {
   name: 'Login',
   components: { UserPassword, UserPhone },
-  data () {
+  data() {
     return {
       form: {
         username: '',
-        password: '',
+        password: ''
       }
     }
   },
   methods: {
-    submit () {
+    submit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.requestLogin()
@@ -52,9 +52,12 @@ export default {
       })
     },
 
-    async requestLogin () {
+    async requestLogin() {
       const { username, password } = this.form
-      const res = await this.$store.dispatch('account/loginAction', { username, password: sha1(password) })
+      const res = await this.$store.dispatch('account/loginAction', {
+        username,
+        password: sha1(password)
+      })
       this.$message({
         type: 'success',
         message: res.message
@@ -63,7 +66,5 @@ export default {
     }
   }
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -86,11 +86,11 @@
 </template>
 <script>
 export default {
-  name: "User",
+  name: 'User',
   components: {},
-  data () {
+  data() {
     return {
-      img: require("@/assets/images/level-img.png")
+      img: require('@/assets/images/level-img.png')
     }
   }
 }

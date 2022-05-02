@@ -41,22 +41,20 @@
 <script>
 export default {
   name: 'User',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
 
   methods: {
-    async loginOut () {
+    async loginOut() {
       await this.$store.dispatch('account/logoutAction')
       this.$router.replace({
-        name: "Login"
+        name: 'Login'
       })
     }
   }
 }
-
 </script>
-<style lang='scss'>
+<style lang="scss">
 @import './index.scss';
 </style>

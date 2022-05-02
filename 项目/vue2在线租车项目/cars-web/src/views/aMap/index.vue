@@ -69,7 +69,7 @@ export default {
       default: () => []
     }
   },
-  data () {
+  data() {
     return {
       amapManager,
       // 地图实例
@@ -96,13 +96,13 @@ export default {
     }
   },
   watch: {
-    '$store.state.location.selfLocation' () {
+    '$store.state.location.selfLocation'() {
       this.setSelfLocation(this.map)
     }
   },
   methods: {
     // 初始化地图
-    initMap () {
+    initMap() {
       // 获取地图实例储存起来
       this.map = amapManager.getMap()
       this.map.on('complete', () => {
@@ -113,15 +113,15 @@ export default {
     },
 
     // 设置自身定位
-    setSelfLocation (map) {
+    setSelfLocation(map) {
       selfLocation({
         map,
-        complete: val => this.onComplete(val)
+        complete: (val) => this.onComplete(val)
       })
     },
 
     // 获取定位成功回调,设置点覆盖物样式
-    onComplete (data) {
+    onComplete(data) {
       const { lng, lat } = data.position
       this.selfLng = lng
       this.selfLat = lat
@@ -136,17 +136,17 @@ export default {
       ]
     },
     // 父组件调用方法，步行路线规划
-    handlerWalking (data) {
+    handlerWalking(data) {
       // 步行路线规划
       getWalking({
         map: this.map,
         startPosition: [this.selfLng, this.selfLat],
         endPosition: data.lnglat.split(','),
-        complete: val => this.handlerWalkingComlete(val, data)
+        complete: (val) => this.handlerWalkingComlete(val, data)
       })
     },
     // 路径规划成功执行的回调，设置停车场距离信息覆盖物
-    handlerWalkingComlete (val, data) {
+    handlerWalkingComlete(val, data) {
       console.log('val: ', val)
       console.log('data: ', data)
       this.parkingInfo = [
@@ -163,7 +163,7 @@ export default {
           }
         }
       ]
-    },
+    }
   }
 }
 </script>

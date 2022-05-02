@@ -24,17 +24,15 @@
 <script>
 export default {
   name: 'AddPhone',
-  data () {
+  data() {
     return {
       form: {
         phoneNumber: '',
-        vCode: '',
+        vCode: ''
       }
     }
   },
   methods: {}
 }
-
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>
