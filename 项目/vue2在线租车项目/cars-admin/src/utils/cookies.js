@@ -3,26 +3,19 @@ import Cookies from 'js-cookie'
 const tokenKey = 'tokenAdmin'
 const userNameKey = 'username'
 // 获取token
-export function getToken() {
-  return Cookies.get(tokenKey)
-}
+export const getToken = () => Cookies.get(tokenKey)
+
 // 写入token
-export function setToken(value) {
-  return Cookies.set(tokenKey, value)
-}
+export const setToken = value => Cookies.set(tokenKey, value)
+
 // 删除token
-export function removeToken() {
-  return Cookies.remove(tokenKey)
-}
+export const removeToken = () => Cookies.remove(tokenKey)
+
 // 写入userName
-export function setUsername(value) {
-  return Cookies.set(userNameKey, value)
-}
+export const setUsername = value => Cookies.set(userNameKey, value)
+
 // 获取userName
-export function getUsername() {
-  return Cookies.get(userNameKey)
-}
+export const getUsername = () => Cookies.get(userNameKey)
+
 // 删除userName
-export function removeUsername() {
-  return Cookies.remove(userNameKey)
-}
+export const removeUsername = () => Cookies.remove(userNameKey)

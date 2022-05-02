@@ -1,7 +1,9 @@
-@import "./sassConfig.scss";
-@import "./elementui.scss";
-@import "./normalize.scss";
-@import "./svgicon.scss";
+@import './sassConfig.scss';
+@import './elementui.scss';
+@import './normalize.scss';
+@import './svgicon.scss';
 
 // float
-.pull-right { float: right; }
+.pull-right {
+  float: right;
+}

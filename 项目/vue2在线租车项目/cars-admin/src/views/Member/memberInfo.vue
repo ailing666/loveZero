@@ -11,124 +11,125 @@
 </template>
 <script>
 import CarForm from '@/components/CarForm'
-import { Detailed, Edit } from "@/api/member"
-import { formatRequestData } from "@/utils/common"
+import { Detailed, Edit } from '@/api/member'
+import { formatRequestData } from '@/utils/common'
 export default {
-  name: "MemberInfo",
+  name: 'MemberInfo',
   components: { CarForm },
-  data () {
+  data() {
     return {
       // 表单数据配置
       id: this.$route.query.id,
-      formData: { // 指定对象里面的所以 key 
-        username: "",
-        truename: "",
-        cardId: "",
-        gender: "",
-        illegalAmount: "",
-        cardPhotoFace: "",
-        cardPhotoBack: "",
-        cardPhotoBareheaded: "",
-        carsPhotoFace: "",
-        carsPhotoBack: "",
-        blacklist: ""
+      formData: {
+        // 指定对象里面的所以 key
+        username: '',
+        truename: '',
+        cardId: '',
+        gender: '',
+        illegalAmount: '',
+        cardPhotoFace: '',
+        cardPhotoBack: '',
+        cardPhotoBareheaded: '',
+        carsPhotoFace: '',
+        carsPhotoBack: '',
+        blacklist: ''
       },
       // 表单配置
       formConfig: [
         {
-          type: "input",
-          label: "用户名",
-          placeholder: "请输入用户名",
-          prop: "username",
+          type: 'input',
+          label: '用户名',
+          placeholder: '请输入用户名',
+          prop: 'username',
           required: true,
-          width: "200px"
+          width: '200px'
         },
         {
-          type: "input",
-          label: "真实姓名",
-          placeholder: "请输入真实姓名",
-          prop: "truename",
+          type: 'input',
+          label: '真实姓名',
+          placeholder: '请输入真实姓名',
+          prop: 'truename',
           required: true
         },
         {
-          type: "input",
-          label: "身份证",
-          placeholder: "请输入身份证",
-          prop: "cardId",
+          type: 'input',
+          label: '身份证',
+          placeholder: '请输入身份证',
+          prop: 'cardId',
           required: true
         },
         {
-          type: "radio",
-          label: "性别",
-          prop: "gender",
+          type: 'radio',
+          label: '性别',
+          prop: 'gender',
           options: this.$store.state.config.gender,
           required: true
         },
         {
-          type: "inputNumber",
-          label: "违章预存金",
-          prop: "illegalAmount",
+          type: 'inputNumber',
+          label: '违章预存金',
+          prop: 'illegalAmount',
           required: true
         },
         {
-          type: "upLoad",
-          label: "身份证（正面）",
-          prop: "cardPhotoFace",
+          type: 'upLoad',
+          label: '身份证（正面）',
+          prop: 'cardPhotoFace',
           required: true,
           requestFlag: true
         },
         {
-          type: "upLoad",
-          label: "身份证（反面）",
-          prop: "cardPhotoBack",
+          type: 'upLoad',
+          label: '身份证（反面）',
+          prop: 'cardPhotoBack',
           required: true
         },
         {
-          type: "upLoad",
-          label: "身份证（免冠）",
-          prop: "cardPhotoBareheaded",
+          type: 'upLoad',
+          label: '身份证（免冠）',
+          prop: 'cardPhotoBareheaded',
           required: true
         },
         {
-          type: "upLoad",
-          label: "驾驶证（正面）",
-          prop: "carsPhotoFace",
+          type: 'upLoad',
+          label: '驾驶证（正面）',
+          prop: 'carsPhotoFace',
           required: true
         },
         {
-          type: "upLoad",
-          label: "驾驶证（反面）",
-          prop: "carsPhotoBack",
+          type: 'upLoad',
+          label: '驾驶证（反面）',
+          prop: 'carsPhotoBack',
           required: true
         },
         {
-          type: "radio",
-          label: "黑名单",
-          prop: "blacklist",
+          type: 'radio',
+          label: '黑名单',
+          prop: 'blacklist',
           options: this.$store.state.config.blacklist,
           required: true
-        },
+        }
       ],
       formButton: [
-        { label: "确定", key: "submit", type: "danger", handler: () => this.formValidate() },
-        { label: "重置", key: "reset" },
-      ],
+        { label: '确定', key: 'submit', type: 'danger', handler: () => this.formValidate() },
+        { label: '重置', key: 'reset' }
+      ]
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.id && this.detailed()
   },
-  mounted () { },
+  mounted() {},
   methods: {
-    detailed () {
+    detailed() {
       Detailed({ id: this.id }).then(response => {
         const data = formatRequestData(this.formData, response.data)
         this.formData = data
       })
     },
     /** 提交表单 */
-    formValidate () {
-      this.$refs.vuForm.$refs.form.validate((valid) => {
+    formValidate() {
+      this.$refs.vuForm.$refs.form.validate(valid => {
         if (valid) {
           this.id && this.editMember()
         } else {
@@ -138,19 +139,21 @@ export default {
       })
     },
     // 编辑
-    editMember () {
+    editMember() {
       // ...扩展
       Edit({ ...this.formData, id: this.id }).then(response => {
         this.$message({
           message: response.message,
-          type: "success"
+          type: 'success'
         })
         this.$router.go(-1)
       })
     },
-    callbackComponent (params) {
-      if (params.function) { this[params.function](params.data) }
-    },
+    callbackComponent(params) {
+      if (params.function) {
+        this[params.function](params.data)
+      }
+    }
   }
 }
 </script>

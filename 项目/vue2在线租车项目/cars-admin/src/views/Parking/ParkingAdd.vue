@@ -24,7 +24,7 @@ import { ParkingAdd, ParkingDetailed, ParkingEdit } from '@/api/parking'
 export default {
   name: 'ParkingAdd',
   components: { CarMap, AreaCascader, CarForm },
-  data () {
+  data() {
     // 自定义校验
     const validateNumber = (rule, value, callback) => {
       if (!value) {
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     // 提交表单
-    formValidate () {
+    formValidate() {
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
           this.id ? this.editParking() : this.addParking()
@@ -108,12 +108,12 @@ export default {
     },
 
     // 地图加载完成再获取接口
-    mapLoad () {
+    mapLoad() {
       this.getParkingDetailed()
     },
 
     // 获取详情
-    async getParkingDetailed () {
+    async getParkingDetailed() {
       // id不存在返回
       if (!this.id) return
       const res = await ParkingDetailed({ id: this.id })
@@ -137,7 +137,7 @@ export default {
     },
 
     // 请求修改停车场接口
-    async editParking () {
+    async editParking() {
       let requestData = JSON.parse(JSON.stringify(this.formData))
       requestData.id = this.id
       this.formLoading = true
@@ -159,7 +159,7 @@ export default {
     },
 
     // 请求添加停车场接口
-    async addParking () {
+    async addParking() {
       this.formLoading = true
       try {
         const res = await ParkingAdd(this.formData)
@@ -175,29 +175,28 @@ export default {
         })
       } catch {
         this.formLoading = false
-
       }
     },
 
     // 修改areaValue
-    cityAreaValue (v) {
+    cityAreaValue(v) {
       this.formData.areaValue = v
     },
 
     // 获取经纬度
-    getLngLat (v) {
+    getLngLat(v) {
       this.formData.lnglat = v.value
     },
 
     // 获取中文地址
-    getAddress (address) {
+    getAddress(address) {
       this.formData.address = address
       // 触发carMap组件事件
       this.$refs.carMap.setMapCenter(address)
     },
 
     // 重置表单
-    resetForm () {
+    resetForm() {
       this.$refs.carForm.$refs.form.resetFields()
       // 清除 cityAray 的值
       this.$refs.areaCascader.clear()

@@ -8,7 +8,7 @@ import TableData from '@/components/TableData.vue'
 export default {
   name: 'CarIndex',
   components: { TableData },
-  data () {
+  data() {
     return {
       form: {
         area: '',
@@ -51,13 +51,13 @@ export default {
           { label: '禁启用', prop: 'status', type: 'switch', width: '100px' },
           { label: '车辆状态', prop: 'status', type: 'switch', width: '100px' },
           {
-            label: "车辆状态",
-            prop: "cars_status",
-            type: "function",
-            callback: (row) => {
+            label: '车辆状态',
+            prop: 'cars_status',
+            type: 'function',
+            callback: row => {
               const carsStatus = this.$store.state.config.cars_status
               const status = carsStatus[row.carsStatus]
-              return status ? status.zh : ""
+              return status ? status.zh : ''
             }
           },
           { label: '停车场', prop: 'parkingName' },
@@ -72,7 +72,7 @@ export default {
             type: 'operation',
             // 需要删除按钮
             default: {
-              delButton: true,
+              delButton: true
             },
             // 配置编辑按钮
             buttonGroup: [
@@ -89,7 +89,7 @@ export default {
             ]
           }
         ],
-        url: 'carsList',
+        url: 'carsList'
       },
       searchConfig: {
         formConfig: [
@@ -123,7 +123,7 @@ export default {
             router: '/CarsAdd'
           }
         ]
-      },
+      }
     }
   }
 }

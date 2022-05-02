@@ -1,6 +1,6 @@
 import service from '../utils/request'
 /** 会员详情 */
-export function Detailed (data = {}) {
+export function Detailed(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/detailed/',
@@ -9,7 +9,7 @@ export function Detailed (data = {}) {
 }
 
 /** 会员修改 */
-export function Edit (data = {}) {
+export function Edit(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/edit/',
@@ -18,7 +18,7 @@ export function Edit (data = {}) {
 }
 
 /** 更新实名认证 */
-export function UpdateRealName (data = {}) {
+export function UpdateRealName(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/updateRealName/',
@@ -27,7 +27,7 @@ export function UpdateRealName (data = {}) {
 }
 
 /** 黑名单 */
-export function Blacklist (data = {}) {
+export function Blacklist(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/blacklist/',
@@ -36,7 +36,7 @@ export function Blacklist (data = {}) {
 }
 
 /** 认证图片 */
-export function Photo (data = {}) {
+export function Photo(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/photo/',
@@ -45,7 +45,7 @@ export function Photo (data = {}) {
 }
 
 /** 清除金额 */
-export function AmountClear (data = {}) {
+export function AmountClear(data = {}) {
   return service.request({
     method: 'post',
     url: '/member/amountClear/',

@@ -1,7 +1,7 @@
 import service from '../utils/request'
 
 /** 添加 */
-export function CarsAdd (data = {}) {
+export function CarsAdd(data = {}) {
   return service.request({
     method: 'post',
     url: '/cars/carsInfoAdd/',
@@ -10,7 +10,7 @@ export function CarsAdd (data = {}) {
 }
 
 /** 禁启用状态 */
-export function CarsStatus (data = {}) {
+export function CarsStatus(data = {}) {
   return service.request({
     method: 'post',
     url: '/cars/status/',
@@ -19,7 +19,7 @@ export function CarsStatus (data = {}) {
 }
 
 /** 删除 */
-export function CarsDelete (data = {}) {
+export function CarsDelete(data = {}) {
   return service.request({
     method: 'post',
     url: '/cars/delete/',
@@ -28,7 +28,7 @@ export function CarsDelete (data = {}) {
 }
 
 /** 详情 */
-export function CarsDetailed (data = {}) {
+export function CarsDetailed(data = {}) {
   return service.request({
     method: 'post',
     url: '/cars/carsDetailed/',
@@ -37,7 +37,7 @@ export function CarsDetailed (data = {}) {
 }
 
 /** 编辑 */
-export function CarsEdit (data = {}) {
+export function CarsEdit(data = {}) {
   return service.request({
     method: 'post',
     url: '/cars/carsInfoEdit/',

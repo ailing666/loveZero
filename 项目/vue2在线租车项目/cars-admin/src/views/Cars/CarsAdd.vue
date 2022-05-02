@@ -75,7 +75,7 @@
 </template>
 <script>
 import CarForm from '@c/CarForm'
-import { LeaseList } from "@/api/sale"
+import { LeaseList } from '@/api/sale'
 import AddCarsAttrList from '@c/addCarsAttrList'
 import { GetCarsBrand, GetParking } from '@/api/common'
 import { CarsAdd, CarsEdit, CarsDetailed } from '@/api/cars'
@@ -83,7 +83,7 @@ import { CarsAdd, CarsEdit, CarsDetailed } from '@/api/cars'
 export default {
   name: 'CarsAdd',
   components: { CarForm, AddCarsAttrList },
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       carsAttrList: [],
@@ -190,10 +190,10 @@ export default {
           label: '车辆属性'
         },
         {
-          type: "slot",
-          slotName: "leaseList",
-          prop: "lease",
-          label: "租赁价格"
+          type: 'slot',
+          slotName: 'leaseList',
+          prop: 'lease',
+          label: '租赁价格'
         },
         {
           type: 'editor',
@@ -227,10 +227,10 @@ export default {
       },
       // 车辆品牌列表
       carsBrandList: [],
-      formLoading: false,
+      formLoading: false
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.getCarsBrandList()
     this.getParkingList()
     this.getLeaseList()
@@ -240,7 +240,7 @@ export default {
 
   methods: {
     // 获取车辆品牌
-    async getCarsBrandList () {
+    async getCarsBrandList() {
       const res = await GetCarsBrand()
       const data = res.data.data
       if (data && data.length > 0) {
@@ -251,7 +251,7 @@ export default {
     },
 
     // 获取停车场
-    async getParkingList () {
+    async getParkingList() {
       const res = await GetParking()
       const data = res.data.data
       if (data && data.length > 0) {
@@ -262,14 +262,16 @@ export default {
     },
 
     /** 获取租赁列表 */
-    async getLeaseList () {
+    async getLeaseList() {
       const res = await LeaseList()
       const data = res.data.data
-      if (data) { this.formData.leasePrice = data }
+      if (data) {
+        this.formData.leasePrice = data
+      }
     },
 
     // 获取车辆详情
-    async getCarsDetailed () {
+    async getCarsDetailed() {
       const res = await CarsDetailed({ id: this.id })
       Object.keys(this.formData).map(item => {
         this.formData[item] = res.data[item]
@@ -277,7 +279,7 @@ export default {
     },
 
     // 提交表单
-    formSubmit () {
+    formSubmit() {
       // 获取属性
       this.$refs.AddCarsAttrList.setAttrList()
       this.$refs.carForm.$refs.form.validate(valid => {
@@ -286,7 +288,7 @@ export default {
     },
 
     // 请求接口
-    async requestCars () {
+    async requestCars() {
       // 根据id判断是编辑还是新增
       let api = this.id ? CarsEdit : CarsAdd
       let requestData = { ...this.formData, leasePrice: this.formData.leasePrice }
@@ -310,7 +312,7 @@ export default {
     },
 
     // 重置表单
-    resetForm () {
+    resetForm() {
       // form表单重置
       this.$refs.carForm.reset()
       // 车辆属性
@@ -318,7 +320,7 @@ export default {
     },
 
     // 改变能源类型清空值
-    changeEnergyType () {
+    changeEnergyType() {
       this.formData.electric = 0
       this.formData.oil = 0
     }

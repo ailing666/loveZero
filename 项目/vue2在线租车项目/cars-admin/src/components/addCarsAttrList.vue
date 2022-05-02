@@ -30,7 +30,7 @@ export default {
       default: 0
     }
   },
-  data () {
+  data() {
     return {
       // 自定义属性列表
       attrsList: [],
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     // 计算公里
-    countKm () {
+    countKm() {
       // 监听值变化时计算属性
       if (
         !this.attrItem.basis ||
@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     initValue: {
-      handler (newValue) {
+      handler(newValue) {
         if (newValue) {
           this.attrItem = JSON.parse(newValue)
         }
@@ -72,14 +72,14 @@ export default {
   },
   methods: {
     // 获取父组件来的属性数据
-    getAttrsData (data) {
+    getAttrsData(data) {
       this.attrsList = data.attrsList
       this.currentBasisAttrs = data.currentBasisAttrs
       this.attrFormat()
     },
 
     // 格式化属性
-    attrFormat () {
+    attrFormat() {
       // 自定义属性为空时，不执行
       if (this.attrsList.length === 0) return false
 
@@ -97,7 +97,7 @@ export default {
       this.$set(this.attrItem, attrBasisKey, attrJson)
     },
     // 父组件调用，更新value
-    setAttrList () {
+    setAttrList() {
       this.$emit('update:value', JSON.stringify(this.attrItem))
     }
   }

@@ -22,32 +22,31 @@
 </template>
 
 <script>
-import { Detailed } from "@/api/member"
+import { Detailed } from '@/api/member'
 export default {
   name: 'Detailed',
   components: {},
   props: {},
-  data () {
+  data() {
     return {
       id: this.$route.query.id,
       detailedData: {}
     }
   },
-  beforeMount () {
+  beforeMount() {
     this.id && this.detailed()
   },
   methods: {
-    detailed () {
+    detailed() {
       Detailed({ id: this.id }).then(res => {
         const data = res.data
         data && (this.detailedData = data)
       })
     }
-
   }
 }
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .detailed {
   line-height: 34px;
   li {

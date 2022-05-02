@@ -17,7 +17,7 @@ import CarAttrItem from '@c/CarsAttrItem.vue'
 export default {
   name: 'CarsAttrList',
   components: { TableData, AddCarsAttrs, CarAttrItem },
-  data () {
+  data() {
     return {
       // 弹窗标记
       showDialog: false,
@@ -31,7 +31,7 @@ export default {
         ],
         checkbox: false,
         isInitRequest: false,
-        url: 'carsAttrList',
+        url: 'carsAttrList'
       },
       searchConfig: {
         formConfig: [
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     // 新增按钮打开弹窗
-    carsTypeAddDialog () {
+    carsTypeAddDialog() {
       // 没有选择自定义属性无法添加
       if (!this.currentBasisAttrs.id) {
         this.$message({
@@ -67,7 +67,7 @@ export default {
       this.showDialog = true
     },
     // 获取对应的属性列表
-    getTypeList (data) {
+    getTypeList(data) {
       this.currentBasisAttrs = data
       this.$refs.table.requestData({ typeId: this.currentBasisAttrs.id })
     }

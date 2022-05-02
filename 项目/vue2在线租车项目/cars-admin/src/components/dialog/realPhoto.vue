@@ -15,12 +15,12 @@
 
 <script>
 export default {
-  name: "realPhoto",
+  name: 'realPhoto',
   components: {},
   props: {
     title: {
       type: String,
-      default: ""
+      default: ''
     },
     flagVisible: {
       type: Boolean,
@@ -28,17 +28,17 @@ export default {
     },
     data: {
       type: Object,
-      defult: () => { }
+      defult: () => {}
     }
   },
-  data () {
+  data() {
     return {
       dialogVisible: false,
       img: []
     }
   },
   methods: {
-    getPhoto () {
+    getPhoto() {
       const imgArr = []
       for (let key in this.data) {
         if (this.data[key]) {
@@ -47,21 +47,21 @@ export default {
       }
       this.img = imgArr
     },
-    close () {
+    close() {
       // 关闭窗口
       this.dialogVisible = false
-      this.$emit("update:flagVisible", false) // {}
+      this.$emit('update:flagVisible', false) // {}
     }
   },
   watch: {
-    flagVisible (newV) {
+    flagVisible(newV) {
       this.dialogVisible = newV
       this.getPhoto()
     }
   }
-};
+}
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .img-list {
   width: 100%;
   margin-bottom: 20px;

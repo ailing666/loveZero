@@ -14,7 +14,7 @@
 
 <script>
 import CarForm from '@/components/CarForm'
-import { LeaseAdd, LeaseEdit } from "@/api/sale"
+import { LeaseAdd, LeaseEdit } from '@/api/sale'
 export default {
   name: 'addSaleList',
   components: { CarForm },
@@ -28,15 +28,15 @@ export default {
       defult: () => ({})
     }
   },
-  data () {
+  data() {
     return {
       // 弹窗显示/关闭标记
       dialogVisible: false,
       // 表单数据
       formData: {
-        carsLeaseTypeName: "",
-        carsLeaseStatus: "",
-        carsLeaseDesc: ""
+        carsLeaseTypeName: '',
+        carsLeaseStatus: '',
+        carsLeaseDesc: ''
       },
       // 表单配置
       formConfig: [
@@ -47,8 +47,8 @@ export default {
           required: true,
           rules: [{ min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }]
         },
-        { type: "disabled", label: "禁/启状态", prop: "carsLeaseStatus", required: true },
-        { type: "textarea", label: "描述", prop: "carsLeaseDesc" },
+        { type: 'disabled', label: '禁/启状态', prop: 'carsLeaseStatus', required: true },
+        { type: 'textarea', label: '描述', prop: 'carsLeaseDesc' }
       ],
       // 表单按钮
       formButton: [
@@ -62,16 +62,16 @@ export default {
     }
   },
   watch: {
-    isVisible (newV) {
+    isVisible(newV) {
       this.dialogVisible = newV
       this.formData = this.data
     }
   },
   methods: {
     // 弹窗打开时
-    opened () { },
+    opened() {},
     // 表单提交
-    submit () {
+    submit() {
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
           this.data.carsLeaseTypeId ? this.edit() : this.add()
@@ -81,7 +81,7 @@ export default {
       })
     },
     // 编辑
-    async edit () {
+    async edit() {
       const res = await LeaseEdit({ ...this.formData })
       this.$message({
         type: 'success',
@@ -91,7 +91,7 @@ export default {
       this.close()
     },
     // 添加
-    async add () {
+    async add() {
       const res = await LeaseAdd({ ...this.formData })
       this.$message({
         type: 'success',
@@ -102,7 +102,7 @@ export default {
     },
 
     // 弹窗关闭
-    close () {
+    close() {
       this.$emit('update:isVisible', false)
       this.$refs.carForm.reset()
     }

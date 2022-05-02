@@ -16,7 +16,7 @@ import TableData from '@/components/TableData.vue'
 export default {
   name: 'Parking',
   components: { ShowMap, TableData },
-  data () {
+  data() {
     return {
       isShowMap: false,
       parkingData: {},
@@ -92,14 +92,14 @@ export default {
         config: {
           resetButton: true
         }
-      },
+      }
     }
   },
   methods: {
-    changeDialogVisible (v) {
+    changeDialogVisible(v) {
       this.parkingData = v
       this.isShowMap = true
-    },
+    }
   }
 }
 </script>

@@ -11,7 +11,7 @@ import TableData from '@/components/TableData.vue'
 export default {
   name: 'CarBrand',
   components: { AddCarsBrand, TableData },
-  data () {
+  data() {
     return {
       // 弹窗标记
       showDialog: false,
@@ -43,7 +43,9 @@ export default {
                 event: 'button',
                 label: '编辑',
                 type: 'danger',
-                handler: (data) => { this.editParking(data) }
+                handler: data => {
+                  this.editParking(data)
+                }
               }
             ]
           }
@@ -72,20 +74,20 @@ export default {
         config: {
           resetButton: false
         }
-      },
+      }
     }
   },
   watch: {
-    'showDialog' (newV) {
+    showDialog(newV) {
       !newV && this.$refs.table.requestData()
-    },
+    }
   },
   methods: {
     // 编辑
-    editParking (query) {
+    editParking(query) {
       this.brandData = JSON.parse(JSON.stringify(query))
       this.showDialog = true
-    },
+    }
   }
 }
 </script>

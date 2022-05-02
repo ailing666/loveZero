@@ -1,7 +1,7 @@
 import service from '../utils/request'
 
 /** 获取车辆公用属性（顶级） */
-export function GetCarsTypeBasis (data = {}) {
+export function GetCarsTypeBasis(data = {}) {
   return service.request({
     method: 'post',
     url: '/carsAttr/type/',
@@ -10,7 +10,7 @@ export function GetCarsTypeBasis (data = {}) {
 }
 
 /** 获取车辆自定义属性 */
-export function GetCarsTypeList (data = {}) {
+export function GetCarsTypeList(data = {}) {
   return service.request({
     method: 'post',
     url: '/carsAttr/list/',
@@ -19,7 +19,7 @@ export function GetCarsTypeList (data = {}) {
 }
 
 /** 添加车辆自定义属性 */
-export function CarsTypeAdd (data = {}) {
+export function CarsTypeAdd(data = {}) {
   return service.request({
     method: 'post',
     url: '/carsAttr/add/',

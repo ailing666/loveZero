@@ -37,10 +37,10 @@ export default {
     },
     data: {
       type: Object,
-      defult: () => { }
+      defult: () => {}
     }
   },
-  data () {
+  data() {
     return {
       // 弹窗显示/关闭标记
       dialogVisible: false,
@@ -98,20 +98,20 @@ export default {
     }
   },
   watch: {
-    isVisible (newV) {
+    isVisible(newV) {
       this.dialogVisible = newV
     }
   },
   methods: {
     // 弹窗打开时
-    opened () {
+    opened() {
       this.getBrandLogo()
       // 如果id存在，就将数据覆盖
       this.data.id && this.dataCover()
     },
 
     // 获取品牌LOGO
-    async getBrandLogo () {
+    async getBrandLogo() {
       // 存在数据时，不再请求接口
       if (this.logoList.length !== 0) return false
       // 没有数据时
@@ -121,14 +121,14 @@ export default {
     },
 
     // 获取详情
-    dataCover () {
+    dataCover() {
       this.formData = this.data
       this.logoCurrent = this.data.imgUrl
       this.formData.imgUrl = this.data.imgUrl
     },
 
     // 表单提交
-    submit () {
+    submit() {
       this.formData.imgUrl = this.logoCurrent
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
@@ -142,7 +142,7 @@ export default {
     },
 
     // 添加
-    async add () {
+    async add() {
       const res = await BrandAdd({ ...this.formData })
       this.$message({
         type: 'success',
@@ -152,7 +152,7 @@ export default {
     },
 
     // 修改
-    async edit () {
+    async edit() {
       const res = await BrandEdit({ ...this.formData })
       this.$message({
         type: 'success',
@@ -162,9 +162,9 @@ export default {
     },
 
     // 重置表单
-    reset () {
+    reset() {
       for (let key in this.formData) {
-        this.formData[key] = ""
+        this.formData[key] = ''
       }
       this.$refs.carForm.reset()
       // 清除选中的LOGO
@@ -172,7 +172,7 @@ export default {
     },
 
     // 弹窗关闭
-    close () {
+    close() {
       this.reset()
       this.$emit('update:isVisible', false)
     }

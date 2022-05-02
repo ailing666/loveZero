@@ -28,7 +28,7 @@ export default {
       defult: () => ({})
     }
   },
-  data () {
+  data() {
     return {
       // 弹窗显示/关闭标记
       dialogVisible: false,
@@ -60,15 +60,15 @@ export default {
     }
   },
   watch: {
-    isVisible (newV) {
+    isVisible(newV) {
       this.dialogVisible = newV
     }
   },
   methods: {
     // 弹窗打开时
-    opened () { },
+    opened() {},
     // 表单提交
-    submit () {
+    submit() {
       this.$refs.carForm.$refs.form.validate(valid => {
         if (valid) {
           this.add()
@@ -80,7 +80,7 @@ export default {
     },
 
     // 添加
-    add () {
+    add() {
       const requestData = {
         typeId: this.data.id,
         key: this.formData.key,
@@ -97,12 +97,12 @@ export default {
     },
 
     // 重置表单
-    reset () {
+    reset() {
       this.$refs.carForm.reset()
     },
 
     // 弹窗关闭
-    close () {
+    close() {
       this.$emit('update:isVisible', false)
       this.reset()
     }

@@ -3,7 +3,7 @@ import requestUrl from './requestUrl'
 /**
  * 获取城市列表
  */
-export function GetCity (data = {}) {
+export function GetCity(data = {}) {
   return service.request({
     method: 'post',
     url: '/cityPicker/',
@@ -14,7 +14,7 @@ export function GetCity (data = {}) {
 /**
  * 获取车辆品牌
  */
-export function GetCarsBrand (data = {}) {
+export function GetCarsBrand(data = {}) {
   return service.request({
     method: 'post',
     url: '/common/getCarsBrand/',
@@ -25,7 +25,7 @@ export function GetCarsBrand (data = {}) {
 /**
  * 获取停车场
  */
-export function GetParking (data = {}) {
+export function GetParking(data = {}) {
   return service.request({
     method: 'post',
     url: '/common/getParking/',
@@ -35,7 +35,7 @@ export function GetParking (data = {}) {
 /**
  * 获取列表
  */
-export function GetList (params = {}) {
+export function GetList(params = {}) {
   return service.request({
     method: 'post',
     url: requestUrl[params.url],
@@ -46,7 +46,7 @@ export function GetList (params = {}) {
 /**
  * 删除列表
  */
-export function Delete (params = {}) {
+export function Delete(params = {}) {
   return service.request({
     method: 'post',
     url: requestUrl[params.url],
@@ -55,7 +55,7 @@ export function Delete (params = {}) {
 }
 
 /** 添加 */
-export function Status (params = {}) {
+export function Status(params = {}) {
   return service.request({
     method: 'post',
     url: requestUrl[params.url],
@@ -66,7 +66,7 @@ export function Status (params = {}) {
 /**
  * 获取七牛云 token
  */
-export function GetQiniuToken (data = {}) {
+export function GetQiniuToken(data = {}) {
   return service.request({
     method: 'post',
     url: '/uploadImgToken/',
