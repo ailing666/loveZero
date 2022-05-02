@@ -7,16 +7,20 @@
 
 			<el-form-item prop="username">
 				<span class="svg-container">
-					<el-icon><avatar /></el-icon>
+					<svg-icon icon="https://res.lgdsunday.club/user.svg"></svg-icon>
 				</span>
 				<el-input placeholder="username" name="username" type="text" />
 			</el-form-item>
 
 			<el-form-item prop="password">
 				<span class="svg-container">
-					<el-icon><lock /></el-icon>
+					<svg-icon icon="lock"></svg-icon>
 				</span>
 				<el-input placeholder="password" name="password" />
+				<span class="svg-container">
+					<svg-icon icon="circle-check-filled"></svg-icon>
+					<!-- <svg-icon icon="circle-close-filled"></svg-icon> -->
+				</span>
 			</el-form-item>
 
 			<el-button type="primary" style="width: 100%; margin-bottom: 30px">登录</el-button>
@@ -24,7 +28,9 @@
 	</div>
 </template>
 
-<script setup></script>
+<script setup>
+import SvgIcon from '../../components/SvgIcon/index.vue'
+</script>
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
