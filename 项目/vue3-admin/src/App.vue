@@ -1,5 +1,4 @@
 <template>
-	<el-button type="success">Success</el-button>
 	<router-view />
 </template>
 
