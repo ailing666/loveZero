@@ -18,10 +18,10 @@
 					<!-- elemnetPlus自带图标 -->
 					<el-icon><lock /></el-icon>
 				</span>
-				<el-input v-model="loginFrom.password" placeholder="password" name="password" />
+				<el-input :type="passwordType" v-model="loginFrom.password" placeholder="password" name="password" />
 				<span class="svg-container">
 					<!-- 本地图标 -->
-					<svg-icon icon="eye" />
+					<svg-icon @click="passwordClick" :icon="passwordType === 'password' ? 'eye' : 'eye-open'" />
 				</span>
 			</el-form-item>
 
@@ -51,6 +51,12 @@ const loginRules = ref({
 		}
 	]
 })
+
+// 密码框类型,默认是password
+const passwordType = ref('password')
+
+// 点击小眼睛，切换 passwordType
+const passwordClick = () => (passwordType.value = passwordType.value === 'password' ? 'text' : 'password')
 </script>
 
 <style lang="scss" scoped>
