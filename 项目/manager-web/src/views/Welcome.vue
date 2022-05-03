@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <el-button type="success">welcome</el-button>
-  </div>
+	<div>
+		<el-button @click="testReq" type="success">welcome</el-button>
+	</div>
 </template>
 
-<script>
-export default {
-  name: "welcome",
-};
+<script setup>
+import { test } from '../api/test'
+const testReq = () => {
+	test().then((res) => {
+		console.log('res: ', res)
+	})
+}
 </script>
