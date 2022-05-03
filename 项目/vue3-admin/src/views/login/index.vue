@@ -1,6 +1,6 @@
 <template>
 	<div class="login-container">
-		<el-form class="login-form" ref="loginFromRef">
+		<el-form class="login-form" :model="loginFrom" :rules="loginRules">
 			<div class="title-container">
 				<h3 class="title">用户登录</h3>
 			</div>
@@ -10,7 +10,7 @@
 					<!-- 外部图标 -->
 					<svg-icon icon="https://res.lgdsunday.club/user.svg"></svg-icon>
 				</span>
-				<el-input placeholder="username" name="username" type="text" />
+				<el-input v-model="loginFrom.username" placeholder="username" name="username" type="text" />
 			</el-form-item>
 
 			<el-form-item prop="password">
@@ -18,7 +18,7 @@
 					<!-- elemnetPlus自带图标 -->
 					<el-icon><lock /></el-icon>
 				</span>
-				<el-input placeholder="password" name="password" />
+				<el-input v-model="loginFrom.password" placeholder="password" name="password" />
 				<span class="svg-container">
 					<!-- 本地图标 -->
 					<svg-icon icon="eye" />
@@ -30,7 +30,29 @@
 	</div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { validatePassword } from './rules'
+
+// loginFrom
+const loginFrom = ref({
+	username: 'super-admin',
+	password: '123456'
+})
+
+// loginRules校验
+const loginRules = ref({
+	username: [{ required: true, message: '用户名必填', trigger: 'blur' }],
+	password: [
+		{
+			required: true,
+			trigger: 'blur',
+			validator: validatePassword()
+		}
+	]
+})
+</script>
+
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
