@@ -1,6 +1,6 @@
 <template>
 	<div class="login-container">
-		<el-form class="login-form" :model="loginFrom" :rules="loginRules">
+		<el-form class="login-form" ref="loginFormRef" :model="loginForm" :rules="loginRules">
 			<div class="title-container">
 				<h3 class="title">用户登录</h3>
 			</div>
@@ -10,7 +10,7 @@
 					<!-- 外部图标 -->
 					<svg-icon icon="https://res.lgdsunday.club/user.svg"></svg-icon>
 				</span>
-				<el-input v-model="loginFrom.username" placeholder="username" name="username" type="text" />
+				<el-input v-model="loginForm.username" placeholder="username" name="username" type="text" />
 			</el-form-item>
 
 			<el-form-item prop="password">
@@ -18,14 +18,14 @@
 					<!-- elemnetPlus自带图标 -->
 					<el-icon><lock /></el-icon>
 				</span>
-				<el-input :type="passwordType" v-model="loginFrom.password" placeholder="password" name="password" />
+				<el-input :type="passwordType" v-model="loginForm.password" placeholder="password" name="password" />
 				<span class="svg-container">
 					<!-- 本地图标 -->
 					<svg-icon @click="passwordClick" :icon="passwordType === 'password' ? 'eye' : 'eye-open'" />
 				</span>
 			</el-form-item>
 
-			<el-button type="primary" style="width: 100%; margin-bottom: 30px">登录</el-button>
+			<el-button type="primary" style="width: 100%; margin-bottom: 30px" :loading="loginLoading" @click="handleLogin">登录</el-button>
 		</el-form>
 	</div>
 </template>
@@ -33,9 +33,10 @@
 <script setup>
 import { ref } from 'vue'
 import { validatePassword } from './rules'
+import { useStore } from 'vuex'
 
-// loginFrom
-const loginFrom = ref({
+// loginForm
+const loginForm = ref({
 	username: 'super-admin',
 	password: '123456'
 })
@@ -57,6 +58,32 @@ const passwordType = ref('password')
 
 // 点击小眼睛，切换 passwordType
 const passwordClick = () => (passwordType.value = passwordType.value === 'password' ? 'text' : 'password')
+
+// 获取ref实例
+const loginFormRef = ref(null)
+
+// 按钮loading状态
+const loginLoading = ref(false)
+
+// 使用vuex
+const store = useStore()
+// 点击登录
+const handleLogin = () => {
+	// 表单验证
+	loginFormRef.value.validate((valid) => {
+		if (!valid) return
+		loginLoading.value = true
+		store
+			.dispatch('user/Login', loginForm.value)
+			.then(() => {
+				loginLoading.value = false
+			})
+			.catch((err) => {
+				console.log(err)
+				loginLoading.value = false
+			})
+	})
+}
 </script>
 
 <style lang="scss" scoped>
