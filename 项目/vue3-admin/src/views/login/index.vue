@@ -7,6 +7,7 @@
 
 			<el-form-item prop="username">
 				<span class="svg-container">
+					<!-- 外部图标 -->
 					<svg-icon icon="https://res.lgdsunday.club/user.svg"></svg-icon>
 				</span>
 				<el-input placeholder="username" name="username" type="text" />
@@ -14,12 +15,13 @@
 
 			<el-form-item prop="password">
 				<span class="svg-container">
-					<svg-icon icon="lock"></svg-icon>
+					<!-- elemnetPlus自带图标 -->
+					<el-icon><lock /></el-icon>
 				</span>
 				<el-input placeholder="password" name="password" />
 				<span class="svg-container">
-					<svg-icon icon="circle-check-filled"></svg-icon>
-					<!-- <svg-icon icon="circle-close-filled"></svg-icon> -->
+					<!-- 本地图标 -->
+					<svg-icon icon="eye" />
 				</span>
 			</el-form-item>
 
@@ -28,9 +30,7 @@
 	</div>
 </template>
 
-<script setup>
-import SvgIcon from '../../components/SvgIcon/index.vue'
-</script>
+<script setup></script>
 <style lang="scss" scoped>
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
