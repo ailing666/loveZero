@@ -120,8 +120,37 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"index.ts":[function(require,module,exports) {
 "use strict";
 
-var age = 22;
-console.log('age', age);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Person = /*#__PURE__*/function () {
+  function Person() {
+    _classCallCheck(this, Person);
+
+    this.name = 'noname';
+    this.age = 22;
+    this.phone = '18911111111';
+  } //方法默认的返回值为void
+
+
+  _createClass(Person, [{
+    key: "doEat",
+    value: function doEat(who, address) {
+      console.log("".concat(this.name, "\u548C").concat(who, "\u5728").concat(address, "\u5403\u996D"));
+    }
+  }]);
+
+  return Person;
+}();
+
+var zs = new Person();
+zs.name = 'zs';
+zs.age = 23;
+zs.phone = '18922222222';
+zs.doEat('ls', '武汉');
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
