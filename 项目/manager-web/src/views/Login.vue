@@ -1,6 +1,6 @@
 <template>
 	<el-card class="login-card" shadow="always">
-		<el-form ref="userForm" :model="user" status-icon>
+		<el-form ref="userForm" :model="user" :rules="rules">
 			<div class="title">火星</div>
 			<el-form-item prop="userName">
 				<el-input type="text" :prefix-icon="User" v-model="user.userName" />
@@ -19,14 +19,33 @@
 import { login } from '../api/test'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+// 数据源
 const user = ref({
 	userName: 'admin',
 	userPwd: 'admin'
 })
 
+// 校验规则
+const rules = ref({
+	userName: [{ required: true, message: '用户名必填', trigger: 'blur' }],
+	userPwd: [{ required: true, message: '密码必填', trigger: 'blur' }]
+})
+
+// 表单dom
+const userForm = ref(null)
+// 使用vuex的store
+const store = useStore()
 const userLogin = () => {
-	login().then((res) => {
-		console.log(res)
+	// 表单校验
+	userForm.value.validate((valid) => {
+		if (valid) {
+			// 校验通过发送请求
+			login().then((res) => {
+				store.commit('saveUserInfo', res)
+				console.log(res)
+			})
+		}
 	})
 }
 </script>
