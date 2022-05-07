@@ -15,5 +15,6 @@ zs.age = 23;
 zs.phone = '18922222222';
 
 zs.doEat('ls', '武汉');
+console.log('zs', zs);
 
 export {};

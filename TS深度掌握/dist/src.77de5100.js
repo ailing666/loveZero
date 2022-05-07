@@ -127,12 +127,16 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 var Person = /*#__PURE__*/function () {
-  function Person() {
+  // 构造器
+  function Person(name_, age_, phone_) {
     _classCallCheck(this, Person);
 
     this.name = 'noname';
     this.age = 22;
     this.phone = '18911111111';
+    this.name = name_;
+    this.age = age_;
+    this.phone = phone_;
   } //方法默认的返回值为void
 
 
@@ -146,10 +150,8 @@ var Person = /*#__PURE__*/function () {
   return Person;
 }();
 
-var zs = new Person();
-zs.name = 'zs';
-zs.age = 23;
-zs.phone = '18922222222';
+var zs = new Person('zs', 23, '18922222222');
+console.log('%czs: ', 'color: #ec40ef;', zs);
 zs.doEat('ls', '武汉');
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
