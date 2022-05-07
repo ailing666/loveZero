@@ -9,19 +9,26 @@
 				<el-input type="password" :prefix-icon="Lock" v-model="user.userPwd" />
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" class="btn-login" @click="login">登录</el-button>
+				<el-button type="primary" class="btn-login" @click="userLogin">登录</el-button>
 			</el-form-item>
 		</el-form>
 	</el-card>
 </template>
 
 <script setup>
+import { login } from '../api/test'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 const user = ref({
 	userName: 'admin',
 	userPwd: 'admin'
 })
+
+const userLogin = () => {
+	login().then((res) => {
+		console.log(res)
+	})
+}
 </script>
 
 <style lang="scss" scoped>

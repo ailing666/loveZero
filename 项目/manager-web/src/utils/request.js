@@ -38,4 +38,41 @@ service.interceptors.response.use((res) => {
 	}
 })
 
-export default service
+function request(options) {
+	// 默认 method 是get
+	options.method = options.method || 'get'
+
+	// 如果传入的method是get，则请求参数设置为params
+	if (options.method.toLowerCase() === 'get') {
+		options.params = options.data
+	}
+
+	// 是否开启mock，默认为配置中的mock，如果传入了mock，就用传入的mock覆盖配置中的mock
+	let isMock = config.mock
+	if (typeof options.mock !== 'undefined') {
+		isMock = options.mock
+	}
+
+	// 如果是生产环境，baseURL一定要设为baseApi
+	if (config.env === 'prod') {
+		service.defaults.baseURL = config.baseApi
+	} else {
+		// 非生产环境，baseURL根据是否开启mock来决定
+		service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
+	}
+
+	return service(options)
+}
+
+const methodList = ['get', 'post', 'put', 'delete', 'patch']
+methodList.forEach((item) => {
+	request[item] = (url, data, options) => {
+		return request({
+			url,
+			data,
+			method: item,
+			...options
+		})
+	}
+})
+export default request

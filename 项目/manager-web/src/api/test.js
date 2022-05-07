@@ -1,10 +1,12 @@
 import request from '../utils/request'
 
 // 登录
-export const test = (data) => {
+export const login = (data) => {
 	return request({
-		url: '/test',
-		method: 'GET',
-		data
+		url: '/users/login',
+		method: 'POST',
+		data,
+		// 是否开启mock
+		mock: true
 	})
 }
