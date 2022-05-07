@@ -7,6 +7,6 @@ export const login = (data) => {
 		method: 'POST',
 		data,
 		// 是否开启mock
-		mock: true
+		mock: false
 	})
 }

@@ -16,10 +16,11 @@
 </template>
 
 <script setup>
-import { login } from '../api/test'
+import { login } from '../api/user'
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 // 数据源
 const user = ref({
 	userName: 'admin',
@@ -36,14 +37,17 @@ const rules = ref({
 const userForm = ref(null)
 // 使用vuex的store
 const store = useStore()
+// 路由
+const router = useRouter()
+const route = useRoute()
 const userLogin = () => {
 	// 表单校验
 	userForm.value.validate((valid) => {
 		if (valid) {
 			// 校验通过发送请求
-			login().then((res) => {
+			login(user.value).then((res) => {
 				store.commit('saveUserInfo', res)
-				console.log(res)
+				router.push({ name: 'welcome' })
 			})
 		}
 	})

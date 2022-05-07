@@ -1,5 +1,5 @@
 // 通用工具函数
-const log4js = require("./log4j");
+const log4js = require("./log4js");
 const CODE = {
   SUCCESS: 200,
   PARAM_ERROR: 10001, // 参数错误
