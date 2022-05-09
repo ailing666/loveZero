@@ -19,3 +19,4 @@ const zs = new Person('zs', 23, '18922222222');
 console.log('%czs: ', 'color: #ec40ef;', zs);
 
 zs.doEat('ls', '武汉');
+export {};
