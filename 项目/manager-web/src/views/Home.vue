@@ -2,7 +2,7 @@
 	<div class="common-layout home">
 		<el-container>
 			<!-- 侧边栏 -->
-			<el-aside class="home-side" width="200px">
+			<el-aside :class="['home-side', isCollapse ? 'fold' : 'unfold']">
 				<h1 class="logo">
 					<img src="../assets/logo.png" alt="" />
 				</h1>
@@ -25,22 +25,68 @@
 					</el-sub-menu>
 				</el-menu>
 			</el-aside>
+
 			<el-container>
 				<el-header class="home-header">
-					<div class="bread">面包屑</div>
-					<div class="user-info">用户</div>
+					<div class="header-left">
+						<el-icon class="menu-fold" @click="toggleIsCollapse"><Menu /></el-icon>
+						<span>面包屑</span>
+					</div>
+
+					<div class="user-info">
+						<el-badge is-dot class="notice">
+							<el-icon><Bell /></el-icon>
+						</el-badge>
+						<el-dropdown @command="handleCommand">
+							<span class="user-link">
+								{{ store.state.userInfo.userName }}
+								<el-icon class="el-icon--right">
+									<arrow-down />
+								</el-icon>
+							</span>
+							<template #dropdown>
+								<el-dropdown-menu>
+									<el-dropdown-item command="email">邮箱：{{ store.state.userInfo.userEmail }}</el-dropdown-item>
+									<el-dropdown-item command="logout">退出</el-dropdown-item>
+								</el-dropdown-menu>
+							</template>
+						</el-dropdown>
+					</div>
 				</el-header>
+
 				<el-main class="wrapper"><router-view></router-view></el-main>
 			</el-container>
 		</el-container>
 	</div>
 </template>
 <script setup>
-import { Promotion, Setting } from '@element-plus/icons-vue'
+import { useStore } from 'vuex'
+import { Promotion, Setting, Menu, Bell, ArrowDown } from '@element-plus/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
+
 import { ref } from 'vue'
 
 // 控制菜单是否展开
 const isCollapse = ref(false)
+
+// vuex
+const store = useStore()
+
+// 路由
+const router = useRouter()
+const route = useRoute()
+
+// 切换菜单是否展开
+const toggleIsCollapse = () => {
+	isCollapse.value = !isCollapse.value
+}
+// 退出
+const handleCommand = (command) => {
+	if (command === 'logout') {
+		store.commit('saveUserInfo', '')
+		router.push({ name: 'login' })
+	}
+}
 </script>
 
 <style lang="scss">
@@ -84,8 +130,33 @@ const isCollapse = ref(false)
 		justify-content: space-between;
 		border-bottom: 1px solid #ddd;
 		padding: 0 20px;
-	}
 
+		.header-left {
+			display: flex;
+			align-items: center;
+			.menu-fold {
+				margin-right: 8px;
+				font-size: 18px;
+				cursor: pointer;
+			}
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+
+			.notice {
+				margin-top: 10px;
+				margin-right: 20px;
+				line-height: 30px;
+				cursor: pointer;
+			}
+			.user-link {
+				cursor: pointer;
+				color: #409eff;
+			}
+		}
+	}
 	.wrapper {
 		background: #eef0f3;
 		padding: 20px;
