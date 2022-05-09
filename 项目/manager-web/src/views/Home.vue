@@ -34,7 +34,7 @@
 					</div>
 
 					<div class="user-info">
-						<el-badge is-dot class="notice">
+						<el-badge :is-dot="isDot" class="notice">
 							<el-icon><Bell /></el-icon>
 						</el-badge>
 						<el-dropdown @command="handleCommand">
@@ -63,9 +63,20 @@
 import { useStore } from 'vuex'
 import { Promotion, Setting, Menu, Bell, ArrowDown } from '@element-plus/icons-vue'
 import { useRouter, useRoute } from 'vue-router'
-
+import { noticeCount } from '../api/user'
 import { ref } from 'vue'
+import { onMounted } from 'vue'
+// onMounted生命周期
+onMounted(() => {
+	getNoticeCount()
+})
+// 控制是否有通知
+const isDot = ref(false)
 
+const getNoticeCount = async () => {
+	const res = await noticeCount()
+	isDot.value = !!res
+}
 // 控制菜单是否展开
 const isCollapse = ref(false)
 

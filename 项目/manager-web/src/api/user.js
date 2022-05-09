@@ -10,3 +10,14 @@ export const login = (data) => {
 		mock: false
 	})
 }
+
+// 通知数量
+export const noticeCount = (data) => {
+	return request({
+		url: '/leave/count',
+		method: 'GET',
+		data,
+		// 是否开启mock
+		mock: true
+	})
+}
