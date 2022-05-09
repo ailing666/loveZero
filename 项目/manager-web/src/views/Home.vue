@@ -1,7 +1,30 @@
 <template>
 	<div class="common-layout home">
 		<el-container>
-			<el-aside class="home-side" width="200px">Aside</el-aside>
+			<!-- 侧边栏 -->
+			<el-aside class="home-side" width="200px">
+				<h1 class="logo">
+					<img src="../assets/logo.png" alt="" />
+				</h1>
+				<el-menu class="nav-menu" active-text-color="#ffd04b" background-color="#001529" :collapse="isCollapse" text-color="#fff">
+					<el-sub-menu index="1">
+						<template #title>
+							<el-icon><Setting /></el-icon>
+							<span>系统管理</span>
+						</template>
+						<el-menu-item index="1-1">用户管理</el-menu-item>
+						<el-menu-item index="1-2">菜单管理</el-menu-item>
+					</el-sub-menu>
+					<el-sub-menu index="2">
+						<template #title>
+							<el-icon><Promotion /></el-icon>
+							<span>审批管理</span>
+						</template>
+						<el-menu-item index="2-1">休假审批</el-menu-item>
+						<el-menu-item index="2-2">待办审批</el-menu-item>
+					</el-sub-menu>
+				</el-menu>
+			</el-aside>
 			<el-container>
 				<el-header class="home-header">
 					<div class="bread">面包屑</div>
@@ -12,6 +35,14 @@
 		</el-container>
 	</div>
 </template>
+<script setup>
+import { Promotion, Setting } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+
+// 控制菜单是否展开
+const isCollapse = ref(false)
+</script>
+
 <style lang="scss">
 .home {
 	.home-side {
