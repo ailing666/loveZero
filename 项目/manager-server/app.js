@@ -6,11 +6,15 @@ const onerror = require("koa-onerror");
 const bodyparser = require("koa-bodyparser");
 // 导入 log4js
 const log4js = require("./utils/log4js");
-const index = require("./routes/index");
+// 一级路由
+const router = require("koa-router")();
 const users = require("./routes/users");
 
 // error handler
 onerror(app);
+
+// 链接数据库配置
+require("./config/db");
 
 // middlewares
 app.use(
@@ -28,14 +32,15 @@ app.use(
 );
 
 app.use(async (ctx, next) => {
-  log4js.info("test info");
-  log4js.error("test error");
   await next();
 });
 
-// routes
-app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
+// 一级路由前缀
+router.prefix("/api");
+// 注册一级路由
+app.use(router.routes(), router.allowedMethods());
+// 注册二级路由
+router.use(users.routes(), users.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {
