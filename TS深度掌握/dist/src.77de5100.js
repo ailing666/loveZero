@@ -127,13 +127,12 @@ Object.defineProperty(exports, "__esModule", {
 var Person =
 /** @class */
 function () {
-  // 方法一、在构造器的参数前面加上public
-  function Person(name, age, phone) {
-    this.name = name;
-    this.age = age;
-    this.phone = phone;
-  } //方法默认的返回值为void
-
+  function Person(name_, age_, phone_) {
+    // 构造器中需要赋值
+    this.name = name_;
+    this.age = age_;
+    this.phone = phone_;
+  }
 
   Person.prototype.doEat = function (who, address) {
     console.log("".concat(this.name, "\u548C").concat(who, "\u5728").concat(address, "\u5403\u996D"));
