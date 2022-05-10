@@ -120,13 +120,35 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"index.ts":[function(require,module,exports) {
 "use strict";
 
-var Index =
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Person =
 /** @class */
 function () {
-  function Index() {}
+  // 方法一、在构造器的参数前面加上public
+  function Person(name, age, phone) {
+    this.name = name;
+    this.age = age;
+    this.phone = phone;
+  } //方法默认的返回值为void
 
-  return Index;
+
+  Person.prototype.doEat = function (who, address) {
+    console.log("".concat(this.name, "\u548C").concat(who, "\u5728").concat(address, "\u5403\u996D"));
+  };
+
+  Person.prototype.getSum = function (age) {
+    return age * 10;
+  };
+
+  return Person;
 }();
+
+var zs = new Person('zs', 23, '18922222222');
+zs.doEat('ls', '武汉');
+console.log(zs.getSum(23));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
