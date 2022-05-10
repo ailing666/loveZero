@@ -130,23 +130,20 @@ var OrderDetail =
 /** @class */
 function () {
   function OrderDetail(count_, price_) {
-    // 不赋值默认是undefined，不会报错
-    // this.price = price_;
-    // this.count = count_;
-    // 赋值就会用外部传入的值
+    // 需要赋值
     this.price = price_;
     this.count = count_;
   }
 
   OrderDetail.prototype.getTotal = function () {
-    return this.price * this.count;
+    return this.price * this.count; // 编译错误对象可能'未定义'
   };
 
   return OrderDetail;
 }();
 
 exports.default = OrderDetail;
-var orderDetail = new OrderDetail(12, 30);
+var orderDetail = new OrderDetail(11, 30);
 console.log(orderDetail.getTotal());
 console.log(_typeof(orderDetail.price));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

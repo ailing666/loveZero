@@ -1,20 +1,17 @@
 export default class OrderDetail {
-  public price!: number;
-  public count!: number;
+  public price: number | undefined;
+  public count: number | undefined;
   constructor(count_: number, price_: number) {
-    // 不赋值默认是undefined，不会报错
-    // this.price = price_;
-    // this.count = count_;
-    // 赋值就会用外部传入的值
+    // 需要赋值
     this.price = price_;
     this.count = count_;
   }
 
   public getTotal(): number {
-    return this.price * this.count;
+    return this.price * this.count; // 编译错误对象可能'未定义'
   }
 }
 
-let orderDetail = new OrderDetail(12, 30);
+let orderDetail = new OrderDetail(11, 30);
 console.log(orderDetail.getTotal());
 console.log(typeof orderDetail.price);
