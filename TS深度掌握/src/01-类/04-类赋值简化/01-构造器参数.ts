@@ -1,5 +1,5 @@
 class Person {
-  // 方法一、在构造器的参数前面加上public
+  // 方法一、在构造器的参数前面加上public,既定义了属性，还隐士赋值了undefined
   constructor(public name: string, public age: number, public phone: string) {}
 
   //方法默认的返回值为void

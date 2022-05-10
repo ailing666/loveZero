@@ -120,34 +120,35 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"index.ts":[function(require,module,exports) {
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var Person =
+var OrderDetail =
 /** @class */
 function () {
-  function Person(name_, age_, phone_) {
-    // 构造器中需要赋值
-    this.name = name_;
-    this.age = age_;
-    this.phone = phone_;
+  function OrderDetail(count_, price_) {
+    // 不赋值默认是undefined，不会报错
+    // this.price = price_;
+    // this.count = count_;
+    // 赋值就会用外部传入的值
+    this.price = price_;
+    this.count = count_;
   }
 
-  Person.prototype.doEat = function (who, address) {
-    console.log("".concat(this.name, "\u548C").concat(who, "\u5728").concat(address, "\u5403\u996D"));
+  OrderDetail.prototype.getTotal = function () {
+    return this.price * this.count;
   };
 
-  Person.prototype.getSum = function (age) {
-    return age * 10;
-  };
-
-  return Person;
+  return OrderDetail;
 }();
 
-var zs = new Person('zs', 23, '18922222222');
-zs.doEat('ls', '武汉');
-console.log(zs.getSum(23));
+exports.default = OrderDetail;
+var orderDetail = new OrderDetail(12, 30);
+console.log(orderDetail.getTotal());
+console.log(_typeof(orderDetail.price));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
