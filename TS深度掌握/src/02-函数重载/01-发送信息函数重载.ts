@@ -53,3 +53,5 @@ getMessage(1);
 getMessage('image');
 console.log('getMessage(1): ', getMessage(1));
 console.log('getMessage("image"): ', getMessage('image'));
+
+export {};

@@ -118,34 +118,46 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; // 消息列表
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+var messageList = [{
+  id: 1,
+  type: 'image',
+  sendMessage: '你好啊,今晚咱们一起去三里屯吧'
+}, {
+  id: 2,
+  type: 'audio',
+  sendMessage: '朝辞白帝彩云间，千里江陵一日还'
+}, {
+  id: 3,
+  type: 'audio',
+  sendMessage: '你好！张无忌'
+}, {
+  id: 4,
+  type: 'image',
+  sendMessage: '刘老根苦练舞台绝技！'
+}, {
+  id: 5,
+  type: 'image',
+  sendMessage: '今晚王牌对王牌节目咋样?'
+}]; // 实现签名
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var OrderDetail =
-/** @class */
-function () {
-  function OrderDetail(count_, price_) {
-    // 需要赋值
-    this.price = price_;
-    this.count = count_;
+function getMessage(value) {
+  if (typeof value === 'number') {
+    return messageList.find(function (msg) {
+      return value === msg.id;
+    });
+  } else {
+    return messageList.filter(function (msg) {
+      return value === msg.type;
+    });
   }
+}
 
-  OrderDetail.prototype.getTotal = function () {
-    return this.price * this.count; // 编译错误对象可能'未定义'
-  };
-
-  return OrderDetail;
-}();
-
-exports.default = OrderDetail;
-var orderDetail = new OrderDetail(11, 30);
-console.log(orderDetail.getTotal());
-console.log(_typeof(orderDetail.price));
+getMessage(1);
+getMessage('image');
+console.log('getMessage(1): ', getMessage(1));
+console.log('getMessage("image"): ', getMessage('image'));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
