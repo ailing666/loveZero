@@ -40,3 +40,4 @@ let res = arrayList.remove(1);
 
 console.log('%cres: ', 'color: #1c9afa;', res);
 arrayList.show();
+export {};

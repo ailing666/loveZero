@@ -118,48 +118,58 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.ts":[function(require,module,exports) {
-"use strict"; // 消息列表
+"use strict";
 
-var messageList = [{
-  id: 1,
-  type: 'image',
-  sendMessage: '你好啊,今晚咱们一起去三里屯吧'
-}, {
-  id: 2,
-  type: 'audio',
-  sendMessage: '朝辞白帝彩云间，千里江陵一日还'
-}, {
-  id: 3,
-  type: 'audio',
-  sendMessage: '你好！张无忌'
-}, {
-  id: 4,
-  type: 'image',
-  sendMessage: '刘老根苦练舞台绝技！'
-}, {
-  id: 5,
-  type: 'image',
-  sendMessage: '今晚王牌对王牌节目咋样?'
-}]; // 实现签名
-// 给默认参数
+var ArrayList =
+/** @class */
+function () {
+  function ArrayList(element) {
+    this.element = element;
+  } // get方法
 
-function getMessage(value, value2) {
-  if (typeof value === 'number') {
-    console.log('myname', value2);
-    return messageList.find(function (msg) {
-      return value === msg.id;
+
+  ArrayList.prototype.get = function (index) {
+    return this.element[index];
+  }; // show方法
+
+
+  ArrayList.prototype.show = function () {
+    this.element.forEach(function (ele) {
+      console.log(ele);
     });
-  } else {
-    return messageList.filter(function (msg) {
-      return value === msg.type;
-    }).slice(0, value2);
-  }
-}
+  };
 
-getMessage(1, 'df');
-getMessage('image', 2);
-console.log('getMessage(1): ', getMessage(1, 'df'));
-console.log('getMessage("image"): ', getMessage('image', 2));
+  ArrayList.prototype.remove = function (value) {
+    this.element = this.element.filter(function (ele, index) {
+      if (typeof value === 'number') {
+        return value !== index;
+      } else {
+        return value !== ele;
+      }
+    });
+    return value;
+  };
+
+  return ArrayList;
+}();
+
+var stuOne = {
+  stuname: 'zs',
+  age: 23
+};
+var stuTwo = {
+  stuname: 'ls',
+  age: 39
+};
+var stuThree = {
+  stuname: 'ww',
+  age: 31
+};
+var arrayList = new ArrayList([stuOne, stuTwo, stuThree]);
+var res = arrayList.remove(1); // let res = arrayList.remove(stuThree);
+
+console.log('%cres: ', 'color: #1c9afa;', res);
+arrayList.show();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

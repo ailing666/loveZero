@@ -55,3 +55,4 @@ getMessage(1, 'df');
 getMessage('image', 2);
 console.log('getMessage(1): ', getMessage(1, 'df'));
 console.log('getMessage("image"): ', getMessage('image', 2));
+export {};
