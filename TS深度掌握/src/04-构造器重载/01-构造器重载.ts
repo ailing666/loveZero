@@ -31,3 +31,5 @@ square.getArea();
 
 const square2 = new Square({ width: 20, height: 30 });
 square2.getArea();
+
+export {};

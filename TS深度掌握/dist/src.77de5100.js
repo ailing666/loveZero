@@ -120,56 +120,40 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"index.ts":[function(require,module,exports) {
 "use strict";
 
-var ArrayList =
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+var Square =
 /** @class */
 function () {
-  function ArrayList(element) {
-    this.element = element;
-  } // get方法
+  // 实现签名
+  function Square(paramObjOrWidth_, height_) {
+    if (height_ === void 0) {
+      height_ = 0;
+    }
 
+    if (_typeof(paramObjOrWidth_) === 'object') {
+      this.width = paramObjOrWidth_.width;
+      this.height = paramObjOrWidth_.height;
+    } else {
+      this.width = paramObjOrWidth_;
+      this.height = height_;
+    }
+  }
 
-  ArrayList.prototype.get = function (index) {
-    return this.element[index];
-  }; // show方法
-
-
-  ArrayList.prototype.show = function () {
-    this.element.forEach(function (ele) {
-      console.log(ele);
-    });
+  Square.prototype.getArea = function () {
+    console.log(this.width * this.height);
   };
 
-  ArrayList.prototype.remove = function (value) {
-    this.element = this.element.filter(function (ele, index) {
-      if (typeof value === 'number') {
-        return value !== index;
-      } else {
-        return value !== ele;
-      }
-    });
-    return value;
-  };
-
-  return ArrayList;
+  return Square;
 }();
 
-var stuOne = {
-  stuname: 'zs',
-  age: 23
-};
-var stuTwo = {
-  stuname: 'ls',
-  age: 39
-};
-var stuThree = {
-  stuname: 'ww',
-  age: 31
-};
-var arrayList = new ArrayList([stuOne, stuTwo, stuThree]);
-var res = arrayList.remove(1); // let res = arrayList.remove(stuThree);
-
-console.log('%cres: ', 'color: #1c9afa;', res);
-arrayList.show();
+var square = new Square(40, 50);
+square.getArea();
+var square2 = new Square({
+  width: 20,
+  height: 30
+});
+square2.getArea();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
