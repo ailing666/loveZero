@@ -39,18 +39,19 @@ let messageList: Message[] = [
 
 // 重载签名
 function getMessage(id: number): Message;
-function getMessage(type: MessageType, readRecordCount: number): Message[];
+function getMessage(type: MessageType): Message[];
 // 实现签名
-// 给默认参数
-function getMessage(value: any, readRecordCount: number = 1): Message | undefined | Message[] {
+function getMessage(value: any): Message | undefined | Message[] {
   if (typeof value === 'number') {
     return messageList.find(msg => value === msg.id);
   } else {
-    return messageList.filter(msg => value === msg.type).slice(0, readRecordCount);
+    return messageList.filter(msg => value === msg.type);
   }
 }
 
 getMessage(1);
-getMessage('image', 2);
+getMessage('image');
 console.log('getMessage(1): ', getMessage(1));
-console.log('getMessage("image"): ', getMessage('image', 2));
+console.log('getMessage("image"): ', getMessage('image'));
+
+export {};

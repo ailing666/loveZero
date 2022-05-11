@@ -141,8 +141,13 @@ var messageList = [{
   type: 'image',
   sendMessage: '今晚王牌对王牌节目咋样?'
 }]; // 实现签名
+// 给默认参数
 
-function getMessage(value) {
+function getMessage(value, readRecordCount) {
+  if (readRecordCount === void 0) {
+    readRecordCount = 1;
+  }
+
   if (typeof value === 'number') {
     return messageList.find(function (msg) {
       return value === msg.id;
@@ -150,14 +155,14 @@ function getMessage(value) {
   } else {
     return messageList.filter(function (msg) {
       return value === msg.type;
-    });
+    }).slice(0, readRecordCount);
   }
 }
 
 getMessage(1);
-getMessage('image');
+getMessage('image', 2);
 console.log('getMessage(1): ', getMessage(1));
-console.log('getMessage("image"): ', getMessage('image'));
+console.log('getMessage("image"): ', getMessage('image', 2));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
