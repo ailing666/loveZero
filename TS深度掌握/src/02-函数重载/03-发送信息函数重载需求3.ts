@@ -41,7 +41,7 @@ let messageList: Message[] = [
 function getMessage(id: number, myname: string): Message;
 function getMessage(type: MessageType, readRecordCount: number): Message[];
 // 实现签名
-// 给默认参数
+// 两个参数都设为any
 function getMessage(value: any, value2: any): Message | undefined | Message[] {
   if (typeof value === 'number') {
     console.log('myname', value2);

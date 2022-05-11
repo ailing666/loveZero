@@ -143,25 +143,22 @@ var messageList = [{
 }]; // 实现签名
 // 给默认参数
 
-function getMessage(value, readRecordCount) {
-  if (readRecordCount === void 0) {
-    readRecordCount = 1;
-  }
-
+function getMessage(value, value2) {
   if (typeof value === 'number') {
+    console.log('myname', value2);
     return messageList.find(function (msg) {
       return value === msg.id;
     });
   } else {
     return messageList.filter(function (msg) {
       return value === msg.type;
-    }).slice(0, readRecordCount);
+    }).slice(0, value2);
   }
 }
 
-getMessage(1);
+getMessage(1, 'df');
 getMessage('image', 2);
-console.log('getMessage(1): ', getMessage(1));
+console.log('getMessage(1): ', getMessage(1, 'df'));
 console.log('getMessage("image"): ', getMessage('image', 2));
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
