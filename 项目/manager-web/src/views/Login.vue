@@ -16,8 +16,7 @@
 </template>
 
 <script setup>
-import { login } from '../api/user'
-import { User, Lock } from '@element-plus/icons-vue'
+import { login } from '@/api/user'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'

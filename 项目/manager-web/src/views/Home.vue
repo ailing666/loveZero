@@ -54,13 +54,13 @@
 	</div>
 </template>
 <script setup>
-import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
-import { GetNoticeCount, GetMenuList } from '../api/user'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
-import TreeMenu from '../components/TreeMenu.vue'
-import BreadCrumb from '../components/BreadCrumb.vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+import TreeMenu from '@/components/TreeMenu.vue'
+import BreadCrumb from '@/components/BreadCrumb.vue'
+import { GetNoticeCount, GetMenuList } from '@/api/user'
 
 // 默认路由
 const activeMenu = ref(location.hash.slice(1))
