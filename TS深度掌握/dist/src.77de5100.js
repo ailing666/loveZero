@@ -120,13 +120,40 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"index.ts":[function(require,module,exports) {
 "use strict";
 
-var Index =
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+var Square =
 /** @class */
 function () {
-  function Index() {}
+  // 实现签名
+  function Square(paramObjOrWidth_, height_) {
+    if (height_ === void 0) {
+      height_ = 0;
+    }
 
-  return Index;
+    if (_typeof(paramObjOrWidth_) === 'object') {
+      this.width = paramObjOrWidth_.width;
+      this.height = paramObjOrWidth_.height;
+    } else {
+      this.width = paramObjOrWidth_;
+      this.height = height_;
+    }
+  }
+
+  Square.prototype.getArea = function () {
+    console.log(this.width * this.height);
+  };
+
+  return Square;
 }();
+
+var square = new Square(40, 50);
+square.getArea();
+var square2 = new Square({
+  width: 20,
+  height: 30
+});
+square2.getArea();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
