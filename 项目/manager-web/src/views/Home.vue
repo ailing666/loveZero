@@ -24,7 +24,7 @@
 				<el-header class="home-header">
 					<div class="header-left">
 						<el-icon class="menu-fold" @click="toggleIsCollapse"><Menu /></el-icon>
-						<span>面包屑</span>
+						<BreadCrumb />
 					</div>
 
 					<div class="user-info">
@@ -60,6 +60,7 @@ import { GetNoticeCount, GetMenuList } from '../api/user'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
 import TreeMenu from '../components/TreeMenu.vue'
+import BreadCrumb from '../components/BreadCrumb.vue'
 
 // 默认路由
 const activeMenu = ref(location.hash.slice(1))
