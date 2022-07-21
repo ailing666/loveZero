@@ -6,23 +6,17 @@
 				<h1 class="logo">
 					<img src="../assets/logo.png" alt="" />
 				</h1>
-				<el-menu class="nav-menu" active-text-color="#ffd04b" background-color="#001529" :collapse="isCollapse" text-color="#fff">
-					<el-sub-menu index="1">
-						<template #title>
-							<el-icon><Setting /></el-icon>
-							<span>系统管理</span>
-						</template>
-						<el-menu-item index="1-1">用户管理</el-menu-item>
-						<el-menu-item index="1-2">菜单管理</el-menu-item>
-					</el-sub-menu>
-					<el-sub-menu index="2">
-						<template #title>
-							<el-icon><Promotion /></el-icon>
-							<span>审批管理</span>
-						</template>
-						<el-menu-item index="2-1">休假审批</el-menu-item>
-						<el-menu-item index="2-2">待办审批</el-menu-item>
-					</el-sub-menu>
+
+				<el-menu
+					class="nav-menu"
+					:default-active="activeMenu"
+					active-text-color="#ffd04b"
+					background-color="#001529"
+					router
+					:collapse="isCollapse"
+					text-color="#fff"
+				>
+					<TreeMenu :userMenu="menuList" />
 				</el-menu>
 			</el-aside>
 
@@ -30,7 +24,7 @@
 				<el-header class="home-header">
 					<div class="header-left">
 						<el-icon class="menu-fold" @click="toggleIsCollapse"><Menu /></el-icon>
-						<span>面包屑</span>
+						<BreadCrumb />
 					</div>
 
 					<div class="user-info">
@@ -60,23 +54,38 @@
 	</div>
 </template>
 <script setup>
-import { useStore } from 'vuex'
-import { Promotion, Setting, Menu, Bell, ArrowDown } from '@element-plus/icons-vue'
-import { useRouter, useRoute } from 'vue-router'
-import { noticeCount } from '../api/user'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+import TreeMenu from '@/components/TreeMenu.vue'
+import BreadCrumb from '@/components/BreadCrumb.vue'
+import { GetNoticeCount, GetMenuList } from '@/api/user'
+
+// 默认路由
+const activeMenu = ref(location.hash.slice(1))
+
 // onMounted生命周期
 onMounted(() => {
 	getNoticeCount()
+	getMenuList()
 })
 // 控制是否有通知
 const isDot = ref(false)
 
+// 获取通知数量
 const getNoticeCount = async () => {
-	const res = await noticeCount()
+	const res = await GetNoticeCount()
 	isDot.value = !!res
 }
+
+// 菜单列表
+const menuList = ref([])
+// 获取菜单列表
+const getMenuList = async () => {
+	menuList.value = await GetMenuList()
+}
+
 // 控制菜单是否展开
 const isCollapse = ref(false)
 
