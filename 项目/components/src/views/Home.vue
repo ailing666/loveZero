@@ -1,10 +1,6 @@
 <template>
   <div>
-    <a-button>默认ffff按钮</a-button>
-    <a-button type="primary">primary</a-button>
-    <a-button type="success">success</a-button>
-    <a-button type="wraning">wraning</a-button>
-    <a-button type="danger">danger</a-button>
+    <a-table :column="column"></a-table>
   </div>
 </template>
 <script>
@@ -12,7 +8,17 @@
 export default {
   name: "Home",
   components: {
-    "a-button": () => import("@/components/button"),
+    "a-table": () => import("@/components/table"),
+  },
+  data() {
+    return {
+      column: [
+        { label: "日期", prop: "date" },
+        { label: "名称", prop: "name" },
+        { label: "地址", prop: "address" },
+        { label: "性别", prop: "sex" },
+      ],
+    };
   },
 };
 </script>
