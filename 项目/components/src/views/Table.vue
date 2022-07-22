@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-  name: "Home",
+  name: "Table",
   components: {
     "a-table": () => import("@/components/table"),
   },
