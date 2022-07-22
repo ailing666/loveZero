@@ -1,6 +1,13 @@
 <template>
   <div>
-    <a-table :column="column" selection index url="/api/name/">
+    <a-table
+      :column="column"
+      selection
+      index
+      url="/api/name/"
+      :requestParams="requestParams"
+      :requestData="requestData"
+    >
       <template #operation="slotData">
         <el-button type="primary" @click="goEdit(slotData.data)"
           >编辑</el-button
@@ -40,6 +47,12 @@ export default {
           slot_name: "operation",
         },
       ],
+      requestParams: {
+        name: "requestParams",
+      },
+      requestData: {
+        name: "requestData",
+      },
     };
   },
   methods: {

@@ -70,6 +70,14 @@ export default {
       default: "post",
       require: true,
     },
+    requestParams: {
+      type: Object,
+      default: () => ({}),
+    },
+    requestData: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   beforeMount() {
     this.getTableList();
@@ -77,15 +85,25 @@ export default {
   methods: {
     // 请求表格数据
     getTableList() {
+      // 判断url
       const url = this.url;
       if (!url) {
         console.error("请求地址不存在");
         return false;
       }
-      this.$axios({
+      // 参数处理
+      const requestObject = {
         url: this.url,
         method: this.method,
-      }).then((response) => {
+      };
+      if (JSON.stringify(this.requestData) !== "{}") {
+        requestObject.data = this.requestData;
+      }
+      if (JSON.stringify(this.requestParams) !== "{}") {
+        requestObject.params = this.requestParams;
+      }
+      // 请求接口
+      this.$axios(requestObject).then((response) => {
         this.tableData = response.data.data;
       });
     },
