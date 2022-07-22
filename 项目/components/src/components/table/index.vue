@@ -14,56 +14,44 @@
       width="50"
     ></el-table-column>
     <!-- 表格内容 -->
-    <template v-for="item in column">
-      <!-- function -->
-      <el-table-column
-        v-if="item.type === 'function'"
-        :prop="item.prop"
-        :key="`function${item.prop}`"
-        :label="item.label"
-        :sortable="item.sort"
-        :sortBy="item.sort_by"
-        :width="item.width"
-      >
-        <template slot-scope="scope">
-          <div v-html="item.callback && item.callback(scope.row)"></div>
-        </template>
-      </el-table-column>
-      <!-- slot -->
-      <el-table-column
-        v-else-if="item.type === 'slot'"
-        :sortable="item.sort"
-        :key="`slot${item.prop}`"
-        :prop="item.prop"
-        :label="item.label"
-        :sortBy="item.sort_by"
-        :width="item.width"
-      >
-        <template slot-scope="scope">
-          <slot :name="item.slot_name" :data="scope.row" />
-        </template>
-      </el-table-column>
-      <!-- 普通文本 -->
-      <el-table-column
-        :key="item.props"
-        :sortable="item.sort"
-        v-else
-        :prop="item.prop"
-        :label="item.label"
-        :sortBy="item.sort_by"
-        :width="item.width"
-      ></el-table-column>
-    </template>
+    <el-table-column
+      v-for="item in column"
+      :prop="item.prop"
+      :key="item.prop"
+      :label="item.label"
+      :sortable="item.sort"
+      :sortBy="item.sort_by"
+      :width="item.width"
+    >
+      <template v-slot="scope">
+        <!-- 插槽 -->
+        <slot
+          v-if="item.type === 'slot'"
+          :name="item.slot_name"
+          :data="scope.row"
+        />
+        <!-- 根据type动态加载组件 -->
+        <component
+          v-else
+          :is="!item.type ? 'com-text' : `com-${item.type}`"
+          :data="scope.row"
+          :config="item"
+          :prop="item.prop"
+        />
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
 <script>
+import { autoControlModules } from "@/utils/common.js";
 export default {
   data() {
     return {
       tableData: [],
     };
   },
+  components: { ...autoControlModules() },
   props: {
     // 表格列
     column: {
