@@ -1,42 +1,40 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
-    <!-- 索引 -->
-    <el-table-column v-if="index" type="index" width="55"></el-table-column>
-    <!-- 多选框 -->
+    <el-table-column v-if="index" type="index" width="40"></el-table-column>
     <el-table-column
-      v-if="selection"
+      v-if="checkbox"
       type="selection"
-      width="55"
+      width="40"
     ></el-table-column>
-    <!-- 表格 -->
     <template v-for="item in column">
-      <!-- function -->
       <el-table-column
         v-if="item.type === 'function'"
         :key="item.prop"
         :prop="item.prop"
         :label="item.label"
+        :width="item.width"
       >
-        <template v-slot="scope">
+        <template slot-scope="scope">
           <div v-html="item.callback && item.callback(scope.row)"></div>
         </template>
       </el-table-column>
-      <!-- 插槽 -->
       <el-table-column
-        v-else-if="item.type === 'slot'"
-        :key="item.slot_name"
+        v-if="item.type === 'slot'"
+        :key="item.prop"
+        :prop="item.prop"
         :label="item.label"
+        :width="item.width"
       >
-        <template v-slot="scope">
-          <slot :name="item.slot_name" :data="scope.row"></slot>
+        <template slot-scope="scope">
+          <slot :name="item.slot_name" :data="scope.row" />
         </template>
       </el-table-column>
-      <!-- 纯文本 -->
       <el-table-column
         v-else
         :key="item.prop + 1"
         :prop="item.prop"
         :label="item.label"
+        :width="item.width"
       ></el-table-column>
     </template>
   </el-table>
@@ -46,44 +44,44 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          sex: "男",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-          sex: "男",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-          sex: "男",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-          sex: "男",
-        },
-      ],
+      tableData: [],
     };
   },
   props: {
-    // 表格列
     column: {
       type: Array,
       default: () => [],
     },
-    // 多选框
-    selection: Boolean,
-    // 索引
+    checkbox: Boolean,
     index: Boolean,
+    url: {
+      type: String,
+      default: "",
+      require: true,
+    },
+    method: {
+      type: String,
+      default: "post",
+      require: true,
+    },
+  },
+  beforeMount() {
+    this.getTableList();
+  },
+  methods: {
+    getTableList() {
+      const url = this.url;
+      if (!url) {
+        console.log("请求地址不存在");
+        return false;
+      }
+      this.$axios({
+        url: this.url,
+        method: this.method,
+      }).then((response) => {
+        this.tableData = response.data.data;
+      });
+    },
   },
 };
 </script>

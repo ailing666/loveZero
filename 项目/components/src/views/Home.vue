@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-table :column="column" selection index>
+    <a-table :column="column" selection index url="/api/name/">
       <template #operation="slotData">
         <el-button type="primary" @click="goEdit(slotData.data)"
           >编辑</el-button
