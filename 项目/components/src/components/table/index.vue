@@ -54,33 +54,47 @@ export default {
     };
   },
   props: {
+    // 表格列
     column: {
       type: Array,
       default: () => [],
     },
+    // 多选
     selection: Boolean,
+    // 索引
     index: Boolean,
+    // 请求地址
     url: {
       type: String,
       default: "",
       require: true,
     },
+    // 请求方法
     method: {
       type: String,
       default: "post",
       require: true,
     },
+    // 请求params参数
     requestParams: {
       type: Object,
       default: () => ({}),
     },
+    // 请求data参数
     requestData: {
       type: Object,
       default: () => ({}),
     },
+    // 是否初始化请求数据
+    isInit: {
+      type: Boolean,
+      default: true,
+    },
+    // 父组件是否需要接受子组件请求的参数
+    onLoad: Boolean,
   },
   beforeMount() {
-    this.getTableList();
+    this.isInit && this.getTableList();
   },
   methods: {
     // 请求表格数据
@@ -105,7 +119,13 @@ export default {
       // 请求接口
       this.$axios(requestObject).then((response) => {
         this.tableData = response.data.data;
+        // 将参数上传给父组件
+        this.onLoad && this.$emit("onLoad", response.data.data);
       });
+    },
+    // 供外部手动调用
+    handleRequest() {
+      this.getTableList();
     },
   },
 };

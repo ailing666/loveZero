@@ -7,6 +7,8 @@
       url="/api/name/"
       :requestParams="requestParams"
       :requestData="requestData"
+      onLoad
+      @onLoad="onLoad"
     >
       <template #operation="slotData">
         <el-button type="primary" @click="goEdit(slotData.data)"
@@ -17,7 +19,6 @@
   </div>
 </template>
 <script>
-// @ is an alias to /src
 export default {
   name: "Home",
   components: {
@@ -57,7 +58,10 @@ export default {
   },
   methods: {
     goEdit(data) {
-      console.log("%cdata: ", "color: #a16026;", data);
+      console.log("%cgoEditdata: ", "color: #a16026;", data);
+    },
+    onLoad(data) {
+      console.log("%conLoaddata: ", "color: #4430b9;", data);
     },
   },
 };
