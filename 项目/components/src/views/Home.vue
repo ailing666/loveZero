@@ -19,18 +19,21 @@ export default {
   data() {
     return {
       column: [
+        { label: "日期", prop: "create_date" },
+        { label: "姓名", prop: "name" },
         {
-          label: "URL",
-          prop: "url",
+          label: "邮箱",
+          prop: "email",
           type: "function",
           callback: (data) => {
-            return `<a href="http://www.baidu.com">${data.name}</a>`;
+            return `<a href="http://www.baidu.com">http://www.baidu.com${data.email}</a>`;
           },
         },
-        { label: "日期", prop: "date" },
-        { label: "名称", prop: "name" },
-        { label: "地址", prop: "address" },
         { label: "性别", prop: "sex" },
+        { label: "手机", prop: "phone" },
+        { label: "年龄", prop: "age" },
+        { label: "地址", prop: "address" },
+        { label: "职业", prop: "profession" },
         {
           label: "操作",
           type: "slot",
