@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { constants } from "buffer";
+
 export default {
   data() {
     return {
@@ -92,6 +94,8 @@ export default {
     },
     // 父组件是否需要接受子组件请求的参数
     onLoad: Boolean,
+    // 格式化
+    format: Function,
   },
   beforeMount() {
     this.isInit && this.getTableList();
@@ -118,7 +122,12 @@ export default {
       }
       // 请求接口
       this.$axios(requestObject).then((response) => {
-        this.tableData = response.data.data;
+        let res = response.data.data;
+        // 数据格式化
+        if (this.format && typeof this.format === "function") {
+          res = this.format(response.data.data);
+        }
+        this.tableData = res;
         // 将参数上传给父组件
         this.onLoad && this.$emit("onLoad", response.data.data);
       });

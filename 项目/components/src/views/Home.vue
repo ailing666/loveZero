@@ -9,6 +9,7 @@
       :requestData="requestData"
       onLoad
       @onLoad="onLoad"
+      :format="formatData"
     >
       <template #operation="slotData">
         <el-button type="primary" @click="goEdit(slotData.data)"
@@ -62,6 +63,13 @@ export default {
     },
     onLoad(data) {
       console.log("%conLoaddata: ", "color: #4430b9;", data);
+    },
+    // 格式化数据
+    formatData(data) {
+      return data.map((item) => ({
+        ...item,
+        phone: "1888888888",
+      }));
     },
   },
 };
