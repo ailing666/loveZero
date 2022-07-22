@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-table :column="column"></a-table>
+    <a-table :column="column" selection index></a-table>
   </div>
 </template>
 <script>

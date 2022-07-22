@@ -1,5 +1,14 @@
 <template>
   <el-table :data="tableData" style="width: 100%">
+    <!-- 索引 -->
+    <el-table-column v-if="index" type="index" width="55"></el-table-column>
+    <!-- 多选框 -->
+    <el-table-column
+      v-if="selection"
+      type="selection"
+      width="55"
+    ></el-table-column>
+    <!-- 表格 -->
     <el-table-column
       v-for="item in column"
       :key="item.prop"
@@ -39,10 +48,15 @@ export default {
     };
   },
   props: {
+    // 表格列
     column: {
       type: Array,
       default: () => [],
     },
+    // 多选框
+    selection: Boolean,
+    // 索引
+    index: Boolean,
   },
 };
 </script>
