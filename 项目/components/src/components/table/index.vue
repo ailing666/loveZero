@@ -12,13 +12,23 @@
     <template v-for="item in column">
       <!-- function -->
       <el-table-column
-        :key="item.prop"
         v-if="item.type === 'function'"
+        :key="item.prop"
         :prop="item.prop"
         :label="item.label"
       >
         <template v-slot="scope">
           <div v-html="item.callback && item.callback(scope.row)"></div>
+        </template>
+      </el-table-column>
+      <!-- 插槽 -->
+      <el-table-column
+        v-else-if="item.type === 'slot'"
+        :key="item.slot_name"
+        :label="item.label"
+      >
+        <template v-slot="scope">
+          <slot :name="item.slot_name" :data="scope.row"></slot>
         </template>
       </el-table-column>
       <!-- 纯文本 -->

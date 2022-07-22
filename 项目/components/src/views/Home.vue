@@ -1,6 +1,12 @@
 <template>
   <div>
-    <a-table :column="column" selection index></a-table>
+    <a-table :column="column" selection index>
+      <template #operation="slotData">
+        <el-button type="primary" @click="goEdit(slotData.data)"
+          >编辑</el-button
+        >
+      </template>
+    </a-table>
   </div>
 </template>
 <script>
@@ -25,8 +31,18 @@ export default {
         { label: "名称", prop: "name" },
         { label: "地址", prop: "address" },
         { label: "性别", prop: "sex" },
+        {
+          label: "操作",
+          type: "slot",
+          slot_name: "operation",
+        },
       ],
     };
+  },
+  methods: {
+    goEdit(data) {
+      console.log("%cdata: ", "color: #a16026;", data);
+    },
   },
 };
 </script>
