@@ -1,5 +1,9 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table
+    @selection-change="handleSelectionChange"
+    :data="tableData"
+    style="width: 100%"
+  >
     <!-- 索引 -->
     <el-table-column v-if="index" type="index" width="40"></el-table-column>
     <!-- 多选框 -->
@@ -96,6 +100,11 @@ export default {
     onLoad: Boolean,
     // 格式化
     format: Function,
+    // 多选框的值
+    checkList: {
+      type: Array,
+      default: () => [],
+    },
   },
   beforeMount() {
     this.isInit && this.getTableList();
@@ -131,6 +140,10 @@ export default {
         // 将参数上传给父组件
         this.onLoad && this.$emit("onLoad", response.data.data);
       });
+    },
+    // 多选框
+    handleSelectionChange(val) {
+      this.$emit("update:checkList", val);
     },
     // 供外部手动调用
     handleRequest() {

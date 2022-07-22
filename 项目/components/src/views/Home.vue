@@ -10,6 +10,7 @@
       onLoad
       @onLoad="onLoad"
       :format="formatData"
+      :checkList.sync="checkList"
     >
       <template #operation="slotData">
         <el-button type="primary" @click="goEdit(slotData.data)"
@@ -55,7 +56,13 @@ export default {
       requestData: {
         name: "requestData",
       },
+      checkList: [],
     };
+  },
+  watch: {
+    checkList(newV) {
+      console.log("%cnewV: ", "color: #87a41d;", newV);
+    },
   },
   methods: {
     goEdit(data) {
