@@ -9,12 +9,26 @@
       width="55"
     ></el-table-column>
     <!-- 表格 -->
-    <el-table-column
-      v-for="item in column"
-      :key="item.prop"
-      :prop="item.prop"
-      :label="item.label"
-    ></el-table-column>
+    <template v-for="item in column">
+      <!-- function -->
+      <el-table-column
+        :key="item.prop"
+        v-if="item.type === 'function'"
+        :prop="item.prop"
+        :label="item.label"
+      >
+        <template v-slot="scope">
+          <div v-html="item.callback && item.callback(scope.row)"></div>
+        </template>
+      </el-table-column>
+      <!-- 纯文本 -->
+      <el-table-column
+        v-else
+        :key="item.prop + 1"
+        :prop="item.prop"
+        :label="item.label"
+      ></el-table-column>
+    </template>
   </el-table>
 </template>
 
@@ -33,16 +47,19 @@ export default {
           date: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄",
+          sex: "男",
         },
         {
           date: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄",
+          sex: "男",
         },
         {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄",
+          sex: "男",
         },
       ],
     };

@@ -13,6 +13,14 @@ export default {
   data() {
     return {
       column: [
+        {
+          label: "URL",
+          prop: "url",
+          type: "function",
+          callback: (data) => {
+            return `<a href="http://www.baidu.com">${data.name}</a>`;
+          },
+        },
         { label: "日期", prop: "date" },
         { label: "名称", prop: "name" },
         { label: "地址", prop: "address" },
