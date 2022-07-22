@@ -41,9 +41,10 @@ export default {
         },
         { label: "性别", prop: "sex" },
         { label: "手机", prop: "phone" },
-        { label: "年龄", prop: "age" },
+        // 根据sort_by字段排序
+        { label: "年龄", prop: "age", sort: "custom", sort_by: "a.xx" },
         { label: "地址", prop: "address" },
-        { label: "职业", prop: "profession" },
+        { label: "职业", prop: "profession", sort: true },
         {
           label: "操作",
           type: "slot",

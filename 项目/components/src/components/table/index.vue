@@ -1,8 +1,9 @@
 <template>
   <el-table
-    @selection-change="handleSelectionChange"
     :data="tableData"
     style="width: 100%"
+    @selection-change="handleSelectionChange"
+    @sort-change="sortChange"
   >
     <!-- 索引 -->
     <el-table-column v-if="index" type="index" width="40"></el-table-column>
@@ -20,6 +21,8 @@
         :prop="item.prop"
         :key="`function${item.prop}`"
         :label="item.label"
+        :sortable="item.sort"
+        :sortBy="item.sort_by"
         :width="item.width"
       >
         <template slot-scope="scope">
@@ -29,9 +32,11 @@
       <!-- slot -->
       <el-table-column
         v-else-if="item.type === 'slot'"
+        :sortable="item.sort"
         :key="`slot${item.prop}`"
         :prop="item.prop"
         :label="item.label"
+        :sortBy="item.sort_by"
         :width="item.width"
       >
         <template slot-scope="scope">
@@ -41,9 +46,11 @@
       <!-- 普通文本 -->
       <el-table-column
         :key="item.props"
+        :sortable="item.sort"
         v-else
         :prop="item.prop"
         :label="item.label"
+        :sortBy="item.sort_by"
         :width="item.width"
       ></el-table-column>
     </template>
@@ -51,8 +58,6 @@
 </template>
 
 <script>
-import { constants } from "buffer";
-
 export default {
   data() {
     return {
@@ -148,6 +153,13 @@ export default {
     // 供外部手动调用
     handleRequest() {
       this.getTableList();
+    },
+    // 远程排序
+    sortChange({ column, prop, order }) {
+      const sort_by = column.sortBy;
+      console.log("%ccolumn: ", "color: #aafc5a;", column);
+      // 传给后端
+      console.log(sort_by, prop, order);
     },
   },
 };
