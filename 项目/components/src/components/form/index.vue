@@ -1,25 +1,18 @@
 <template>
   <el-form ref="form" :model="formData" label-width="80px">
-    <template v-for="item in formConfig">
-      <el-form-item
-        v-if="item.type === 'input'"
-        :key="item.prop"
-        :label="item.label"
-        :prop="item.prop"
-        :rules="item.rules"
-      >
-        <el-input v-model="formData[item.prop]"></el-input>
-      </el-form-item>
-      <el-form-item
-        v-if="item.type === 'select'"
-        :key="item.prop"
-        :prop="item.prop"
-        :label="item.label"
-        :rules="item.rules"
-      >
-        <el-select v-model="formData[item.prop]"></el-select>
-      </el-form-item>
-    </template>
+    <el-form-item
+      v-for="item in formConfig"
+      :key="item.prop"
+      :label="item.label"
+      :prop="item.prop"
+      :rules="item.rules"
+    >
+      <component
+        :value.sync="formData[item.prop]"
+        :is="!item.type ? 'com-input' : `com-${item.type}`"
+        :config="item"
+      />
+    </el-form-item>
     <el-form-item>
       <el-button
         v-for="item in formButton"
@@ -35,6 +28,8 @@
 
 <script>
 import { createRules } from "./createRules";
+import { autoControlModules } from "@/utils/common.js";
+
 export default {
   props: {
     formConfig: { type: Array, default: () => [] },
@@ -43,6 +38,7 @@ export default {
     beforeSubmit: Function,
     beforeReset: Function,
   },
+  components: { ...autoControlModules() },
   data() {
     return {};
   },
