@@ -6,6 +6,7 @@
       :filterable="filterable"
       :remote="remote"
       :multiple="multiple"
+      :collapse-tags="multiple"
       :remote-method="keywordRequest"
     >
       <el-option
@@ -14,6 +15,7 @@
         :label="item[defaultOptionMap.label]"
         :value="item[defaultOptionMap.value]"
       >
+        <slot name="select" :data="item"></slot>
       </el-option>
     </el-select>
   </div>
@@ -81,8 +83,11 @@ export default {
     this.initOptionsMap();
   },
   methods: {
-    selectChange() {
+    selectChange(value) {
       this.$emit("update:value", this.val);
+      if (this.config.callback) {
+        this.config.callback(value);
+      }
     },
     // 初始化option
     initOptions() {
@@ -106,6 +111,7 @@ export default {
         Object.prototype.toString.call(optionsMap) === "[object Object]"
       ) {
         this.defaultOptionMap = optionsMap;
+        console.log("%coptionsMap: ", "color: #4aef38;", optionsMap);
       }
     },
     // 远程请求option

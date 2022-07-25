@@ -4,7 +4,15 @@
     :formData="formData"
     :formButton="formButton"
     :before-submit="submitForm"
-  ></a-form>
+  >
+    <template v-slot:classroom>
+      <a-select :config="select_classroom">
+        <template v-slot:select="slot">
+          <div style="font-size: 30px">{{ slot.data.class_name }}</div>
+        </template>
+      </a-select>
+    </template>
+  </a-form>
 </template>
 
 <script>
@@ -19,10 +27,16 @@ export default {
   name: "Form",
   components: {
     "a-form": () => import("@/components/form"),
+    "a-select": () => import("@/components/control/select/index.vue"),
   },
   data() {
     return {
-      formData: {},
+      formData: {
+        phone: "13713746864",
+        gender: "",
+        age: "",
+        slot_room: "",
+      },
       formConfig: [
         {
           type: "input",
@@ -70,6 +84,13 @@ export default {
           remote: true,
           multiple: true,
         },
+        {
+          type: "slot",
+          slotName: "classroom",
+          prop: "slot_room",
+          label: "slot教室",
+          required: true,
+        },
       ],
       formButton: [
         // 确定按钮，取消按钮和其他按钮
@@ -87,6 +108,15 @@ export default {
           callback: (data) => this.next(data),
         },
       ],
+      select_classroom: {
+        url: "/api/classroom/",
+        optionsMap: {
+          label: "class_name",
+          value: "id",
+        },
+        init: true,
+        callback: (data) => this.selectClassRoom(data),
+      },
     };
   },
   methods: {
@@ -102,6 +132,9 @@ export default {
     },
     next(data) {
       console.log("%cnextdata: ", "color: #a390ab;", data);
+    },
+    selectClassRoom(data) {
+      this.formData.slot_room = data;
     },
   },
 };

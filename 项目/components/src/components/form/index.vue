@@ -7,7 +7,9 @@
       :prop="item.prop"
       :rules="item.rules"
     >
+      <slot v-if="item.type === 'slot'" :name="item.slotName"></slot>
       <component
+        v-else
         :value.sync="formData[item.prop]"
         :is="!item.type ? 'com-input' : `com-${item.type}`"
         :config="item"
@@ -56,9 +58,9 @@ export default {
       data.callback && data.callback(this.formData);
     },
     submit(data) {
+      console.log("this.formData", this.formData);
       this.$refs.form.validate((valid) => {
         if (valid && typeof this.beforeSubmit === "function") {
-          console.log("this.formData", this.formData);
           this.$set(data, "loading", true);
           this.beforeSubmit()
             .then(() => {
