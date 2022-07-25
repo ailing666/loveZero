@@ -38,6 +38,8 @@ export default {
           label: "性别",
           prop: "sex",
           optionsMap: { label: "name", value: "id" },
+          // 本地搜索
+          filterable: true,
           options: [
             { name: "黄金糕", id: "选项1" },
             { name: "双皮奶", id: "选项2" },
@@ -62,6 +64,10 @@ export default {
           },
           init: true,
           url: "/api/classroom/",
+          keyword: "class_name",
+          filterable: true,
+          // 远程搜索
+          remote: true,
         },
       ],
       formButton: [

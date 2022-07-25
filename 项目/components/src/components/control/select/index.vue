@@ -1,6 +1,12 @@
 <template>
   <div>
-    <el-select v-model="val" @change="selectChange">
+    <el-select
+      v-model="val"
+      @change="selectChange"
+      :filterable="filterable"
+      :remote="remote"
+      :remote-method="keywordRequest"
+    >
       <el-option
         v-for="item in option"
         :key="item[defaultOptionMap.value]"
@@ -46,6 +52,17 @@ export default {
     method() {
       return this.config?.method || "get";
     },
+    // 本地搜索
+    filterable() {
+      return this.config?.filterable;
+    },
+    // 远程搜索
+    remote() {
+      return this.config?.remote;
+    },
+    keyword() {
+      return this.config?.keyword || "keyword";
+    },
   },
   watch: {
     value: {
@@ -89,11 +106,25 @@ export default {
     },
     // 远程请求option
     fetchOptions() {
-      if (!this.initRequest) return false;
+      this.initRequest && this.requestData();
+    },
+    // 远程搜索
+    keywordRequest(query) {
+      query && this.remote && this.requestData(query);
+    },
+    // 请求
+    requestData(value) {
       const requestData = {
         url: this.url,
         method: this.method,
       };
+      // 搜索请求需参数
+      if (this.method === "get") {
+        requestData.params = value ? { [this.keyword]: value } : {};
+      }
+      if (this.method === "post") {
+        requestData.data = value ? { [this.keyword]: value } : {};
+      }
       // 接口的请求
       this.$axios(requestData).then((res) => {
         this.option = res.data.data;
