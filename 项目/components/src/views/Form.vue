@@ -28,14 +28,28 @@ export default {
           type: "input",
           label: "姓名",
           prop: "name",
+          required: true,
+          rules: [
+            { min: 3, max: 6, message: "请输入3-6长度", trigger: "blur" },
+          ],
         },
-        { type: "select", label: "性别", prop: "sex" },
+        {
+          type: "select",
+          label: "性别",
+          prop: "sex",
+          optionsMap: { label: "name", value: "id" },
+          options: [
+            { name: "黄金糕", id: "选项1" },
+            { name: "双皮奶", id: "选项2" },
+          ],
+        },
         { type: "input", label: "手机号", prop: "phone", value_type: "phone" },
         { type: "input", label: "邮箱", prop: "email", value_type: "email" },
         {
           type: "input",
           label: "test",
           prop: "test",
+          rules: [{ validator: validatePass, trigger: "blur" }],
         },
       ],
       formButton: [

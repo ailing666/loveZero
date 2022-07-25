@@ -2,10 +2,10 @@
   <div>
     <el-select v-model="val" @change="selectChange">
       <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+        v-for="item in option"
+        :key="item[defaultOptionMap.value]"
+        :label="item[defaultOptionMap.label]"
+        :value="item[defaultOptionMap.value]"
       >
       </el-option>
     </el-select>
@@ -16,6 +16,10 @@
 export default {
   name: "SelectComponent",
   props: {
+    config: {
+      type: Object,
+      default: () => ({}),
+    },
     value: {
       type: [String, Number],
       default: "",
@@ -24,16 +28,11 @@ export default {
   data() {
     return {
       val: "",
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕",
-        },
-        {
-          value: "选项2",
-          label: "双皮奶",
-        },
-      ],
+      option: [],
+      defaultOptionMap: {
+        label: "label",
+        value: "value",
+      },
     };
   },
   watch: {
@@ -44,10 +43,31 @@ export default {
       immediate: true,
     },
   },
+  beforeMount() {
+    this.initOptions();
+    this.initOptionsMap();
+  },
   methods: {
     selectChange() {
-      console.log(1);
       this.$emit("update:value", this.val);
+    },
+    // 初始化option
+    initOptions() {
+      const option = this.config.options;
+      if (option && Array.isArray(option) && option.length > 0) {
+        this.option = option;
+      }
+    },
+    // 初始化option映射
+    initOptionsMap() {
+      // 外部传来的options映射
+      const optionsMap = this.config.optionsMap;
+      if (
+        optionsMap &&
+        Object.prototype.toString.call(optionsMap) === "[object Object]"
+      ) {
+        this.defaultOptionMap = optionsMap;
+      }
     },
   },
 };
