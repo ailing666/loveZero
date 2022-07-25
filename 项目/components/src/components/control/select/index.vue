@@ -35,6 +35,18 @@ export default {
       },
     };
   },
+  computed: {
+    url() {
+      return this.config?.url;
+    },
+    // 是否初始化请求
+    initRequest() {
+      return this.config?.init;
+    },
+    method() {
+      return this.config?.method || "get";
+    },
+  },
   watch: {
     value: {
       handler(newValue) {
@@ -53,6 +65,12 @@ export default {
     },
     // 初始化option
     initOptions() {
+      // 请求接口
+      if (this.url) {
+        this.fetchOptions();
+        return false;
+      }
+      // 外部配置
       const option = this.config.options;
       if (option && Array.isArray(option) && option.length > 0) {
         this.option = option;
@@ -68,6 +86,18 @@ export default {
       ) {
         this.defaultOptionMap = optionsMap;
       }
+    },
+    // 远程请求option
+    fetchOptions() {
+      if (!this.initRequest) return false;
+      const requestData = {
+        url: this.url,
+        method: this.method,
+      };
+      // 接口的请求
+      this.$axios(requestData).then((res) => {
+        this.option = res.data.data;
+      });
     },
   },
 };

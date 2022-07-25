@@ -57,17 +57,16 @@ export default {
     },
     submit(data) {
       this.$refs.form.validate((valid) => {
-        if (valid) {
-          if (typeof this.beforeSubmit === "function") {
-            this.$set(data, "loading", true);
-            this.beforeSubmit()
-              .then(() => {
-                this.$set(data, "loading", false);
-              })
-              .catch(() => {
-                this.$set(data, "loading", false);
-              });
-          }
+        if (valid && typeof this.beforeSubmit === "function") {
+          console.log("this.formData", this.formData);
+          this.$set(data, "loading", true);
+          this.beforeSubmit()
+            .then(() => {
+              this.$set(data, "loading", false);
+            })
+            .catch(() => {
+              this.$set(data, "loading", false);
+            });
         }
       });
     },

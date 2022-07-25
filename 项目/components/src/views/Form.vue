@@ -51,6 +51,18 @@ export default {
           prop: "test",
           rules: [{ validator: validatePass, trigger: "blur" }],
         },
+        {
+          type: "select",
+          prop: "classroom",
+          label: "教室",
+          required: true,
+          optionsMap: {
+            label: "class_name",
+            value: "id",
+          },
+          init: true,
+          url: "/api/classroom/",
+        },
       ],
       formButton: [
         // 确定按钮，取消按钮和其他按钮
