@@ -68,6 +68,7 @@ export default {
           filterable: true,
           // 远程搜索
           remote: true,
+          multiple: true,
         },
       ],
       formButton: [

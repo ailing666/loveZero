@@ -5,6 +5,7 @@
       @change="selectChange"
       :filterable="filterable"
       :remote="remote"
+      :multiple="multiple"
       :remote-method="keywordRequest"
     >
       <el-option
@@ -62,6 +63,9 @@ export default {
     },
     keyword() {
       return this.config?.keyword || "keyword";
+    },
+    multiple() {
+      return this.config?.multiple;
     },
   },
   watch: {
