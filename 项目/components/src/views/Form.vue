@@ -107,6 +107,23 @@ export default {
             { label: "飞机", value: "3" },
           ],
         },
+        {
+          type: "date",
+          model: "datetimerange",
+          prop: "createDate",
+          // 自定义禁用规则
+          disabled_data_rule: (time) => {
+            // 大于今天的日期都不能选
+            return time.getTime() > new Date();
+          },
+          disabled_data: true, // 禁用今天之前的日期
+          disabled_today: true, // 禁用今天之前的日期，包括今天
+          start_placeholder: "请选择开始创建日期",
+          end_placeholder: "请选择结束创建日期",
+          range: "至",
+          label: "日期",
+          required: true,
+        },
       ],
       formData: {
         name: "",
@@ -118,6 +135,7 @@ export default {
         slot_room: "",
         food: [],
         car: "",
+        createDate: "",
       },
       formButton: [
         // 确定按钮，取消按钮和其他按钮
