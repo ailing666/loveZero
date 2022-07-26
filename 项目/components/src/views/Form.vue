@@ -32,10 +32,14 @@ export default {
   data() {
     return {
       formData: {
-        phone: "13713746864",
-        gender: "",
-        age: "",
+        name: "",
+        sex: "",
+        phone: "18111111111",
+        email: "",
+        desc: "",
+        classroom: "",
         slot_room: "",
+        food: [],
       },
       formConfig: [
         {
@@ -63,8 +67,8 @@ export default {
         { type: "input", label: "邮箱", prop: "email", value_type: "email" },
         {
           type: "input",
-          label: "test",
-          prop: "test",
+          label: "简介",
+          prop: "desc",
           rules: [{ validator: validatePass, trigger: "blur" }],
         },
         {
@@ -90,6 +94,17 @@ export default {
           prop: "slot_room",
           label: "slot教室",
           required: true,
+        },
+        {
+          type: "checkbox",
+          prop: "food",
+          label: "食物",
+          required: true,
+          options: [
+            { label: "苹果", value: "1" },
+            { label: "杨梅", value: "2" },
+            { label: "芒果", value: "3" },
+          ],
         },
       ],
       formButton: [
