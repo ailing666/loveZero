@@ -31,16 +31,6 @@ export default {
   },
   data() {
     return {
-      formData: {
-        name: "",
-        sex: "",
-        phone: "18111111111",
-        email: "",
-        desc: "",
-        classroom: "",
-        slot_room: "",
-        food: [],
-      },
       formConfig: [
         {
           type: "input",
@@ -106,7 +96,29 @@ export default {
             { label: "芒果", value: "3" },
           ],
         },
+        {
+          type: "radio",
+          prop: "car",
+          label: "交通工具",
+          required: true,
+          options: [
+            { label: "汽车", value: "1" },
+            { label: "高铁", value: "2" },
+            { label: "飞机", value: "3" },
+          ],
+        },
       ],
+      formData: {
+        name: "",
+        sex: "",
+        phone: "18111111111",
+        email: "",
+        desc: "",
+        classroom: "",
+        slot_room: "",
+        food: [],
+        car: "",
+      },
       formButton: [
         // 确定按钮，取消按钮和其他按钮
         { label: "提交", key: "submit", type: "primary" },
