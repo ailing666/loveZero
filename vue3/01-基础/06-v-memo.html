@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <div v-memo="[name]">
+      <h2>姓名: {{ name }}</h2>
+      <h2>年龄: {{ age }}</h2>
+    </div>
+    <button @click="changeName">改变name</button>
+    <button @click="changeAge">改变age</button>
+    <h2>姓名: {{ name }}</h2>
+    <h2>年龄: {{ age }}</h2>
+  </div>
+  
+    <!-- CDN引入 -->
+    <script src="https://unpkg.com/vue@next"></script>
+  <script>
+    const app = Vue.createApp({
+      data: function() {
+        return {
+          name: "loveZero",
+          age: 18,
+        }
+      },
+
+      methods: {
+        changeName() {
+          this.name = "小艾同学"
+        },
+        changeAge() {
+          this.age = 25
+        }
+      }
+    })
+
+    app.mount("#app")
+  </script>
+</body>
+</html>

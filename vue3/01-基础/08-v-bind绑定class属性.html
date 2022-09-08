@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        color: red;
+      }
+      .is-green {
+        background-color: green;
+      }
+      .height40 {
+        height: 40px;
+      }
+
+      .f-size-12 {
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 基本绑定class -->
+      <h2 :class="classes">Hello World</h2>
+
+      <!-- 动态class可以写对象语法 -->
+      <button :class=" isActive ? 'active': '' " @click="btnClick">动态class三元</button>
+
+      <!-- 对象语法的基本使用 -->
+      <button :class="{ active: isActive }" @click="btnClick">动态class对象</button>
+
+      <!-- 对象语法的多个键值对 -->
+      <button :class="{ active: isActive, 'is-green': true }" @click="btnClick">
+        动态class多个键值对
+      </button>
+
+      <!-- 动态class和普通的class同时使用，不会覆盖普通class，会一起生效 -->
+      <button class="height40" :class="{ active: isActive, 'is-green': true }" @click="btnClick">
+        动态class和普通的class同时使用
+      </button>
+
+      <!-- 动态class和普通的class同时使用 -->
+      <button class="height40" :class="getDynamicClasses()" @click="btnClick">
+        动态class和普通的class同时使用
+      </button>
+
+      <!-- 动态class数组语法 -->
+      <h2 :class="['f-size-12', 'cba']">Hello Array</h2>
+      <h2 :class="['f-size-12', className]">Hello Array</h2>
+      <h2 :class="['f-size-12', className, isActive? 'active': '']">Hello Array</h2>
+      <h2 :class="['f-size-12', className, { active: isActive }]">Hello Array</h2>
+    </div>
+
+    <!-- CDN引入 -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            classes: 'height40',
+            isActive: false,
+            className: 'is-green',
+          };
+        },
+
+        methods: {
+          btnClick: function () {
+            this.isActive = !this.isActive;
+          },
+
+          getDynamicClasses: function () {
+            return { active: this.isActive, 'is-green': true };
+          },
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>
