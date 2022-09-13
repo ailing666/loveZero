@@ -1,0 +1,46 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1 v-if="score > 90">优秀</h1>
+      <h2 v-else-if="score > 80">良好</h2>
+      <h3 v-else-if="score >= 60">及格</h3>
+      <h4 v-else>不及格</h4>
+
+      <!-- v-if="条件" -->
+      <template v-if="Object.keys(info).length">
+        <h2>个人信息</h2>
+        <ul>
+          <li>姓名: {{info.name}}</li>
+          <li>年龄: {{info.age}}</li>
+        </ul>
+      </template>
+
+      <!-- v-else -->
+      <template v-else>
+        <h2>没有输入个人信息</h2>
+        <p>请输入个人信息后, 再进行展示~</p>
+      </template>
+    </div>
+
+    <!-- CDN引入 -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            score: 40,
+            info: { name: 'loveZero', age: 18 },
+          };
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>
