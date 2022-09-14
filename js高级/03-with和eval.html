@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+
+    var obj = {
+      message: "Hello World"
+    }
+    // 扩展作用域链
+    with (obj) {
+      console.log(message)
+    }
+
+
+    var message = "Hello World"
+    var codeString = `console.log(message); "abc"; foo()`
+    var result = eval(codeString)
+    console.log(result)
+
+    function foo() {
+      console.log('foo');
+    }
+  </script>
+
+</body>
+</html>
