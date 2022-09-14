@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 动态绑定style, 在后面跟上 对象类型 (重要)-->
+      <h2 v-bind:style="{ color: fontColor, fontSize: fontSize + 'px' }">哈哈哈哈</h2>
+      <!-- 动态的绑定属性, 这个属性是一个对象 -->
+      <h2 :style="objStyle">呵呵呵呵</h2>
+
+      <!-- style的数组语法 -->
+      <h2 :style="[objStyle, { backgroundColor: 'purple' }]">嘿嘿嘿嘿</h2>
+    </div>
+
+    <!-- CDN引入 -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            fontColor: 'blue',
+            fontSize: 30,
+            objStyle: {
+              fontSize: '50px',
+              color: 'green',
+            },
+          };
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>

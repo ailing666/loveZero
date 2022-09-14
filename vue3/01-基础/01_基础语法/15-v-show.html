@@ -1,0 +1,39 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <button @click="toggle">切换</button>
+      </div>
+      <!-- v-show -->
+      <div v-show="isShowCode">v-show</div>
+      <!-- v-if -->
+      <div v-if="isShowCode">v-if</div>
+    </div>
+
+    <!-- CDN引入 -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            isShowCode: true,
+          };
+        },
+
+        methods: {
+          toggle() {
+            this.isShowCode = !this.isShowCode;
+          },
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>
