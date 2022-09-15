@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function foo(a, b, c) {
+      console.log(a + b + c);
+    }
+
+    // 柯里化后
+    function bar1(a) {
+      return function (b) {
+        return function (c) {
+          console.log(a + b + c);
+        }
+      }
+    }
+
+    // 箭头函数简写
+    const bar = a => b => c => {
+      console.log(a + b + c);
+    }
+
+    // foo(1, 2, 3) // 6
+    // bar(1)(2)(3) // 6
+
+    // 自动柯里化
+    const toCurrying = (fn) => {
+      // 柯里化后的函数
+      const curried = (...args) => {
+        // 柯里化函数参数与原函数需要的参数相等时，将参数传入原函数并执行
+        if (args.length >= fn.length) {
+          return fn(...args)
+        } else {
+          // 柯里化函数参数与原函数需要的参数不相等时，将剩余的参数与原参数并且，递归调用柯里化函数
+          return (...newargs) => curried(...args.concat(newargs))
+        }
+      }
+      return curried
+    }
+
+    const curryFoo = toCurrying(foo)
+    curryFoo(1)(2)(2)
+  </script>
+</body>
+
+</html>

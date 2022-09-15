@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    var obj = {
+      num: 1
+    }
+
+    // 对obj对象中的name添加描述符(存取属性描述符)
+    var _name = ""
+    Object.defineProperty(obj, "name", {
+      configurable: true, // 可以被删除
+      enumerable: false, // 不可枚举
+      set: function(value) {
+        console.log("set方法被调用了", value)
+        _name = value
+      },
+      get: function() {
+        console.log("get方法被调用了")
+        return _name
+      }
+    })
+
+    // 设置值
+    obj.name = 2
+    obj.name = 3
+    obj.name = 4
+    obj.name = 5
+
+    // 获取值
+    console.log(obj.name)
+
+  </script>
+
+</body>
+</html>
