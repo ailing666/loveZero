@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h2>{{message}}</h2>
+    <h2>{{info}}</h2>
+    <button @click="changeMessage">修改message</button>
+    <button @click="changeInfo">修改Info</button>
+  </div>
+  
+  <script src="https://unpkg.com/vue@next"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "Hello Vue",
+          info: { name: "小艾同学", age: 18 }
+        }
+      },
+      methods: {
+        changeMessage() {
+          this.message = "Hello Watch"
+        },
+        changeInfo(){
+          this.info = { name: "loveZero" }
+        }
+      },
+      watch: {
+        // 基本类型
+        message(newValue, oldValue) {
+          console.log("message数据发生了变化:", newValue, oldValue)
+        },
+        info(newValue, oldValue) {
+          // 如果是对象类型拿到的是代理对象 Proxy
+          console.log("info数据发生了变化:", newValue, oldValue)
+
+          // 获取原生对象
+          console.log({ ...newValue })
+          console.log(Vue.toRaw(newValue))
+        }
+      }
+    })
+
+    app.mount("#app")
+  </script>
+</body>
+</html>

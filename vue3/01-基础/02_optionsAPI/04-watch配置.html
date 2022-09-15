@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>{{info}}</h2>
+      <button @click="changeInfoName">修改InfoName</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            info: { name: '小艾同学', age: 18 },
+          };
+        },
+        methods: {
+          changeInfoName() {
+            this.info.name = 'loveZero';
+          },
+        },
+        watch: {
+          // 复杂数据类型改变无法直接侦听到
+          info(newValue, oldValue) {
+            console.log('info数据发生了变化:', newValue, oldValue);
+          },
+
+          // handler函数侦听
+          info: {
+            handler(newValue, oldValue) {
+              // 可以侦听到，但是new和old一样
+              console.log('handler侦听info.name变化:', newValue, oldValue);
+              console.log(newValue === oldValue);
+            },
+            deep: true,
+            immediate: true // 初始化时就执行侦听
+          },
+
+          // 直接侦听对应属性
+          'info.name'(newValue, oldValue) {
+            console.log('info数据发生了变化:', newValue, oldValue);
+          },
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>
