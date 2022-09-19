@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    function Father(name, age, height) {
+      this.name = name
+      this.age = age
+      this.height = height
+    }
+
+    Father.prototype.running = function () {
+      console.log("running~")
+    }
+    Father.prototype.eating = function () {
+      console.log("eating~")
+    }
+
+
+    function Son(name, age, height, sno, score) {
+      // 借用构造函数
+      Father.call(this, name, age, height)
+      this.sno = sno
+      this.score = score
+    }
+
+    // 将子类的原型对象指向父类的原型对象    
+    Son.prototype = Object.create(Father.prototype)
+    Son.prototype.constructor = Son
+
+    Son.prototype.studying = function () {
+      console.log("studying")
+    }
+
+    // 创建实例对象
+    const stu1 = new Son("aaa", 18, 1.88, 111, 100)
+    const stu2 = new Son("bbb", 27, 1.66, 100, 90)
+    console.log(stu1);
+    console.log(stu2);
+    stu1.running()
+    stu1.studying()
+
+
+    // ---------------------
+    // Object.create内部大概操作
+    function createObject(o) {
+      function F() { }
+      F.prototype = o
+      return new F()
+    }
+  </script>
+
+</body>
+
+</html>

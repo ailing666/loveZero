@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    const obj = {
+      name: "aaa",
+      age: 18
+    }
+
+    const info = Object.create(obj)
+    info.address = "中国"
+    info.msg = "ok"
+
+    // hasOwnProperty:对象是否有某一个属于自己的属性（不是在原型上的属性）
+    console.log(info.hasOwnProperty("name")) // false
+    console.log(info.hasOwnProperty("address")) // true
+
+    // in/for in:判断某个属性是否在某个对象或者对象的原型上
+    console.log("name" in info) // true
+    console.log("address" in info) // true
+    // for in遍历不仅仅是自己对象上的内容, 也包括原型对象上的内容
+    for (var key in info) {
+      console.log(key)
+    }
+
+    // instanceof用于判断对象和类(构造函数)之间的关系
+    function Father() { }
+    function Son() { }
+    Son.prototype = Object.create(Father.prototype)
+    Son.prototype.constructor = Son
+    var son = new Son()
+    console.log(son instanceof Son) // true
+    console.log(son instanceof Father) // true
+    console.log(son instanceof Object) // true
+    console.log(son instanceof Array) // false
+
+
+    // isPrototypeOf
+    console.log(Son.prototype.isPrototypeOf(son)) // true
+    console.log(Father.prototype.isPrototypeOf(son)) // true
+
+    // 可以用于判断对象之间的继承
+    console.log(obj.isPrototypeOf(info)) // true
+  </script>
+
+</body>
+
+</html>
+
