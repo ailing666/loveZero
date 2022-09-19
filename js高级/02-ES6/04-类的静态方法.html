@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    class Person {
+      constructor(msg, age) {
+        this.msg = msg
+      }
+
+      // 实例方法
+      running() {
+        console.log(this.msg + " running~")
+      }
+
+      // 类方法(静态方法)
+      static staticFun() {
+        console.log('静态方法')
+      }
+    }
+
+    var p1 = new Person('hello')
+    p1.running()
+    var staticFun = Person.staticFun()
+
+  </script>
+
+</body>
+</html>

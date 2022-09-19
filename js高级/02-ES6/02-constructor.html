@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    class Person {
+      // 构造函数，new时调用
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      // 实例方法，new出来的实例才能调用
+      running() {
+        console.log(this.name + " running~")
+      }
+      eating() {
+        console.log(this.name + " eating~")
+      }
+    }
+
+    // 创建实例对象
+    var p = new Person("loveZero", 18)
+
+    // 使用实例对象中属性和方法
+    console.log(p.name, p.age)
+    p.running()
+    p.eating()
+    Person.running() // 报错，实例方法只有new出来的实例才能调用
+
+  </script>
+
+</body>
+
+</html>

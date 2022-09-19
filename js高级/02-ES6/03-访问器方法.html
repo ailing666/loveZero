@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    class Person {
+      constructor(name, age) {
+        this._name = name
+      }
+
+      set name(value) {
+        console.log("设置name")
+        this._name = value
+      }
+
+      get name() {
+        console.log("获取name")
+        return this._name
+      }
+    }
+
+    var p = new Person("loveZero", 18)
+    p.name = "小艾同学"
+    console.log(p.name)
+  </script>
+
+</body>
+</html>
