@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- textarea -->
+      <textarea cols="30" rows="10" v-model="content"></textarea>
+      <p>输入的内容: {{content}}</p>
+      <hr />
+      <!-- radio -->
+      <template v-for="(item,index) in genderList" :key="index">
+        <label :for="item.label">
+          <input :id="item.label" type="radio" v-model="gender" :value="item.value" />
+          {{item.value}}
+        </label>
+      </template>
+      <p>性别: {{gender}}</p>
+      <hr />
+
+      <!-- select的单选 -->
+      <select v-model="fruit">
+        <option value="apple" v-for="(item,index) in fruitsList" :key="index">{{item}}</option>
+      </select>
+      <h2>单选: {{fruit}}</h2>
+      <hr />
+
+      <!-- select的多选 -->
+      <select multiple size="3" v-model="fruits">
+        <option value="apple" v-for="(item,index) in fruitsList" :key="index">{{item}}</option>
+      </select>
+      <h2>多选: {{fruits}}</h2>
+      <hr />
+      <!-- checkbox单选 -->
+      <label for="agree">
+        <input id="agree" type="checkbox" v-model="isAgree" />
+        同意协议
+      </label>
+      <h2>单选框: {{isAgree}}</h2>
+      <hr />
+      <!-- checkbox多选 -->
+      <h2>请选择你的爱好:</h2>
+      <template v-for="item in allHobbies" :key="item.value">
+        <label :for="item.value">
+          <input :id="item.value" type="checkbox" v-model="hobbies" :value="item.value" />
+          {{item.text}}
+        </label>
+      </template>
+      <h2>爱好: {{hobbies}}</h2>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            content: '',
+            gender: '女',
+            isAgree: false,
+            genderList: [
+              { label: 'male', value: '男' },
+              { label: 'female', value: '女' },
+            ],
+            fruitsList: ['苹果', '橘子', '香蕉'],
+            fruit: 'orange',
+            fruits: [],
+            // 爱好
+            allHobbies: [
+              { value: 'sing', text: '唱' },
+              { value: 'jump', text: '跳' },
+              { value: 'rap', text: 'rap' },
+              { value: 'basketball', text: '篮球' },
+            ],
+            hobbies: [],
+          };
+        },
+      });
+
+      app.mount('#app');
+    </script>
+  </body>
+</html>
