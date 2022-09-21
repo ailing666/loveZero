@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       title: '子组件title',
-      list: ['aaa','bbb','ccc'],
+      list: ['aaa', 'bbb', 'ccc'],
     };
   },
 };

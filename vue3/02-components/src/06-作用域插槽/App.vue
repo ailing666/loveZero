@@ -5,7 +5,8 @@
       <!-- 使用 -->
       {{ slotProps.title }}
       <div v-for="item in slotProps.list" :key="item">
-      {{item}}</div>
+        {{ item }}
+      </div>
     </template>
   </show-message>
 </template>
