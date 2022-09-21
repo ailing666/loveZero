@@ -1,7 +1,8 @@
 <template>
   <div class="app">
     <show-message>
-      {{title}}
+      <!-- 无法访问子组件中的变量 -->
+      {{ title }}
     </show-message>
   </div>
 </template>
@@ -12,11 +13,6 @@ import ShowMessage from './ShowMessage.vue';
 export default {
   components: {
     ShowMessage,
-  },
-  data() {
-    return {
-      title: '父组件title',
-    };
   },
 };
 </script>
