@@ -1,4 +1,7 @@
 import { createApp } from 'vue'
-import App from './07-爷孙通讯/App.vue'
+import mitt from "mitt"
+import App from './08-兄弟通讯/App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.config.globalProperties.$mybus = mitt()
+app.mount('#app')
