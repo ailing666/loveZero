@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    const obj = {}
+    const s1 = Symbol()
+    const s2 = Symbol()
+    obj[s1] = "bbb"
+    console.log(obj)
+
+    const data = {
+      age: 18,
+      [s1]: "bbb",
+      [s2]: "ttt"
+    }
+    console.log(data);
+
+    // Symbol不会被遍历
+    console.log(Object.keys(data)) // age
+    // 获取 Symbol
+    console.log(Object.getOwnPropertySymbols(data))// [Symbol(), Symbol()]
+    const symbolKeys = Object.getOwnPropertySymbols(data)
+    for (const key of symbolKeys) {
+      console.log(data[key]) //  bbb ttt
+    }
+
+    // Symbol函数直接生成的值, 都是独一无二
+    const s3 = Symbol("ccc")
+    console.log(s3.description) // ccc
+    const s4 = Symbol(s3.description)
+    console.log(s3 === s4) //false
+
+    // 如果相同的key, 通过Symbol.for可以生成相同的Symbol值
+    const s5 = Symbol.for("ddd")
+    const s6 = Symbol.for("ddd")
+    console.log(s5 === s6) //true
+
+    // 获取传入的key
+    console.log(Symbol.keyFor(s5)) // ddd
+  </script>
+
+</body>
+
+</html>
