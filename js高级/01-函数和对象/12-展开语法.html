@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    const names = ["abc", "cba", "nba", "mba"]
+    console.log(...names);// abc cba nba mba
+    const str = "Hello"
+    console.log(...str);// H e l l o
+
+    const obj = {
+      name: "loveZero",
+      age: 18,
+      height: 1.88,
+      friend: {
+        name: "007"
+      }
+    }
+    const info = {
+      ...obj,
+      height: 1.88,
+      address: "广州市"
+    }
+    console.log(info)
+    // 1.引用赋值
+    const info1 = obj
+
+
+    // 2.浅拷贝
+    const info2 = {
+      ...obj
+    }
+    info2.name = "kobe"
+    console.log(obj.name) // loveZero
+    console.log(info2.name) // kobe
+    info2.friend.name = "james"
+    console.log(obj.friend.name) // james
+
+
+    // 3.深拷贝
+    const info3 = JSON.parse(JSON.stringify(obj))
+    console.log(info3.friend.name) // james
+    info3.friend.name = "hhh"
+    console.log("info3.friend.name:", info3.friend.name) // hhh
+    console.log(obj.friend.name) // james
+
+  </script>
+
+</body>
+
+</html>
