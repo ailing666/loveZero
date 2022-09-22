@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // 创建Set
+    const set = new Set()
+    console.log(set) // {size: 0}
+
+    // 添加元素
+    set.add(10)
+    set.add(22)
+    set.add(22)
+    // set不会有重复的元素
+    console.log(set) // 10,22
+
+    const info = {}
+    const obj = { name: "obj" }
+    set.add(info)
+    set.add(obj)
+    set.add(obj)
+    console.log(set)
+
+    // 数组的去重
+    const names = ["abc", "cba", "nba", "cba", "nba"]
+    const newNamesSet = new Set(names)
+    const newNames = Array.from(newNamesSet)
+    console.log(newNames)
+
+    // 获取set中数据个数
+    console.log(set.size) // 4
+    // delete方法 删除某个元素
+    set.delete(obj)
+    console.log(set)
+    // has方法 判断某个元素是否在set中
+    console.log(set.has(info))
+    // forEach 遍历set
+    set.forEach(item => console.log(item))
+
+    // set支持for...of 遍历set
+    for (const item of set) {
+      console.log(item)
+    }
+  </script>
+</body>
+
+</html>
