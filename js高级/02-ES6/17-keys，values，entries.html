@@ -33,6 +33,13 @@
     console.log(Object.entries(["abc", "cba"]))// [['0', 'abc'],['1', 'cba']]
     // entries对字符串
     console.log(Object.entries("abc")) // [['0', 'a'],['1', 'b'],['2', 'c']]
+    // fromEntries 获取 URLSearchParams 对象
+    const searchString = "?name=loveZero&age=18&height=1.88"
+    const params = new URLSearchParams(searchString)
+    console.log('params: ', params);// URLSearchParams {}
+    console.log(params.get("name")) // loveZero
+    const paramObj = Object.fromEntries(params)
+    console.log(paramObj) // {name: 'loveZero', age: '18', height: '1.88'}
   </script>
 
 </body>

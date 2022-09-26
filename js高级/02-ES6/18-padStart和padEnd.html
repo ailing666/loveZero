@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+    // 应用场景一: 对时间进行格式化
+    // 从前面开始填充，一共2位，不满的填充0
+    const minute = "15".padStart(2, "0")
+    const second = "6".padStart(2, "0")
+    console.log(`${minute}:${second}`)
+
+    // 应用场景二: 对一些敏感数据格式化
+    let cardNumber = "132666200001018899"
+    const sliceNumber = cardNumber.slice(-4)
+    // 从前面开始填充，一共cardNumber.length位，不满的填充*
+    cardNumber = sliceNumber.padStart(cardNumber.length, "*")
+    console.log('cardNumber: ', cardNumber);
+
+  </script>
+
+</body>
+</html>
