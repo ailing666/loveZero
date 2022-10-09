@@ -23,6 +23,10 @@ const routes = [
     path: '/user/:id',
     component: () => import(/* webpackChunkName: 'user'*/ '../components/User.vue'),
   },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('../components/NotFound.vue'),
+  },
 ];
 
 // 调用 createRouter 函数，传入配置，并指定路由模式
