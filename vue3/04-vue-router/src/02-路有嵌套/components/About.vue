@@ -1,7 +1,4 @@
 <template>
-  <div>About</div>
+  <!-- 获取query参数 -->
+  <div>About:query参数{{$route.query.id}}</div>
 </template>
-
-<script setup>
-
-</script>
