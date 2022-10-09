@@ -12,11 +12,15 @@ const routes = [
     component: () => import(/* webpackChunkName: 'home'*/ '../components/About.vue'),
   },
   {
+    name: "about",
     path: '/about',
     component: () => import(/* webpackChunkName: 'about'*/ '../components/Home.vue'),
+    meta: {
+      title: "about",
+    },
   },
   {
-    path: '/user',
+    path: '/user/:id',
     component: () => import(/* webpackChunkName: 'user'*/ '../components/User.vue'),
   },
 ];

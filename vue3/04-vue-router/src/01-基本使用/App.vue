@@ -6,7 +6,7 @@
     <!-- 指定路由激活后的类名 -->
     <router-link to="/about" active-class="active">About</router-link>
     <!-- to参数可以是一个对象 -->
-    <router-link :to="{ path: '/user' }" replace>User</router-link>
+    <router-link :to="{ path: '/user/123' }" replace>User</router-link>
 
     <!-- 路由出口 -->
     <router-view></router-view>
