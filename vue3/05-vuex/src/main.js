@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './01-基本使用/App.vue'
-import store from './01-基本使用/store'
+import App from './02-mapState/App.vue'
+import store from './02-mapState/store'
 
 createApp(App).use(store).mount('#app')
