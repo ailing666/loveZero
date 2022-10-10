@@ -1,12 +1,11 @@
 // 定义关于counter的store
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
-import useUser from './user'
-
-const useCounter = defineStore("counter", {
+const useCounter = defineStore('counter', {
   state: () => ({
     count: 99,
+    id: 66,
   }),
-})
+});
 
-export default useCounter
+export default useCounter;
