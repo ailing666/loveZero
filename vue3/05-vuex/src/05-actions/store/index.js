@@ -23,6 +23,14 @@ const store = createStore({
     changeNameAction(context, payload) {
       context.commit('changeName', payload);
     },
+    fetchHomeMultidataAction(context) {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch('http://123.207.32.32:8000/home/multidata');
+        const data = await res.json();
+        context.commit('name', data.data.name);
+        resolve('回调');
+      });
+    },
   },
 });
 
