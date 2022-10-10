@@ -32,7 +32,7 @@ function stateCount() {
   counterStore.$state = {
     count: 22222,
     id: 2,
-    msg:'hello'
+    msg: 'hello',
   };
 }
 </script>
