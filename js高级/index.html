@@ -48,6 +48,69 @@
     obj?.hobbit?.running?.()
     obj?.hobbit?.sport?.() // sport
 
+    console.log('----------');
+
+    let aaa = { id: 18 }
+
+    const finalRegistry = new FinalizationRegistry((value) => {
+      console.log("某一个对象被回收了:", value) // 某一个对象被回收了: 9
+    })
+
+    finalRegistry.register(aaa, 9)
+
+    aaa = null
+
+    function foo1(message, value) {
+      message ||= "默认值"
+      value &&= "value"
+      console.log(message, value)
+    }
+
+    foo1("abc", 'cba') // abc value
+    foo1() // 默认值 undefined
+
+
+    const ddd = Object.create(null)
+    ddd.name = "loveZero"
+    console.log(info.hasOwnProperty("name")) // false
+    console.log(Object.hasOwn(ddd, "name")) // true
+    console.log('----------');
+
+    class Person {
+      // 实例属性: public 公共 
+      height = 1.88
+
+
+      // 实例属性：private 私有，只能内部访问
+      #intro = "name is loveZero"
+
+
+      // 类静态属性
+      static num = 666
+
+      // 类静态私有属性
+      static #id = "007"
+
+      constructor(name) {
+        console.log('constructor');
+        // 对象中的属性: 在constructor通过this设置
+        this.name = name
+      }
+
+      // 静态代码块
+      static {
+        // 比 constructor 先执行
+        console.log("Hello World")
+      }
+    }
+
+    const p = new Person("loveZero", 18)
+    console.log(p) // {height: 1.88, name: 'loveZero', #intro: 'name is loveZero'}
+    console.log(p.num) // undefined
+    console.log(Person.num) // 666
+    console.log(p.height) // 1.88
+    // console.log(p.#intro) // 报错
+    // console.log(Person.#id) // 报错
   </script>
 
 </body>
