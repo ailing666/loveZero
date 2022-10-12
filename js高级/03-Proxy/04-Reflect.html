@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    const obj = {
+      _name: "why",
+      set name(newValue) {
+        console.log("this:", this) // 默认是obj
+        this._name = newValue
+      },
+      get name() {
+        return this._name
+      }
+    }
+
+
+
+    const objProxy = new Proxy(obj, {
+      set: function (target, key, newValue, receiver) {
+        console.log("proxy中设置方法被调用")
+        const isSuccess = Reflect.set(target, key, newValue, receiver)
+
+        if (!isSuccess) {
+          throw new Error(`set ${key} failure`)
+        }
+      },
+      get: function (target, key, receiver) {
+        console.log("proxy中获取方法被调用")
+        return Reflect.get(target, key, receiver)
+      }
+    })
+
+
+    // 操作代理对象
+    // objProxy.name = "kobe"
+    console.log(objProxy.name)
+
+  </script>
+
+</body>
+
+</html>
