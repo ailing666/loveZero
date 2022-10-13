@@ -1,6 +1,9 @@
+/**
+ * 将图片名转为相对路径
+ * @param {*} image 图片名
+ * @returns 相对路径
+ */
 export const getAssetURL = (image) => {
-  // 参数一: 相对路径
-  // 参数二: 当前路径的URL
   return new URL(`../assets/img/${image}`, import.meta.url).href
 }
 
