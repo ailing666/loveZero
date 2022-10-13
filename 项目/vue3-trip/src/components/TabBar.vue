@@ -30,7 +30,7 @@ const currentIndex = ref(0);
 
 <style lang="less" scoped>
 .tab-bar {
-  :deep(.van-tabbar-item__icon) {
+  :deep(.van-tabbar-item__icon) { 
     font-size: 50px;
   }
 

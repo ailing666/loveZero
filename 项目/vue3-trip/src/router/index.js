@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/order',
       name: 'order',
       component: () => import('../views/order/index.vue')
+    },
+    {
+      path: '/city',
+      name: 'city',
+      component: () => import('../views/city/index.vue')
     }
   ]
 })
