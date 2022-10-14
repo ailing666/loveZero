@@ -10,7 +10,9 @@
   <!-- tab -->
   <van-tabs v-model:active="tabActive" color="#ff9854" line-height="3">
     <template v-for="(value, key) in allCities" :key="key">
-      <van-tab :title="value.title" :name="key"></van-tab>
+      <van-tab :title="value.title" :name="key">
+        <city-group :groupData="value"></city-group>
+      </van-tab>
     </template>
   </van-tabs>
 </template>
@@ -19,6 +21,7 @@
 import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import useCityStore from "@/stores/modules/city";
+import cityGroup from "@/views/city/components/city-group.vue";
 
 const onSearch = () => {};
 const onCancel = () => {};
