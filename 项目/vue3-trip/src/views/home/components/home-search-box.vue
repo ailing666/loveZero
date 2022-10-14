@@ -2,7 +2,7 @@
   <div>
     <!-- 我的位置 -->
     <div class="location bottom-gray-line">
-      <div class="city" @click="cityClick">SDDD</div>
+      <div class="city" @click="cityClick">{{ currentCity.cityName }}</div>
       <div class="position">
         <span class="text">我的位置</span>
         <img src="@/assets/img/home/icon_location.png" alt="" />
@@ -12,13 +12,18 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia';
 import { useRouter } from "vue-router";
+import useCityStore from "@/stores/modules/city";
 const router = useRouter();
 // 点击城市
 const cityClick = () => {
   // 跳转到city路由
   router.push("/city");
 };
+
+const cityStore = useCityStore();
+const { currentCity } = storeToRefs(cityStore);
 </script>
 
 <style lang="less" scoped>
