@@ -31,6 +31,24 @@
       :round="false"
       @confirm="onConfirm"
     />
+    <!-- 价格/人数选择 -->
+    <div class="section price-counter bottom-gray-line">
+      <div class="start">价格不限</div>
+      <div class="end">人数不限</div>
+    </div>
+    <!-- 关键字 -->
+    <div class="section keyword bottom-gray-line">关键字/位置/民宿名</div>
+    <!-- 热门建议 -->
+    <div class="section hot-suggests">
+      <template v-for="(item, index) in hotSuggests" :key="index">
+        <div
+          class="item"
+          :style="{ color: item.tagText.color, background: item.tagText.background.color }"
+        >
+          {{ item.tagText.text }}
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -39,6 +57,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import useCityStore from '@/stores/modules/city';
+import useHomeStore from '@/stores/modules/home';
 import { formatMonthDay, getDiffDays } from '@/utils/common';
 
 const router = useRouter();
@@ -73,6 +92,10 @@ const onConfirm = date => {
   stayCount.value = getDiffDays(selectStartDate, selectEndDate);
   showCalendar.value = false;
 };
+
+// 热门建议
+const homeStore = useHomeStore();
+const { hotSuggests } = storeToRefs(homeStore);
 </script>
 
 <style lang="less" scoped>

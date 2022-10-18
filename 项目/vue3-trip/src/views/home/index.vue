@@ -9,8 +9,11 @@
 </template>
 
 <script setup>
+import useHomeStore from '@/stores/modules/home';
 import HomeNav from '@/views/home/components/home-nav.vue'
 import HomeSearchBox from '@/views/home/components/home-search-box.vue'
+const homeStore = useHomeStore()
+homeStore.fetchHotSuggestData()
 </script>
 
 <style lang="less" scoped>
