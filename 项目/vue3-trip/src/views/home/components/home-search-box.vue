@@ -8,22 +8,71 @@
         <img src="@/assets/img/home/icon_location.png" alt="" />
       </div>
     </div>
+    <!-- 日期范围 -->
+    <div class="section date-range bottom-gray-line" @click="showCalendar = true">
+      <div class="start">
+        <div class="date">
+          <span class="tip">入住</span>
+          <span class="time">{{ startDate }}</span>
+        </div>
+      </div>
+      <div class="stay">共{{ stayCount }}晚</div>
+      <div class="end">
+        <div class="date">
+          <span class="tip">离店</span>
+          <span class="time">{{ endDate }}</span>
+        </div>
+      </div>
+    </div>
+    <van-calendar
+      v-model:show="showCalendar"
+      type="range"
+      color="#ff9854"
+      :round="false"
+      @confirm="onConfirm"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRouter } from "vue-router";
-import useCityStore from "@/stores/modules/city";
+import { useRouter } from 'vue-router';
+import useCityStore from '@/stores/modules/city';
+import { formatMonthDay, getDiffDays } from '@/utils/common';
+
 const router = useRouter();
 // 点击城市
 const cityClick = () => {
   // 跳转到city路由
-  router.push("/city");
+  router.push('/city');
 };
 
 const cityStore = useCityStore();
+// 当前城市
 const { currentCity } = storeToRefs(cityStore);
+
+// 默认开始日期是今天的日期
+const nowDate = new Date();
+// 默认结束日期是今天的日期+1
+const newDate = new Date();
+newDate.setDate(nowDate.getDate() + 1);
+// 开始日期
+const startDate = ref(formatMonthDay(nowDate));
+// 结束日期
+const endDate = ref(formatMonthDay(newDate));
+// 相差天数
+const stayCount = ref(getDiffDays(nowDate, newDate));
+// 日期选择器显示与隐藏
+const showCalendar = ref(false);
+// 日期选择器确认事件
+const onConfirm = date => {
+  const [selectStartDate, selectEndDate] = date;
+  startDate.value = formatMonthDay(selectStartDate);
+  endDate.value = formatMonthDay(selectEndDate);
+  stayCount.value = getDiffDays(selectStartDate, selectEndDate);
+  showCalendar.value = false;
+};
 </script>
 
 <style lang="less" scoped>
@@ -86,6 +135,7 @@ const { currentCity } = storeToRefs(cityStore);
   .date {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     .tip {
       font-size: 12px;

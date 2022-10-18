@@ -22,7 +22,7 @@
 
 <script setup>
 import tabbarData from "../assets/data/tabbar";
-import { getAssetURL } from "../utils/load_assets.js";
+import { getAssetURL } from "../utils/common.js";
 import { ref } from "vue";
 
 const currentIndex = ref(0);
