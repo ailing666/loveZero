@@ -3,23 +3,24 @@
     <h2 class="title">热门精选</h2>
     <div class="list">
       <template v-for="item in houselist" :key="item.data.houseId">
-        {{item}}
+        <house-item-v9 v-if="item.discoveryContentType === 9" :item-data="item.data" />
+        <house-item-v3 v-else-if="item.discoveryContentType === 3" :item-data="item.data" />
       </template>
     </div>
   </div>
 </template>
 
 <script setup>
-import useHomeStore from '@/stores/modules/home';
 import { storeToRefs } from 'pinia';
+import useHomeStore from '@/stores/modules/home';
+import HouseItemV3 from '@/views/home/components/house-item-v3.vue';
+import HouseItemV9 from '@/views/home/components/house-item-v9.vue';
 
-const homeStore = useHomeStore()
-const { houselist } = storeToRefs(homeStore)
-
+const homeStore = useHomeStore();
+const { houselist } = storeToRefs(homeStore);
 </script>
 
 <style lang="less" scoped>
-
 .content {
   padding: 10px 8px;
 
