@@ -8,6 +8,7 @@
         <img src="@/assets/img/home/icon_location.png" alt="" />
       </div>
     </div>
+
     <!-- 日期范围 -->
     <div class="section date-range bottom-gray-line" @click="showCalendar = true">
       <div class="start">
@@ -31,11 +32,13 @@
       :round="false"
       @confirm="onConfirm"
     />
+
     <!-- 价格/人数选择 -->
     <div class="section price-counter bottom-gray-line">
       <div class="start">价格不限</div>
       <div class="end">人数不限</div>
     </div>
+
     <!-- 关键字 -->
     <div class="section keyword bottom-gray-line">关键字/位置/民宿名</div>
     <!-- 热门建议 -->
@@ -48,6 +51,11 @@
           {{ item.tagText.text }}
         </div>
       </template>
+    </div>
+
+    <!-- 搜索按钮 -->
+    <div class="section search-btn">
+      <div class="btn">开始搜索</div>
     </div>
   </div>
 </template>
@@ -97,7 +105,6 @@ const onConfirm = date => {
 const homeStore = useHomeStore();
 const { hotSuggests } = storeToRefs(homeStore);
 </script>
-
 <style lang="less" scoped>
 .search-box {
   --van-calendar-popup-height: 100%;
@@ -158,7 +165,6 @@ const { hotSuggests } = storeToRefs(homeStore);
   .date {
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     .tip {
       font-size: 12px;
@@ -186,12 +192,13 @@ const { hotSuggests } = storeToRefs(homeStore);
 
 .price-counter {
   .start {
-    border-right: 1px solid var(--line-color);
+    border-right: 1px solid  var(--line-color);
   }
 }
 
 .hot-suggests {
   margin: 10px 0;
+  height: auto;
 
   .item {
     padding: 4px 8px;
@@ -201,4 +208,20 @@ const { hotSuggests } = storeToRefs(homeStore);
     line-height: 1;
   }
 }
+
+.search-btn {
+  .btn {
+    width: 342px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-linear-gradient);
+  }
+}
+
 </style>
