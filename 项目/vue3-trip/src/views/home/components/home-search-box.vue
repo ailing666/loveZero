@@ -14,14 +14,14 @@
       <div class="start">
         <div class="date">
           <span class="tip">入住</span>
-          <span class="time">{{ startDate }}</span>
+          <span class="time">{{ startDateStr }}</span>
         </div>
       </div>
       <div class="stay">共{{ stayCount }}晚</div>
       <div class="end">
         <div class="date">
           <span class="tip">离店</span>
-          <span class="time">{{ endDate }}</span>
+          <span class="time">{{ endDateStr }}</span>
         </div>
       </div>
     </div>
@@ -61,11 +61,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import useCityStore from '@/stores/modules/city';
 import useHomeStore from '@/stores/modules/home';
+import useMainStore from '@/stores/modules/main';
 import { formatMonthDay, getDiffDays } from '@/utils/common';
 
 const router = useRouter();
@@ -79,24 +80,21 @@ const cityStore = useCityStore();
 // 当前城市
 const { currentCity } = storeToRefs(cityStore);
 
-// 默认开始日期是今天的日期
-const nowDate = new Date();
-// 默认结束日期是今天的日期+1
-const newDate = new Date();
-newDate.setDate(nowDate.getDate() + 1);
+// 日期范围的处理
+const mainStore = useMainStore();
+const { startDate, endDate } = storeToRefs(mainStore);
 // 开始日期
-const startDate = ref(formatMonthDay(nowDate));
+const startDateStr = computed(() => formatMonthDay(startDate.value));
 // 结束日期
-const endDate = ref(formatMonthDay(newDate));
-// 相差天数
-const stayCount = ref(getDiffDays(nowDate, newDate));
-// 日期选择器显示与隐藏
+const endDateStr = computed(() => formatMonthDay(endDate.value));
+// 持续天数
+const stayCount = ref(getDiffDays(startDate.value, endDate.value));
+
 const showCalendar = ref(false);
-// 日期选择器确认事件
-const onConfirm = date => {
-  const [selectStartDate, selectEndDate] = date;
-  startDate.value = formatMonthDay(selectStartDate);
-  endDate.value = formatMonthDay(selectEndDate);
+const onConfirm = value => {
+  const [selectStartDate, selectEndDate] = value;
+  mainStore.startDate = selectStartDate;
+  mainStore.endDate = selectEndDate;
   stayCount.value = getDiffDays(selectStartDate, selectEndDate);
   showCalendar.value = false;
 };
@@ -192,7 +190,7 @@ const { hotSuggests } = storeToRefs(homeStore);
 
 .price-counter {
   .start {
-    border-right: 1px solid  var(--line-color);
+    border-right: 1px solid var(--line-color);
   }
 }
 
@@ -223,5 +221,4 @@ const { hotSuggests } = storeToRefs(homeStore);
     background-image: var(--theme-linear-gradient);
   }
 }
-
 </style>
