@@ -19,7 +19,7 @@ const useHomeStore = defineStore('home', {
     },
     async fetchHouselistData() {
       const res = await getHomeHouselist(this.currentPage);
-      this.houselist = res.data;
+      this.houselist.push(...res.data)
       this.currentPage++;
     },
   },

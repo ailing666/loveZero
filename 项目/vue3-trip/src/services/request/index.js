@@ -1,34 +1,55 @@
-import axios from "axios";
+import axios from 'axios';
+import { BASE_URL, TIMEOUT } from './config';
+import pinia from '../../stores/index' 
+import useMainStore from '@/stores/modules/main'
 
-import { BASE_URL, TIMEOUT } from "./config";
-
+const mainStore = useMainStore(pinia)
 class Request {
   constructor(baseURL, timeout = 10000) {
     this.instance = axios.create({
       baseURL,
       timeout,
     });
+    this.instance.interceptors.request.use(
+      config => {
+        mainStore.isLoading = true;
+        return config;
+      },
+      err => {
+        return err;
+      }
+    );
+    this.instance.interceptors.response.use(
+      res => {
+        mainStore.isLoading = false;
+        return res;
+      },
+      err => {
+        mainStore.isLoading = false;
+        return err;
+      }
+    );
   }
 
   request(config) {
     return new Promise((resolve, reject) => {
       this.instance
         .request(config)
-        .then((res) => {
+        .then(res => {
           resolve(res.data);
         })
-        .catch((err) => {
+        .catch(err => {
           reject(err);
         });
     });
   }
 
   get(config) {
-    return this.request({ ...config, method: "get" });
+    return this.request({ ...config, method: 'get' });
   }
 
   post(config) {
-    return this.request({ ...config, method: "post" });
+    return this.request({ ...config, method: 'post' });
   }
 }
 
