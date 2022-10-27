@@ -8,6 +8,7 @@
       <detail-facility name="设施" :ref="getSectionRef" :house-facility="mainPart.dynamicModule.facilityModule.houseFacility"/>
       <detail-landlord name="房东" :ref="getSectionRef" :landlord="mainPart.dynamicModule.landlordModule"/>
       <detail-comment name="评论" :ref="getSectionRef" :comment="mainPart.dynamicModule.commentModule"/>
+      <detail-map name="周边" :ref="getSectionRef" :position="mainPart.dynamicModule.positionModule"/>
       <detail-intro :price-intro="mainPart.introductionModule"/>
     </div>
     <div class="footer">
@@ -27,6 +28,7 @@ import DetailFacility from './components/detail-facility.vue';
 import DetailLandlord from "./components/detail-landlord.vue"
 import DetailComment from "./components/detail-comment.vue"
 import DetailIntro from "./components/detail-intro.vue"
+import DetailMap from "./components/detail-map.vue"
 
 const router = useRouter();
 const route = useRoute();
