@@ -6,6 +6,13 @@
       <detail-swipe name="轮播图" :swipeData="mainPart?.topModule?.housePicture?.housePics"></detail-swipe>
       <detail-infos name="描述" :topInfos="mainPart.topModule" />
       <detail-facility name="设施" :ref="getSectionRef" :house-facility="mainPart.dynamicModule.facilityModule.houseFacility"/>
+      <detail-landlord name="房东" :ref="getSectionRef" :landlord="mainPart.dynamicModule.landlordModule"/>
+      <detail-comment name="评论" :ref="getSectionRef" :comment="mainPart.dynamicModule.commentModule"/>
+      <detail-intro :price-intro="mainPart.introductionModule"/>
+    </div>
+    <div class="footer">
+      <img src="@/assets/img/detail/icon_ensure.png" alt="">
+      <div class="text">弘源旅途, 永无止境!</div>
     </div>
   </div>
 </template>
@@ -17,6 +24,10 @@ import { useRoute, useRouter } from 'vue-router';
 import DetailSwipe from './components/detail-swipe.vue';
 import DetailInfos from './components/detail-infos.vue';
 import DetailFacility from './components/detail-facility.vue';
+import DetailLandlord from "./components/detail-landlord.vue"
+import DetailComment from "./components/detail-comment.vue"
+import DetailIntro from "./components/detail-intro.vue"
+
 const router = useRouter();
 const route = useRoute();
 const houseId = route.params.id;
