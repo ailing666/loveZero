@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const infos = {
+      name: "loveZero",
+      age: 18,
+      height: 1.88,
+
+      [Symbol.iterator]: function () {
+        // const keys = Object.keys(this)
+        // const values = Object.values(this)
+        const entries = Object.entries(this)
+        let index = 0
+        const iterator = {
+          next: function () {
+            if (index < entries.length) {
+              return { done: false, value: entries[index++] }
+            } else {
+              return { done: true }
+            }
+          }
+        }
+        return iterator
+      }
+    }
+    for (const item of infos) {
+      const [key, value] = item
+      console.log(key, value)
+    }
+  </script>
+</body>
+
+</html>
