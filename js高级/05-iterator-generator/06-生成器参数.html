@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    function* foo(name1) {
+      console.log("执行内部代码:1111", name1)
+      console.log("执行内部代码:2222", name1)
+      const name2 = yield "aaaa"
+      console.log("执行内部代码:3333", name2)
+      console.log("执行内部代码:4444", name2)
+      const name3 = yield "bbbb"
+      console.log("执行内部代码:5555", name3)
+      console.log("执行内部代码:6666", name3)
+      yield "cccc"
+      return undefined
+    }
+
+    const generator = foo("next1")
+    console.log(generator.next()) // {value: 'aaaa', done: false}
+    console.log(generator.next('next2')) // {value: 'bbbb', done: false}
+    console.log(generator.next('next3')) // {value: 'cccc', done: false}
+    console.log(generator.next('next4')) // {value: undefined, done: true}
+
+  </script>
+
+</body>
+
+</html>

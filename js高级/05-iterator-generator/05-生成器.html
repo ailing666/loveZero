@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+
+    // 生成器函数
+    function* foo() {
+      console.log("1111")
+      console.log("2222")
+      yield
+      console.log("3333")
+      console.log("4444")
+      yield
+      console.log("5555")
+      console.log("6666")
+    }
+
+    // 调用生成器函数, 返回一个生成器对象
+    const generator = foo()
+    // 调用next方法
+    console.log(generator.next());
+    console.log(generator.next());
+    console.log(generator.next());
+
+  </script>
+
+</body>
+</html>
