@@ -8,29 +8,18 @@
         <img src="@/assets/img/home/icon_location.png" alt="" />
       </div>
     </div>
-<<<<<<< HEAD
-
-    <!-- 日期范围 -->
-    <div class="section date-range bottom-gray-line" @click="showCalendar = true">
-      <div class="start">
-        <div class="date">
-          <span class="tip">入住</span>
-          <span class="time">{{ startDateStr }}</span>
-=======
     <!-- 日期 -->
     <div class="section date-range bottom-gray-line " @click="showCalendar = true">
       <div class="start">
         <div class="date">
           <span class="tip">入住</span>
           <span class="time">{{ startDate }}</span>
->>>>>>> be22692 (迭代器)
         </div>
       </div>
       <div class="stay">共{{ stayCount }}晚</div>
       <div class="end">
         <div class="date">
           <span class="tip">离店</span>
-<<<<<<< HEAD
           <span class="time">{{ endDateStr }}</span>
         </div>
       </div>
@@ -67,18 +56,10 @@
     <div class="section search-btn">
       <div class="btn">开始搜索</div>
     </div>
-=======
-          <span class="time">{{ endDate }}</span>
-        </div>
-      </div>
-    </div>
-    <van-calendar v-model:show="showCalendar" type="range" @confirm="onConfirm" />
->>>>>>> be22692 (迭代器)
   </div>
 </template>
 
 <script setup>
-<<<<<<< HEAD
 import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -87,12 +68,6 @@ import useHomeStore from '@/stores/modules/home';
 import useMainStore from '@/stores/modules/main';
 import { formatMonthDay, getDiffDays } from '@/utils/common';
 
-=======
-import { storeToRefs } from "pinia";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import useCityStore from "@/stores/modules/city";
->>>>>>> be22692 (迭代器)
 const router = useRouter();
 // 点击城市
 const cityClick = () => {
@@ -104,7 +79,6 @@ const cityStore = useCityStore();
 // 当前城市
 const { currentCity } = storeToRefs(cityStore);
 
-<<<<<<< HEAD
 // 日期范围的处理
 const mainStore = useMainStore();
 const { startDate, endDate } = storeToRefs(mainStore);
@@ -127,17 +101,6 @@ const onConfirm = value => {
 // 热门建议
 const homeStore = useHomeStore();
 const { hotSuggests } = storeToRefs(homeStore);
-=======
-const date = ref("");
-const showCalendar = ref(false);
-
-const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
-const onConfirm = (values) => {
-  const [start, end] = values;
-  showCalendar.value = false;
-  date.value = `${formatDate(start)} - ${formatDate(end)}`;
-};
->>>>>>> be22692 (迭代器)
 </script>
 <style lang="less" scoped>
 .search-box {
@@ -243,7 +206,6 @@ const onConfirm = (values) => {
   }
 }
 
-<<<<<<< HEAD
 .search-btn {
   .btn {
     width: 342px;
@@ -258,6 +220,4 @@ const onConfirm = (values) => {
     background-image: var(--theme-linear-gradient);
   }
 }
-=======
->>>>>>> be22692 (迭代器)
 </style>
