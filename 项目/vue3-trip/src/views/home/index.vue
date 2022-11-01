@@ -7,27 +7,29 @@
     <home-search-box></home-search-box>
     <home-categories></home-categories>
     <div class="search-bar" v-if="isShowSearchBar">
-      <search-bar :start-date="'09.19'" :end-date="'09.20'"/>
+      <search-bar :start-date="'09.19'" :end-date="'09.20'" />
     </div>
     <home-content></home-content>
   </div>
 </template>
-
+<script>
+export default { name: 'home' };
+</script>
 <script setup>
-import { watch,computed } from 'vue';
+import { watch, computed } from 'vue';
 import useScroll from '@/hooks/useScroll';
 import useHomeStore from '@/stores/modules/home';
 import HomeNav from '@/views/home/components/home-nav.vue';
 import HomeSearchBox from '@/views/home/components/home-search-box.vue';
 import HomeContent from '@/views/home/components/home-content.vue';
 import HomeCategories from '@/views/home/components/home-categories.vue';
-import SearchBar from '@/components/SearchBar.vue'
+import SearchBar from '@/components/SearchBar.vue';
 
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggestData();
 homeStore.fetchCategoriesData();
 homeStore.fetchHouselistData();
-const { isReachBottom,scrollTop } = useScroll();
+const { isReachBottom, scrollTop } = useScroll();
 // 触底加载
 watch(isReachBottom, newValue => {
   if (newValue) {
@@ -39,13 +41,16 @@ watch(isReachBottom, newValue => {
 
 // 是否显示SearchBar
 const isShowSearchBar = computed(() => {
-  return scrollTop.value >= 360
-})
+  return scrollTop.value >= 360;
+});
 </script>
 
 <style lang="less" scoped>
 .home {
-  padding-bottom: 100px;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-bottom: 60px;
 }
 
 .banner {
