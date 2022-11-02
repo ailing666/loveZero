@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+
+    const ACCESS_TOKEN = "token"
+
+    console.log(localStorage.length)
+    // 设置 localStorage:
+    localStorage.setItem(ACCESS_TOKEN, "token")
+    // 获取 localStorage
+    console.log(localStorage.getItem(ACCESS_TOKEN))
+
+    // 根据索引取值
+    console.log(localStorage.key(0))
+    console.log(localStorage.key(1))
+    // 移除指定 localStorage
+    console.log(localStorage.removeItem("infoTab"))
+    // 清除所有 localStorage
+    localStorage.clear()
+
+  </script>
+
+</body>
+
+</html>
