@@ -11,106 +11,47 @@
 <body>
 
   <script>
-    // trim 去除首尾空格，trimStart去除前面空格，trimEnd去除后面空格
-    const message = "   Hello World    "
-    console.log(message.trim())
-    console.log(message.trimStart())
-    console.log(message.trimEnd())
+    console.log("script start")
 
-    const foo = (num1, num2,) => (num1 + num2)
-    // 函数尾部逗号不报错
-    foo(10, 20,)
+    setTimeout(function () {
+      console.log("setTimeout1");
+      new Promise(function (resolve) {
+        resolve();
+      }).then(function () {
+        new Promise(function (resolve) {
+          resolve();
+        }).then(function () {
+          console.log("then4");
+        });
+        console.log("then2");
+      });
+    });
 
-    console.log(Number.MAX_SAFE_INTEGER)
-    // 在数字后面加 n 表示BigInt大的整数
-    const num = 9007199254740993n
-    console.log(num)
+    new Promise(function (resolve) {
+      console.log("promise1");
+      resolve();
+    }).then(function () {
+      console.log("then1");
+    });
 
-    // ??: 空值合并运算符
-    let info = undefined ?? "默认值"
-    let info1 = null ?? "默认值"
-    let info2 = 0 ?? "默认值"
-    let info3 = '' ?? "默认值"
-    console.log(info, info1, info2) // 默认值 默认值 0 ''
+    setTimeout(function () {
+      console.log("setTimeout2");
+    });
 
-    const obj = {
-      name: "loveZero",
-      hobbit: {
-        // running: function() {
-        //   console.log("running~")
-        // }
-        sport: function () {
-          console.log("sport~")
-        }
-      }
-    }
-    // 可选链的用法: ?. 如果有值才调用
-    obj?.hobbit?.running?.()
-    obj?.hobbit?.sport?.() // sport
+    console.log(2);
 
-    console.log('----------');
+    queueMicrotask(() => {
+      console.log("queueMicrotask1")
+    });
 
-    let aaa = { id: 18 }
+    new Promise(function (resolve) {
+      resolve();
+    }).then(function () {
+      console.log("then3");
+    });
 
-    const finalRegistry = new FinalizationRegistry((value) => {
-      console.log("某一个对象被回收了:", value) // 某一个对象被回收了: 9
-    })
+    console.log("script end")
 
-    finalRegistry.register(aaa, 9)
-
-    aaa = null
-
-    function foo1(message, value) {
-      message ||= "默认值"
-      value &&= "value"
-      console.log(message, value)
-    }
-
-    foo1("abc", 'cba') // abc value
-    foo1() // 默认值 undefined
-
-
-    const ddd = Object.create(null)
-    ddd.name = "loveZero"
-    console.log(info.hasOwnProperty("name")) // false
-    console.log(Object.hasOwn(ddd, "name")) // true
-    console.log('----------');
-
-    class Person {
-      // 实例属性: public 公共 
-      height = 1.88
-
-
-      // 实例属性：private 私有，只能内部访问
-      #intro = "name is loveZero"
-
-
-      // 类静态属性
-      static num = 666
-
-      // 类静态私有属性
-      static #id = "007"
-
-      constructor(name) {
-        console.log('constructor');
-        // 对象中的属性: 在constructor通过this设置
-        this.name = name
-      }
-
-      // 静态代码块
-      static {
-        // 比 constructor 先执行
-        console.log("Hello World")
-      }
-    }
-
-    const p = new Person("loveZero", 18)
-    console.log(p) // {height: 1.88, name: 'loveZero', #intro: 'name is loveZero'}
-    console.log(p.num) // undefined
-    console.log(Person.num) // 666
-    console.log(p.height) // 1.88
-    // console.log(p.#intro) // 报错
-    // console.log(Person.#id) // 报错
   </script>
 
 </body>
