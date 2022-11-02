@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <h2 v-hello:msg.dnf.qwer="message">哈哈哈哈</h2>
+    <h2 v-unit> {{ 111 }} </h2>
   </div>
 </template>
 
