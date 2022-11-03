@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    const message = "My name is AL"
+
+    // 正则: 锚点
+    if (/^my/i.test(message)) {
+      console.log("以my开头")
+    }
+
+    if (/al$/i.test(message)) {
+      console.log("以al结尾")
+    }
+    if (/\bname\b/i.test(message)) {
+      console.log("有name, name有边界")
+    }
+
+    const re = /^hello$/
+    const info = "hellooo"
+    console.log(re.test(info)) // false
+
+  </script>
+
+</body>
+</html>
