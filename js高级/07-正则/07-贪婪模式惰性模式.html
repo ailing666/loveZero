@@ -9,8 +9,6 @@
 <body>
   
   <script>
-
-    // 1.贪婪模式/惰性模式
     const message = "我最喜欢的两本书: 《黄金时代》和《沉默的大多数》、《一只特立独行的猪》"
 
     // 默认.+采用贪婪模式
@@ -21,8 +19,8 @@
     
     const result1 = message.match(nameRe)
     const result2 = message.match(nameRe2)
-    console.log(result1)
-    console.log(result2)
+    console.log(result1)// ['《黄金时代》和《沉默的大多数》、《一只特立独行的猪》']
+    console.log(result2)// ['《黄金时代》', '《沉默的大多数》', '《一只特立独行的猪》']
 
   </script>
 
