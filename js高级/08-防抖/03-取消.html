@@ -51,6 +51,7 @@
     }, 1000)
     inputEl.oninput = debounceFn
 
+    // 取消1s后发送的请求
     cancelBtn.onclick = function () {
       debounceFn.cancel()
     }
