@@ -17,7 +17,3 @@ import { defineAsyncComponent } from 'vue';
 const AsyncHome = defineAsyncComponent(() => import("./AsyncHome.vue"))
 
 </script>
-
-<style scoped>
-
-</style>
