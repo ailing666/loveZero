@@ -13,13 +13,18 @@
   <input type="text">
   <script>
     function hythrottle(fn, interval) {
+      // 开始时间
       let startTime = 0
 
       const _throttle = function() {
+        // 目前的时间
         const nowTime = new Date().getTime()
+        // 等待执行的时间
         const waitTime = interval - (nowTime - startTime)
+        // 当等待时间《= 0 时，执行函数
         if (waitTime <= 0) {
           fn()
+          // 将开始时间置为现在的时候
           startTime = nowTime
         }
       }
@@ -29,19 +34,10 @@
   </script>
 
   <script>
-    // 1.获取input元素
     const inputEl = document.querySelector("input")
-
-    // 2.underscore节流处理代码
-    // let counter = 1
-    // inputEl.oninput = _.throttle(function() {
-    //   console.log(`发送网络请求${counter++}:`, this.value)
-    // }, 1000)
-
-    // 3.自己实现的节流函数
     let counter = 1
     inputEl.oninput = hythrottle(function() {
-      console.log(`发送网络请求${counter++}:`, this.value)
+      console.log(`发送网络请求${counter++}:`)
     }, 1000)
 
 
