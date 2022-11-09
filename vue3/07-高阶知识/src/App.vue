@@ -4,7 +4,7 @@
       <button @click="isShow = !isShow">切换</button>
     </div>
 
-    <transition name="abc">
+    <transition name="abc" :duration="{ enter: 800, leave: 1000 }">
       <h2 v-if="isShow">哈哈哈哈哈哈</h2>
     </transition>
   </div>
