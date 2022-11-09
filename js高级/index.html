@@ -10,76 +10,46 @@
 
 <body>
 
-  <button>按钮</button>
-
-  <input type="text">
-  <button class="cancel">取消</button>
-
   <script>
-    function hythrottle(fn, interval, { leading = true, trailing = false } = {}) {
-      let startTime = 0
-      let timer = null
+    function isObject(value) {
 
-      const _throttle = function (...args) {
-        return new Promise((resolve, reject) => {
-          try {
-            // 获取当前时间
-            const nowTime = new Date().getTime()
-
-            // 对立即执行进行控制
-            if (!leading && startTime === 0) {
-              startTime = nowTime
-            }
-
-            // 计算需要等待的时间执行函数
-            const waitTime = interval - (nowTime - startTime)
-            if (waitTime <= 0) {
-              if (timer) clearTimeout(timer)
-              const res = fn.apply(this, args)
-              resolve(res)
-              startTime = nowTime
-              timer = null
-              return
-            }
-
-            // 判断是否需要执行尾部
-            if (trailing && !timer) {
-              timer = setTimeout(() => {
-                const res = fn.apply(this, args)
-                resolve(res)
-                startTime = new Date().getTime()
-                timer = null
-              }, waitTime);
-            }
-          } catch (error) {
-            reject(error)
-          }
-        })
-      }
-
-      _throttle.cancel = function () {
-        if (timer) clearTimeout(timer)
-        startTime = 0
-        timer = null
-      }
-
-      return _throttle
+      const valueType = typeof value
+      return (value !== null) && (valueType === "object" || valueType === "function")
     }
   </script>
-
   <script>
-    const inputEl = document.querySelector("input")
-    const cancelBtn = document.querySelector(".cancel")
+    // 深拷贝函数
+    function deepCopy(originValue) {
+      // 如果是原始类型, 直接返回
+      if (!isObject(originValue)) {
+        return originValue
+      }
 
-    let counter = 1
+      // 如果是对象类型, 才需要创建对象
+      const newObj = {}
+      for (const key in originValue) {
+        // 递归调用
+        newObj[key] = deepCopy(originValue[key]);
+      }
+      return newObj
+    }
 
-    const throttleFn = hythrottle(function (event) {
-      console.log(`发送网络请求${counter++}:`, this.value, event)
-    }, 3000, { trailing: true })
-    inputEl.oninput = throttleFn
-    throttleFn("aaaa").then(res => {
-      console.log("res:", res)
-    })
+    const info = {
+      name: 'cba',
+      age: 18,
+      friend: {
+        name: "abc",
+        address: {
+          city: "洛杉矶",
+          detail: "斯坦普斯中心"
+        }
+      }
+    }
+
+    const newObj = deepCopy(info)
+    console.log(newObj);
+    info.friend.address.city = "北京市"
+    console.log(newObj.friend.address.city)
 
   </script>
 

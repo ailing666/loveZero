@@ -1,0 +1,42 @@
+<script>
+  function isObject(value) {
+
+    const valueType = typeof value
+    return (value !== null) && (valueType === "object" || valueType === "function")
+  }
+</script>
+<script>
+  // 深拷贝函数
+  function deepCopy(originValue) {
+    // 如果是原始类型, 直接返回
+    if (!isObject(originValue)) {
+      return originValue
+    }
+
+    // 如果是对象类型, 才需要创建对象
+    const newObj = {}
+    for (const key in originValue) {
+      // 递归调用
+      newObj[key] = deepCopy(originValue[key]);
+    }
+    return newObj
+  }
+
+  const info = {
+    name: 'cba',
+    age: 18,
+    friend: {
+      name: "abc",
+      address: {
+        city: "洛杉矶",
+        detail: "斯坦普斯中心"
+      }
+    }
+  }
+
+  const newObj = deepCopy(info)
+  console.log(newObj);
+  info.friend.address.city = "北京市"
+  console.log(newObj.friend.address.city)
+
+</script>
