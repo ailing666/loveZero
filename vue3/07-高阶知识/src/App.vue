@@ -1,12 +1,12 @@
 <script setup>
 class Depend {
   constructor() {
-    this.reactiveFns = [];
+    this.reactiveFns = new Set();
   }
 
-  addDepend(fn) {
-    if (fn) {
-      this.reactiveFns.push(fn);
+  depend() {
+    if (reactiveFn) {
+      this.reactiveFns.add(reactiveFn)
     }
   }
 
@@ -67,7 +67,7 @@ Object.keys(obj).forEach(key => {
       // 根据key，找到对应的dep
       const dep = getDepend(obj, key)
       // 将依赖了属性的函数，添加到reactiveFn中
-      dep.addDepend(reactiveFn)
+      dep.depend()
       return value
     }
   })
@@ -77,6 +77,7 @@ Object.keys(obj).forEach(key => {
 watchFn(function foo() {
   console.log('foo function');
   console.log('foo:', obj.name);
+  console.log('foo', obj.age);
   console.log('foo', obj.age);
 });
 
