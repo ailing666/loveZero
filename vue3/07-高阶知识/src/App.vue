@@ -49,30 +49,24 @@ function getDepend(obj, key) {
  *
  * @param {要监听的对象} obj
  */
-function reactive(obj) {
-  // 监听属性变化
-  Object.keys(obj).forEach(key => {
-    let value = obj[key];
-
-    Object.defineProperty(obj, key, {
-      // 设置值时通知监听
-      set: function (newValue) {
-        value = newValue;
-        // 根据key，找到对应的dep
-        const dep = getDepend(obj, key);
-        dep.notify();
-      },
-      get: function () {
-        // 根据key，找到对应的dep
-        const dep = getDepend(obj, key);
-        // 将依赖了属性的函数，添加到reactiveFn中
-        dep.depend();
-        return value;
-      },
-    });
-  });
-  return obj;
+ function reactive(obj) {
+  const objProxy = new Proxy(obj, {
+    set: function(target, key, newValue, receiver) {
+      Reflect.set(target, key, newValue, receiver)
+      const dep = getDepend(target, key)
+      // 通知
+      dep.notify()
+    },
+    get: function(target, key, receiver) {
+      const dep = getDepend(target, key)
+      // 收集
+      dep.depend()
+      return Reflect.get(target, key, receiver)
+    }
+  })
+  return objProxy
 }
+
 
 const obj = reactive({
   name: 'abc',
