@@ -1,5 +1,9 @@
 import request from '@/utils/request'
-
-export function login(data) {
-  return request()
+// 用户登录
+export function login(formData) {
+  return request({
+    url: 'api/sys/login',
+    method: 'POST',
+    data: formData
+  })
 }
