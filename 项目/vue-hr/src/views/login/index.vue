@@ -114,20 +114,12 @@ export default {
         this.$refs.password.focus()
       })
     },
-    async doLogin() {
-      try {
-        const res = await login(this.loginForm)
-  	      console.log('获取到的token是', res)
-      } catch (err) {
-        console.log('登录错误，原因是', err)
-      }
-    },
+
     handleLogin() {
       // 手动兜底校验
       this.$refs.loginForm.validate(valid => {
-        console.log(valid)
         if (valid) {
-          this.doLogin()
+          this.$store.dispatch('user/userLogin', this.loginForm)
         }
       })
     }
