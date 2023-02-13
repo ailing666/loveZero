@@ -48,7 +48,6 @@ module.exports = {
     proxy: {
       '/api': {
         // target: '目标服务器'
-        changeOrigin: true,
         target: 'http://localhost:3000'
       }
     }

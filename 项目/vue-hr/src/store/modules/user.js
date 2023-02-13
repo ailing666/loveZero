@@ -1,26 +1,40 @@
 import { getToken, setToken } from '@/utils/auth'
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
+import router from '@/router'
 
 const state = {
-  token: getToken() || ''
+  token: getToken() || '',
+  userInfo: null
 }
 
 const mutations = {
   setToken(state, token) {
     state.token = token
     setToken(state.token)
+  },
+  setUserInfo(state, userInfo) {
+    state.userInfo = userInfo
+    setToken(state.userInfo)
   }
 }
 
 const actions = {
-  async userLogin(context, formData) {
+  async UserLogin(context, formData) {
     try {
       const res = await login(formData)
       context.commit('setToken', res.data)
+      console.log(router)
+      // 登录成功，路由跳转
+      router.push(router.currentRoute.redirect || '/')
     } catch (err) {
       console.log('登录错误，原因是', err)
     }
+  },
+  async GetUserInfo(context) {
+    const res = await getUserInfo()
+    context.commit('setUserInfo', res.data)
   }
+
 }
 
 export default {
