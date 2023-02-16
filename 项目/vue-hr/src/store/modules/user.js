@@ -8,7 +8,7 @@ const state = {
 }
 
 const mutations = {
-  setToken(state, token) {
+  setUserToken(state, token) {
     state.token = token
     setToken(state.token)
   },
@@ -22,8 +22,7 @@ const actions = {
   async UserLogin(context, formData) {
     try {
       const res = await login(formData)
-      context.commit('setToken', res.data)
-      console.log(router)
+      context.commit('setUserToken', res.data)
       // 登录成功，路由跳转
       router.push(router.currentRoute.redirect || '/')
     } catch (err) {
@@ -31,6 +30,7 @@ const actions = {
     }
   },
   async GetUserInfo(context) {
+    console.log('GetUserInfo: ')
     const res = await getUserInfo()
     context.commit('setUserInfo', res.data)
   }
