@@ -1,5 +1,5 @@
 import { getToken, setToken } from '@/utils/auth'
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 import router from '@/router'
 
 const state = {
@@ -14,7 +14,6 @@ const mutations = {
   },
   setUserInfo(state, userInfo) {
     state.userInfo = userInfo
-    setToken(state.userInfo)
   }
 }
 
@@ -30,9 +29,9 @@ const actions = {
     }
   },
   async GetUserInfo(context) {
-    console.log('GetUserInfo: ')
     const res = await getUserInfo()
-    context.commit('setUserInfo', res.data)
+    const user = await getUserDetailById(res.data.userId)
+    context.commit('setUserInfo', { ...res.data, ...user.data })
   }
 
 }

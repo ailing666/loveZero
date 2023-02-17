@@ -5,7 +5,7 @@ import store from '@/store'
 
 // 白名单数组
 const whiteList = ['/login', '/404']
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start()
   const token = store.state.user.token
   if (token) {
@@ -13,6 +13,7 @@ router.beforeEach((to, from, next) => {
       next('/')
       NProgress.done()
     } else {
+      await store.dispatch('user/GetUserInfo')
       next()
     }
   } else {

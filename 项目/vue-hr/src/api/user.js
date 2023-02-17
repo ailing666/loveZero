@@ -16,3 +16,9 @@ export function getUserInfo(formData) {
     data: formData
   })
 }
+
+export function getUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
