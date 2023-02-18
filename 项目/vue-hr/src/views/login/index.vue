@@ -117,9 +117,11 @@ export default {
 
     handleLogin() {
       // 手动兜底校验
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.$store.dispatch('user/UserLogin', this.loginForm)
+          await this.$store.dispatch('user/UserLogin', this.loginForm)
+          // 登录成功，路由跳转
+          this.$router.push(this.$route.query.redirect || '/')
         }
       })
     }

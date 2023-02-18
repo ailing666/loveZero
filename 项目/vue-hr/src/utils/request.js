@@ -1,4 +1,6 @@
 import store from '@/store'
+import router from '@/router'
+import { Message } from 'element-ui'
 
 // 导出一个axios的实例  而且这个实例要有请求拦截器 响应拦截器
 import axios from 'axios'
@@ -29,7 +31,16 @@ service.interceptors.response.use(response => {
     // 被catch分支捕获
     return Promise.reject(new Error(response.data.message))
   }
-}, error => {
-  return Promise.reject(error) // 返回执行错误 让当前的执行链跳出成功 直接进入 catch
+},
+async error => {
+  if (error.response.data.code === 10002) {
+    await store.dispatch('user/logout')
+    router.push(`/login?redirect=${encodeURIComponent(router.currentRoute.fullPath)}`)
+    Message({
+      message: error.response.data.message,
+      type: 'error'
+    })
+  }
+  return Promise.reject(error)
 })
 export default service // 导出axios实例

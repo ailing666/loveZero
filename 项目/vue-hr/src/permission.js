@@ -2,7 +2,6 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import router from './router'
 import store from '@/store'
-
 // 白名单数组
 const whiteList = ['/login', '/404']
 router.beforeEach(async(to, from, next) => {
@@ -13,6 +12,8 @@ router.beforeEach(async(to, from, next) => {
       next('/')
       NProgress.done()
     } else {
+      console.log(3)
+
       await store.dispatch('user/GetUserInfo')
       next()
     }
@@ -25,7 +26,6 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     }
   }
-  console.log(token, '路由跳转', from.path, '----->', to.path)
 })
 
 router.afterEach(() => {

@@ -1,4 +1,4 @@
-import { getToken, setToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
 import router from '@/router'
 
@@ -14,6 +14,13 @@ const mutations = {
   },
   setUserInfo(state, userInfo) {
     state.userInfo = userInfo
+  },
+  reomveUserInfo(state, userInfo) {
+    state.userInfo = null
+  },
+  reomveToken(state) {
+    state.token = ''
+    removeToken()
   }
 }
 
@@ -32,8 +39,12 @@ const actions = {
     const res = await getUserInfo()
     const user = await getUserDetailById(res.data.userId)
     context.commit('setUserInfo', { ...res.data, ...user.data })
+  },
+  logout(context) {
+    context.commit('reomveToken')
+    // 删除userInfo
+    context.commit('reomveUserInfo')
   }
-
 }
 
 export default {
