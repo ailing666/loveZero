@@ -12,9 +12,9 @@ router.beforeEach(async(to, from, next) => {
       next('/')
       NProgress.done()
     } else {
-      console.log(3)
-
-      await store.dispatch('user/GetUserInfo')
+      if (!store.getters.userId) {
+        await store.dispatch('user/GetUserInfo')
+      }
       next()
     }
   } else {

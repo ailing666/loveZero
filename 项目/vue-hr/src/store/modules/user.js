@@ -4,7 +4,7 @@ import router from '@/router'
 
 const state = {
   token: getToken() || '',
-  userInfo: null
+  userInfo: {}
 }
 
 const mutations = {
@@ -16,7 +16,7 @@ const mutations = {
     state.userInfo = userInfo
   },
   reomveUserInfo(state, userInfo) {
-    state.userInfo = null
+    state.userInfo = {}
   },
   reomveToken(state) {
     state.token = ''
