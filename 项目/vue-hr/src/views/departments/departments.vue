@@ -38,7 +38,7 @@
               <el-col :span="4">
                 <el-row type="flex" justify="end">
                   <!-- 两个内容 -->
-                  <el-col>负责人</el-col>
+                  <el-col>{{ data.manager }}</el-col>
                   <!-- 下拉菜单 element -->
                   <el-col>
                     <el-dropdown>
@@ -47,6 +47,8 @@
                       </span>
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>添加子部门</el-dropdown-item>
+                        <el-dropdown-item>查看部门</el-dropdown-item>
+                        <el-dropdown-item>删除部门</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -55,18 +57,29 @@
             </el-row>
           </template>
         </el-tree>
+        <el-dialog
+          title="添加或修改"
+          :close-on-click-modal="false"
+          :close-on-press-escape="false"
+          :visible.sync="dialogFormVisible"
+        >
+          <departmentsDialog />
+        </el-dialog>
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
+import departmentsDialog from './departmentsDialog.vue'
 import { getDepartments } from '@/api/departments'
 import { tranListToTreeData } from '@/utils/index'
 export default {
+  components: { departmentsDialog },
   data() {
     return {
-      list: []
+      list: [],
+      dialogFormVisible: true
     }
   },
   created() {
@@ -77,7 +90,6 @@ export default {
       const res = await getDepartments()
       res.data.depts.shift()
       this.list = tranListToTreeData(res.data.depts)
-      console.log('this.list: ', this.list)
     }
   }
 }
