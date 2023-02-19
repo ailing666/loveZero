@@ -119,18 +119,24 @@ export function param2Obj(url) {
 }
 
 export function tranListToTreeData(list) {
-  const arr = []
-  list.forEach((item) => {
-    if (!item.pid) {
-      arr.push(item)
+  const treeList = []
+  const map = {}
+  // 建立一个映射关系：通过id快速找到对应的元素
+  list.forEach(item => {
+    if (!item.children) item.children = []
+    // 将id作为key
+    map[item.id] = item
+  })
+
+  list.forEach(item => {
+    // 如果存在上级则表示item不是最顶层的数据
+    if (map[item.pid]) {
+      map[item.pid].children.push(item)
     } else {
-      arr.find(v => {
-        if (v.id === item.pid) {
-          v.children || (v.children = [])
-          v.children.push(item)
-        }
-      })
+      // 如果不存在上级 则是顶层数据,直接添加
+      treeList.push(item)
     }
   })
-  return arr
+
+  return treeList
 }
