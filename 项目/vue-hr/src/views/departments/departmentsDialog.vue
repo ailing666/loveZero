@@ -24,12 +24,16 @@
 
 <script>
 import { getEmployeeSimple } from '@/api/employees'
-import { addDepartments } from '@/api/departments'
+import { addDepartments, getDepartDetail } from '@/api/departments'
 
 export default {
   props: {
     pid: {
       type: String,
+      required: true
+    },
+    isEdit: {
+      type: Boolean,
       required: true
     }
   },
@@ -46,12 +50,18 @@ export default {
   },
   created() {
     this.loadManagerList()
+    this.isEdit && this.loadDepartDetail()
   },
   methods: {
     async loadManagerList() {
       const res = await getEmployeeSimple()
       this.managerList = res.data
     },
+    async loadDepartDetail() {
+      const res = await getDepartDetail(this.pid)
+      this.form = res.data
+    },
+
     async hSubmit() {
       // 发起请求
       await addDepartments({ ...this.form, pid: this.pid })

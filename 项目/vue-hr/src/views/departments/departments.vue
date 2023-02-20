@@ -46,8 +46,8 @@
                         操作<i class="el-icon-arrow-down" />
                       </span>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item @click.native="showDialog(data.id)">添加子部门</el-dropdown-item>
-                        <el-dropdown-item>查看部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="add(data.id)">添加子部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="edit(data.id)">编辑部门</el-dropdown-item>
                         <el-dropdown-item>删除部门</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -58,12 +58,12 @@
           </template>
         </el-tree>
         <el-dialog
-          title="添加或修改"
+          :title="isEdit?'编辑':'添加'"
           :close-on-click-modal="false"
           :close-on-press-escape="false"
           :visible.sync="dialogFormVisible"
         >
-          <departmentsDialog :pid="curId" @closeDialog="closeDialog" />
+          <departmentsDialog :is-edit="isEdit" :pid="curId" @closeDialog="closeDialog" />
         </el-dialog>
       </el-card>
     </div>
@@ -80,7 +80,8 @@ export default {
     return {
       list: [],
       dialogFormVisible: false,
-      curId: ''
+      curId: '',
+      isEdit: false
     }
   },
   created() {
@@ -92,9 +93,15 @@ export default {
       res.data.depts.shift()
       this.list = tranListToTreeData(res.data.depts)
     },
-    showDialog(id) {
+    add(id) {
       this.curId = id
       this.dialogFormVisible = true
+      this.isEdit = false
+    },
+    edit(id) {
+      this.curId = id
+      this.dialogFormVisible = true
+      this.isEdit = true
     },
     closeDialog() {
       this.dialogFormVisible = false
