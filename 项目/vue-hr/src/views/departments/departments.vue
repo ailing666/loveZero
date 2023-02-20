@@ -30,7 +30,7 @@
           default-expand-all
           node-key="id"
         >
-          <template v-slot="{ node, data }">
+          <template v-slot="{ data }">
             <el-row type="flex" justify="space-between" align="middle" style="height: 40px; width: 100%;">
               <el-col :span="20">
                 <span>{{ data.name }}</span>
@@ -46,7 +46,7 @@
                         操作<i class="el-icon-arrow-down" />
                       </span>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>添加子部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="showDialog(data.id)">添加子部门</el-dropdown-item>
                         <el-dropdown-item>查看部门</el-dropdown-item>
                         <el-dropdown-item>删除部门</el-dropdown-item>
                       </el-dropdown-menu>
@@ -63,7 +63,7 @@
           :close-on-press-escape="false"
           :visible.sync="dialogFormVisible"
         >
-          <departmentsDialog />
+          <departmentsDialog :pid="curId" @closeDialog="closeDialog" />
         </el-dialog>
       </el-card>
     </div>
@@ -79,7 +79,8 @@ export default {
   data() {
     return {
       list: [],
-      dialogFormVisible: true
+      dialogFormVisible: false,
+      curId: ''
     }
   },
   created() {
@@ -90,6 +91,14 @@ export default {
       const res = await getDepartments()
       res.data.depts.shift()
       this.list = tranListToTreeData(res.data.depts)
+    },
+    showDialog(id) {
+      this.curId = id
+      this.dialogFormVisible = true
+    },
+    closeDialog() {
+      this.dialogFormVisible = false
+      this.getDepartmentsList()
     }
   }
 }

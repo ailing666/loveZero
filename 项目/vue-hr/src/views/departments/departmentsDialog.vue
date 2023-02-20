@@ -8,7 +8,7 @@
     </el-form-item>
     <el-form-item label="部门负责人">
       <el-select v-model="form.manager" style="width:80%" placeholder="请选择">
-        <el-option value="1" :label="小美丽" />
+        <el-option v-for="item in managerList" :key="item.id" :value="item.username" :label="item.username" />
       </el-select>
     </el-form-item>
     <el-form-item label="部门介绍">
@@ -23,7 +23,16 @@
 </template>
 
 <script>
+import { getEmployeeSimple } from '@/api/employees'
+import { addDepartments } from '@/api/departments'
+
 export default {
+  props: {
+    pid: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       form: {
@@ -31,8 +40,25 @@ export default {
         code: '', // 部门编码
         manager: '', // 部门管理者
         introduce: '' // 部门介绍
-      }
+      },
+      managerList: []
     }
+  },
+  created() {
+    this.loadManagerList()
+  },
+  methods: {
+    async loadManagerList() {
+      const res = await getEmployeeSimple()
+      this.managerList = res.data
+    },
+    async hSubmit() {
+      // 发起请求
+      await addDepartments({ ...this.form, pid: this.pid })
+      // 关闭弹窗
+      this.$emit('closeDialog')
+    },
+    hCancel() {}
   }
 }
 </script>
