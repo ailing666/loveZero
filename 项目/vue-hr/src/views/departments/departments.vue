@@ -18,7 +18,7 @@
                     操作<i class="el-icon-arrow-down" />
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>添加子部门</el-dropdown-item>
+                    <el-dropdown-item @click.native="add('')">添加一级部门</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </el-col>
@@ -48,7 +48,7 @@
                       <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="add(data.id)">添加子部门</el-dropdown-item>
                         <el-dropdown-item @click.native="edit(data.id)">编辑部门</el-dropdown-item>
-                        <el-dropdown-item>删除部门</el-dropdown-item>
+                        <el-dropdown-item @click.native="del(data.id)">删除部门</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </el-col>
@@ -63,7 +63,7 @@
           :close-on-press-escape="false"
           :visible.sync="dialogFormVisible"
         >
-          <departmentsDialog :is-edit="isEdit" :pid="curId" @closeDialog="closeDialog" />
+          <departmentsDialog v-if="dialogFormVisible" :is-edit="isEdit" :pid="curId" @closeDialog="closeDialog" />
         </el-dialog>
       </el-card>
     </div>
@@ -72,7 +72,7 @@
 
 <script>
 import departmentsDialog from './departmentsDialog.vue'
-import { getDepartments } from '@/api/departments'
+import { getDepartments, delDepartment } from '@/api/departments'
 import { tranListToTreeData } from '@/utils/index'
 export default {
   components: { departmentsDialog },
@@ -102,6 +102,26 @@ export default {
       this.curId = id
       this.dialogFormVisible = true
       this.isEdit = true
+    },
+    async doDel(id) {
+      try {
+        await delDepartment(id)
+        this.$message({ type: 'success', message: '删除成功!' })
+        this.getDepartmentsList()
+      } catch (err) {
+        console.log(err)
+        this.$message({ type: 'error', message: '删除失败' })
+      }
+    },
+    del(id) {
+      this.curId = id
+      this.$confirm('此操作将永久删除部门, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.doDel(id)
+      }).catch(() => {})
     },
     closeDialog() {
       this.dialogFormVisible = false

@@ -36,3 +36,27 @@ export function getDepartDetail(id) {
     url: `/company/department/${id}`
   })
 }
+
+/**
+  * @description: 更新部门数据
+  * @param {*} data:form表单数据 但是要有id值
+  * @return {*}
+  */
+export function updateDepartments(data) {
+  return request({
+    url: `/company/department/${data.id}`,
+    method: 'put',
+    data
+  })
+}
+/**
+ * @description: 删除部门
+ * @param {*} id 当前点击的操作按钮 所在的项的id
+ * @return {*}
+ */
+export function delDepartment(id) {
+  return request({
+    url: `/company/department/${id}`,
+    method: 'delete'
+  })
+}

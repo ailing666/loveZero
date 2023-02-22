@@ -24,7 +24,7 @@
 
 <script>
 import { getEmployeeSimple } from '@/api/employees'
-import { addDepartments, getDepartDetail } from '@/api/departments'
+import { addDepartments, getDepartDetail, updateDepartments } from '@/api/departments'
 
 export default {
   props: {
@@ -64,7 +64,7 @@ export default {
 
     async hSubmit() {
       // 发起请求
-      await addDepartments({ ...this.form, pid: this.pid })
+      this.isEdit ? await updateDepartments(this.form) : await addDepartments({ ...this.form, pid: this.pid })
       // 关闭弹窗
       this.$emit('closeDialog')
     },
