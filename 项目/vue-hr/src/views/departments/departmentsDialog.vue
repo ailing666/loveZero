@@ -45,7 +45,6 @@ export default {
     const validCode = (rule, value, callback) => {
       let existCodeList = this.originList.map(item => item.code)
       if (this.isEdit) {
-        console.log('现在是编辑状态，正在编辑的id是', this.pid)
         existCodeList = this.originList.filter(item => item.id !== this.pid).map(item => item.code)
       }
       existCodeList.includes(value)
@@ -56,8 +55,6 @@ export default {
     const validName = (rule, value, callback) => {
       // 同级下的所有name
       let existNameList = this.originList.filter(item => item.pid === this.pid).map(item => item.name)
-      // 编辑时要将自己移除
-      console.log(existNameList)
       if (this.isEdit) {
         const dept = this.originList.find(item => item.id === this.pid)
         const pid = dept.pid
@@ -121,6 +118,9 @@ export default {
     hCancel() {
       // 关闭弹窗
       this.$emit('closeDialog')
+    },
+    resetForm() {
+      this.$refs.deptForm.resetFields()
     }
   }
 }
