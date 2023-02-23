@@ -63,7 +63,7 @@
           :close-on-press-escape="false"
           :visible.sync="dialogFormVisible"
         >
-          <departmentsDialog v-if="dialogFormVisible" :is-edit="isEdit" :pid="curId" @closeDialog="closeDialog" />
+          <departmentsDialog v-if="dialogFormVisible" :origin-list="originList" :is-edit="isEdit" :pid="curId" @closeDialog="closeDialog" />
         </el-dialog>
       </el-card>
     </div>
@@ -81,7 +81,8 @@ export default {
       list: [],
       dialogFormVisible: false,
       curId: '',
-      isEdit: false
+      isEdit: false,
+      originList: []
     }
   },
   created() {
@@ -92,6 +93,7 @@ export default {
       const res = await getDepartments()
       res.data.depts.shift()
       this.list = tranListToTreeData(res.data.depts)
+      this.originList = res.data.depts.map(({ id, pid, code, name }) => { return { id, code, pid, name } })
     },
     add(id) {
       this.curId = id
