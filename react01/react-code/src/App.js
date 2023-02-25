@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
-import Footer from './02_组件通信/父传子/Footer'
-import Main from './02_组件通信/父传子/Main'
-import Header from './02_组件通信/父传子/Header'
+import Son from './02_组件通信/子传父/Son'
 export class App extends Component {
+	constructor() {
+		super()
+		this.state = {
+			counter: 0,
+		}
+	}
+	// 定义一个函数
+	changeCounter(count) {
+		this.setState({ counter: this.state.counter + count })
+	}
+
 	render() {
+		const { counter } = this.state
+
 		return (
-			<>
-				<div>App</div>
-				<Footer />
-				<Main />
-				<Header />
-			</>
+			<div>
+				<h2>当前计数: {counter}</h2>
+				<Son addClick={count => this.changeCounter(count)} />
+			</div>
 		)
 	}
 }
