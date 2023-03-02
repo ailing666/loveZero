@@ -1,24 +1,23 @@
 import React, { Component } from 'react'
-import Son from './02_组件通信/子传父/Son'
+import Son from './02_组件通信/案例/index'
 export class App extends Component {
 	constructor() {
 		super()
 		this.state = {
-			counter: 0,
+			list: ['aaa', 'bbb', 'ccc'],
+			tabIndex: 0,
 		}
 	}
-	// 定义一个函数
-	changeCounter(count) {
-		this.setState({ counter: this.state.counter + count })
+	tabClick = index => {
+		this.setState({
+			tabIndex: index,
+		})
 	}
-
 	render() {
-		const { counter } = this.state
-
 		return (
 			<div>
-				<h2>当前计数: {counter}</h2>
-				<Son addClick={count => this.changeCounter(count)} />
+				<Son list={this.state.list} tabClick={this.tabClick} />
+				<h2>{this.state.list[this.state.tabIndex]}</h2>
 			</div>
 		)
 	}
