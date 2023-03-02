@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
-import Son from './02_组件通信/案例/index'
+import NavBar from './03-插槽/NavBar'
 export class App extends Component {
-	constructor() {
-		super()
-		this.state = {
-			list: ['aaa', 'bbb', 'ccc'],
-			tabIndex: 0,
-		}
-	}
-	tabClick = index => {
-		this.setState({
-			tabIndex: index,
-		})
-	}
 	render() {
 		return (
 			<div>
-				<Son list={this.state.list} tabClick={this.tabClick} />
-				<h2>{this.state.list[this.state.tabIndex]}</h2>
+				<NavBar>
+					{/* <div>单个元素</div> */}
+					<button>按钮</button>
+					<h2>哈哈哈</h2>
+					<i>斜体文本</i>
+				</NavBar>
 			</div>
 		)
 	}
