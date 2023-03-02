@@ -1,18 +1,17 @@
 <script setup>
 import { ref } from 'vue'
-import Form from './defineExpose/Form.vue'
+import Son from './defineProps/Son.vue'
 
-// 提供一个ref
-const formRef = ref(null)
-// 使用组件组件和方法
-const fn = () => {
-	formRef.value.count++
-	formRef.value.validate()
-}
+const money = ref(100)
+const car = ref('法拉利')
 </script>
 
 <template>
-	<h2>app count{{ formRef }}</h2>
-	<button @click="fn">button</button>
-	<Form ref="formRef"></Form>
+	<div>
+		<h1>我是父组件</h1>
+		<div>金钱：{{ money }}</div>
+		<div>车辆：{{ car }}</div>
+		<hr />
+		<Son :money="money" :car="car"></Son>
+	</div>
 </template>
