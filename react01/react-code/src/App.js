@@ -1,37 +1,22 @@
 import React, { Component } from 'react'
-import Son from './03-插槽/作用域插槽/index'
+import NavBar from './03-插槽/NavBar'
+import NavBar2 from './03-插槽/NavBar2'
+
 export class App extends Component {
-	constructor() {
-		super()
-		this.state = {
-			list: ['aaa', 'bbb', 'ccc'],
-			tabIndex: 0,
-		}
-	}
-	tabClick = index => {
-		this.setState({
-			tabIndex: index,
-		})
-	}
-	// 根据不同值渲染不同的元素
-	getSlot(item) {
-		if (item === 'aaa') {
-			return <span>{item}</span>
-		} else if (item === 'bbb') {
-			return <button>{item}</button>
-		} else {
-			return <i>{item}</i>
-		}
-	}
 	render() {
+		const btn = <button>按钮2</button>
+
 		return (
 			<div>
-				<Son
-					list={this.state.list}
-					tabClick={this.tabClick}
-					itemSlot={item => this.getSlot(item)}
-				/>
-				<h2>{this.state.list[this.state.tabIndex]}</h2>
+				{/* 使用children实现插槽 */}
+				<NavBar>
+					<button>按钮</button>
+					<h2>哈哈哈</h2>
+					<i>斜体文本</i>
+				</NavBar>
+
+				{/* 使用props实现插槽 */}
+				<NavBar2 leftSlot={btn} centerSlot={<h2>呵呵呵</h2>} rightSlot={<i>斜体2</i>} />
 			</div>
 		)
 	}
