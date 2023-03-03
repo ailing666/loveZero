@@ -1,24 +1,38 @@
 import React, { Component } from 'react'
-import Home from './04-Context/Home'
-import ThemeContext from './04-Context/context/HomeContext'
-import Theme from './04-Context/Theme'
+import Home from './05-eventBus/Home'
+import eventBus from './05-eventBus/utils/event-bus'
+
 export default class App extends Component {
 	constructor() {
 		super()
-
 		this.state = {
-			info: { name: 'loveZero', age: 18 },
+			name: '',
+			age: 1,
 		}
 	}
+	componentDidMount() {
+		eventBus.on('prev', this.prevClick, this)
+		eventBus.on('next', this.nextClick, this)
+	}
+	prevClick(info) {
+		console.log('app中监听到nextClick', info)
+	}
+
+	nextClick({ name, age }) {
+		console.log('app中监听到prevClick', name, age)
+		this.setState({ name, age })
+	}
+
+	componentWillUnmount() {
+		eventBus.off('prev', this.prevClick)
+		eventBus.off('next', this.nextClick)
+	}
+
 	render() {
-		const { info } = this.state
 		return (
 			<div>
-				{/* // 使用context中的Provider，传递值。名称只能是value */}
-				<ThemeContext.Provider value={info}>
-					<Home>App</Home>
-				</ThemeContext.Provider>
-				<Theme></Theme>
+				{this.state.name}---{this.state.age}
+				<Home></Home>
 			</div>
 		)
 	}
