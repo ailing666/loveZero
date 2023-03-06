@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import child from './01-defineProps/child.vue'
-const name = ref('loveZero')
+import child from './02-defineEmits/child.vue'
+const money = ref(0)
+const msg = ref('你好')
 </script>
 
 <template>
-	<child :name="name"></child>
+	<child @change-money="money = $event" @change-msg="msg = $event"></child>
+	{{ money }}---{{ msg }}
 </template>
