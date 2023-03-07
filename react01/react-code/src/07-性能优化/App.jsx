@@ -11,12 +11,6 @@ export class App extends Component {
 			count: 0,
 		}
 	}
-	shouldComponentUpdate(nextProps, newState) {
-		if (this.state.message !== newState.message || this.state.count !== newState.count) {
-			return true
-		}
-		return false
-	}
 	changeMsg() {
 		this.setState({
 			message: '你好',
