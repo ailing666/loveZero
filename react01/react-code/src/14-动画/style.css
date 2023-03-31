@@ -1,0 +1,29 @@
+/* 初始动画 */
+.abc-appear {
+  opacity: 0;
+}
+
+.abc-appear-active {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+/* 进入动画 */
+.abc-enter {
+  transform: translateX(-150px);
+}
+
+.abc-enter-active {
+  transform: translateX(0);
+  transition: transform 2s ease;
+} 
+
+/* 离开动画 */
+.abc-exit {
+  opacity: 1;
+}
+
+.abc-exit-active {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+

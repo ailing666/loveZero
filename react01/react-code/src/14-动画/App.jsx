@@ -1,7 +1,7 @@
 import React, { createRef, PureComponent } from 'react'
 // 导入 CSSTransition
 import { CSSTransition } from "react-transition-group"
-import "./14-动画/style.css"
+import "./style.css"
 
 export class App extends PureComponent {
   constructor(props) {
