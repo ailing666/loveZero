@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { TransitionGroup, CSSTransition } from "react-transition-group"
-import "./14-动画/TransitionGroup/style.css"
+import "./style.css"
 
 export class App extends PureComponent {
   constructor() {
@@ -37,7 +37,6 @@ export class App extends PureComponent {
           {
             books.map((item, index) => {
               return (
-                // 要添加唯一的id
                 <CSSTransition key={item.id} classNames="book" timeout={1000}>
                   <li>
                     <span>{item.name}-{item.price}</span>

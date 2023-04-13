@@ -23,7 +23,7 @@ export class App extends PureComponent {
             timeout={500}
           >
             <button onClick={e => this.setState({ isLogin: !isLogin })}>
-              { isLogin ? "退出": "登录" }
+              { isLogin ? "退出": "登录" } 
             </button>
           </CSSTransition>
         </SwitchTransition>
