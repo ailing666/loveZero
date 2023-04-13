@@ -1,55 +1,36 @@
 import React, { PureComponent } from 'react'
-import { TransitionGroup, CSSTransition } from "react-transition-group"
-import "./14-动画/TransitionGroup/style.css"
+import Home from './15-css/home'
+import { AppWrapper, SectionWrapper } from "./style"
 
 export class App extends PureComponent {
+
   constructor() {
     super()
 
     this.state = {
-      books: [
-        { id: 111, name: "你不知道JS", price: 99 },
-        { id: 222, name: "JS高级程序设计", price: 88 },
-        { id: 333, name: "Vuejs高级设计", price: 77 },
-      ]
+      size: 30,
+      color: "yellow"
     }
   }
 
-  addNewBook() {
-    const books = [...this.state.books]
-    books.push({ id: new Date().getTime(), name: "React高级程序设计", price: 99 })
-    this.setState({ books })
-  }
-
-  removeBook(index) {
-    const books = [...this.state.books]
-    books.splice(index, 1)
-    this.setState({ books })
-  }
-
   render() {
-    const { books } = this.state
+    const { size } = this.state
 
     return (
-      <div>
-        <h2>书籍列表:</h2>
-        <TransitionGroup component="ul">
-          {
-            books.map((item, index) => {
-              return (
-                // 要添加唯一的id
-                <CSSTransition key={item.id} classNames="book" timeout={1000}>
-                  <li>
-                    <span>{item.name}-{item.price}</span>
-                    <button onClick={e => this.removeBook(index)}>删除</button>
-                  </li>
-                </CSSTransition>
-              )
-            })
-          }
-        </TransitionGroup>
-        <button onClick={e => this.addNewBook()}>添加新书籍</button>
-      </div>
+      <AppWrapper>
+        <SectionWrapper size={size}>
+          <h2 className='title'>我是标题</h2>
+          <p className='content'>我是内容, 哈哈哈</p>
+          <button onClick={e => this.setState({color: "skyblue"})}>修改颜色</button>
+        </SectionWrapper>
+
+        <Home/>
+
+        <div className='footer'>
+          <p>免责声明</p>
+          <p>版权声明</p>
+        </div>
+      </AppWrapper>
     )
   }
 }
