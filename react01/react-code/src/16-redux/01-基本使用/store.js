@@ -1,26 +1,23 @@
 const { createStore } = require("redux")
 const reducer = require("./reducer.js")
-const { ADD_NUMBER, CHANGE_NAME } = require("./constants")
+const { addNumberAction, changeNameAction } = require("./actionCreators")
 
 // 创建的store
 const store = createStore(reducer)
 // 使用store中的数据
-console.log(store.getState())
+const unsubscribe = store.subscribe(() => {
+  console.log("订阅数据的变化:", store.getState())
+})
+store.dispatch(addNumberAction(10))
+store.dispatch(addNumberAction(100))
+store.dispatch(changeNameAction('666'))
+store.dispatch(changeNameAction('777'))
 
-// 修改store中的数据: 必须action
-const nameAction = { type: CHANGE_NAME, name: "6666" }
-store.dispatch(nameAction)
-
-console.log(store.getState())
-
-const nameAction2 = { type: CHANGE_NAME, name: "7777" }
-store.dispatch(nameAction2)
-console.log(store.getState())
-
-// 修改counter
-const counterAction = { type: ADD_NUMBER, num: 10 }
-store.dispatch(counterAction)
-console.log(store.getState())
-
+unsubscribe()
 module.exports = store
 
+// $ node store.js 
+// 订阅数据的变化: { name: 'lovezero', counter: 110 }
+// 订阅数据的变化: { name: 'lovezero', counter: 210 }
+// 订阅数据的变化: { name: '666', counter: 210 }
+// 订阅数据的变化: { name: '777', counter: 210 }

@@ -7,6 +7,7 @@ const initialState = {
 }
 
 function reducer(state = initialState, action) {
+  // 通过不同的 action 拆分为多个
   switch(action.type) {
     case CHANGE_NAME:
       // 需要是纯函数不能修改原值
