@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
-import Home from './16-redux/02-react-redux/pages/Home'
-import store from './16-redux/02-react-redux/store'
+import Home from './16-redux/02-react中使用/pages/Home'
+import store from './16-redux/02-react中使用/store'
 
 export class App extends PureComponent {
 	constructor() {
